@@ -7,20 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.arm.ArmSubsystem;
-import frc.robot.subsystems.arm.elevator.ElevatorIORobotB;
-import frc.robot.subsystems.arm.wrist.WristIORobotB;
-import frc.robot.subsystems.ballIntake.BallIntakeIORobotB;
-import frc.robot.subsystems.ballIntake.BallIntakeSubsystem;
-import frc.robot.subsystems.coralHolder.CoralHolderIORobotB;
-import frc.robot.subsystems.coralHolder.CoralHolderSubsystem;
-import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
-
-import static frc.robot.subsystems.swerve.generated.TunerConstantsRobotB.createDrivetrainRobotB;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -32,14 +22,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotInit() {
         initializeLogger();
-
-        ArmSubsystem.init(new ElevatorIORobotB(), new WristIORobotB());
-        BallIntakeSubsystem.init(new BallIntakeIORobotB());
-        CoralHolderSubsystem.init(new CoralHolderIORobotB());
-        CommandSwerveDrivetrain.init(createDrivetrainRobotB());
-
-        Superstructure.init(ArmSubsystem.getInstance(), CoralHolderSubsystem.getInstance(), BallIntakeSubsystem.getInstance(), CommandSwerveDrivetrain.getInstance());
-
+        Superstructure.init();
         new DriverOi().withActions();
     }
 

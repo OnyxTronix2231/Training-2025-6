@@ -1,14 +1,15 @@
 package TrainingUtils;
 
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-import static frc.robot.Constants.ROBOT_MECHANISM;
-
 public class LedConstants {
 
     public static class LedSimulationConstants {
+
+        public static final Mechanism2d ROBOT_MECHANISM = new Mechanism2d(2, 2);
 
         public static final MechanismRoot2d ledRoot = ROBOT_MECHANISM.getRoot("Led", 0.5, 1.1);
 
