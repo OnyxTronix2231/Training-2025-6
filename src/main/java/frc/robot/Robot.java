@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import TrainingUtils.AddressableLEDSim;
+import TrainingUtils.KeyBinder;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
@@ -23,6 +26,20 @@ public class Robot extends LoggedRobot {
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
+
+        AddressableLEDSim strip = new AddressableLEDSim();
+        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
+        strip.setLength(buffer.getLength());
+
+        buffer.setRGB(0, 200, 0, 0);
+        strip.setData(buffer);
+
+        KeyBinder keyBinder = new KeyBinder('a', ()->
+        {
+            buffer.setRGB(6, 200, 0, 0);
+            strip.setData(buffer);
+        });
+
         new DriverOi().withActions();
     }
 
