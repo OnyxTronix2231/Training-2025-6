@@ -15,6 +15,8 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
+
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
  * the TimedRobot documentation. If you change the name of this class or the package after creating
@@ -32,13 +34,8 @@ public class Robot extends LoggedRobot {
         strip.setLength(buffer.getLength());
 
         buffer.setRGB(0, 200, 0, 0);
+        buffer.setRGB(6, 200, 0, 0);
         strip.setData(buffer);
-
-        KeyBinder keyBinder = new KeyBinder('a', ()->
-        {
-            buffer.setRGB(6, 200, 0, 0);
-            strip.setData(buffer);
-        });
 
         new DriverOi().withActions();
     }
@@ -80,6 +77,8 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void robotPeriodic() {
+        Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
+
         CommandScheduler.getInstance().run();
     }
 
