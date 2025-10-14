@@ -1,11 +1,11 @@
 package L2.lecture;
 
-public class Color {
+public class ColorClass2 {
     private int red;
     private int green;
     private int blue;
 
-    public Color(int red, int green, int blue) {
+    public ColorClass2(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -68,20 +68,13 @@ public class Color {
 
     // =======================================================
 
-    public static Color addColors(Color color1, Color color2) {
+    public static ColorClass2 addColors(ColorClass2 color1, ColorClass2 color2) {
         int resultRed = color1.getRed() + color2.getRed();
         int resultGreen = color1.getGreen() + color2.getGreen();
         int resultBlue = color1.getBlue() + color2.getBlue();
 
-        Color result = new Color(resultRed, resultGreen, resultBlue);
+        ColorClass2 result = new ColorClass2(resultRed, resultGreen, resultBlue);
         return result;
-    }
-
-    public static void main(String[] args) {
-        Color c1 = new Color(0, 100, 50);
-        Color c2 = new Color(150, 30, 30);
-
-        Color c3 = Color.addColors(c1, c2);
     }
 }
 
