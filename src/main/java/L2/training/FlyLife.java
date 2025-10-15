@@ -1,6 +1,6 @@
 package L2.training;
 
-public class Targil1 {
+public class FlyLife {
     public static void main(String[] args) {
         int birthYear = 2010;
         int Age = 2025 - birthYear;
