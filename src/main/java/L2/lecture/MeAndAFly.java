@@ -2,7 +2,7 @@ package L2.lecture;
 
 public class MeAndAFly {
     public static void main(String[] args) {
-        
+
         int birth = 2004; // ha ha yuval is old - get over it!
         int age = 2025 - birth;
         System.out.println("The age is " + age);
