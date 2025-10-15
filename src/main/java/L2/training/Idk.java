@@ -1,4 +1,4 @@
-package L2.lecture;
+package L2.training;
 
 public class Idk {
     public static void main(String[] args) {
