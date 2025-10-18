@@ -76,6 +76,35 @@ public class ColorClass2 {
         ColorClass2 result = new ColorClass2(resultRed, resultGreen, resultBlue);
         return result;
     }
+
+    // =======================================================
+
+    public void clear() {
+        red = 0;
+        green = 0;
+        blue = 0;
+    }
+
+    public static ColorClass2 getFactoredColor(ColorClass2 color, int percentage) {
+        int red = color.getRed() * percentage / 100;
+        int green = color.getGreen() * percentage / 100;
+        int blue = color.getBlue() * percentage / 100;
+        return new ColorClass2(red, green, blue);
+    }
+
+    public static ColorClass2 addByFactor(ColorClass2 c1, ColorClass2 c2, int percentage) {
+        c1 = ColorClass2.getFactoredColor(c1, percentage);
+        c2 = ColorClass2.getFactoredColor(c2, 100 - percentage);
+        return ColorClass2.addColors(c1, c2);
+    }
+
+    public static void main(String[] args) {
+        ColorClass2 c1 = new ColorClass2(200, 0, 0);
+        ColorClass2 c2 = new ColorClass2(0, 200, 0);
+        ColorClass2 c3 = ColorClass2.addByFactor(c1, c2, 25);
+
+        System.out.println(c3.getGreen());
+    }
 }
 
 
