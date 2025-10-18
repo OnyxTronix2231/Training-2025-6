@@ -38,5 +38,25 @@ public class Main {
         System.out.println("Should say -6.0");
         System.out.println(trinom2.solve());
 
+        System.out.println("Point");
+
+        Point point = new Point(2, 2);
+        System.out.println(point.getDistanceFromOrigin());
+        point.setPoint(3, 3);
+        System.out.println(point.getDistanceFromOrigin());
+
+        System.out.println("Circle");
+
+        Circle circle = new Circle(point, 2);
+        circle.moveCircle(3, 3);
+        System.out.println(circle.getPoint().getDistanceFromOrigin());
+        circle.addRadius(2);
+        System.out.println(circle.getRadius());
+        System.out.println("area");
+        System.out.println(circle.getArea());
+        System.out.println("circumference");
+        System.out.println(circle.getCircumference());
+
+
     }
 }
