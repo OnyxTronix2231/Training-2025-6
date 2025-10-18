@@ -7,6 +7,11 @@ public class ColorClass2 {
 
     public ColorClass2(int red, int green, int blue) {
         this.red = red;
+        if (red > 255) {
+            this.red = 255;
+        } if (red < 0) {
+            this.red = 0;
+        }
         this.green = green;
         this.blue = blue;
     }
