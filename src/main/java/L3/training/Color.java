@@ -1,4 +1,5 @@
-package L2.training;
+package L3.training;
+
 
 public class Color {
     private int red;
@@ -35,6 +36,15 @@ public class Color {
         green = newGreen;
     }
 
+    @Override
+    public String toString() {
+        return "Color{" +
+                "red=" + red +
+                ", blue=" + blue +
+                ", green=" + green +
+                '}';
+    }
+
     public void add_to_newcolor(int new_red, int new_green, int new_blue) {
         new_red += red;
         new_green += green;
@@ -67,16 +77,16 @@ public class Color {
         return c1;
     }
     public static Color addByFactor(int color1, int color2, int percentage){
-        Color c2 = new Color(color1*percentage/100,color2*(100-percentage)/100,0);
-        return c2;
+        return new Color(color1*percentage/100,color2*(100-percentage)/100,0);
     }
     public static void main(String[] args) {
 
         Color red = new Color(255, 0, 0);
-        getFactoredColor(25,red);
-        System.out.println(red.red);
+        System.out.println(red.toString());
+
         Color blue = new Color(0, 255, 0);
 
         Color green = new Color(0, 0, 255);
+
     }
 }
