@@ -30,8 +30,16 @@ public class BallonShop {
         return amount * getBallon_price() < balance;
     }
 
+    public void buy(int amount, double balance){
+        if (canBuy(amount,balance)){
+            System.out.println("Bought: " + amount + " of Ballons");
+            System.out.println("Costed: " + amount * getBallon_price() + "Shekels");
+            System.out.println("Money left: " + (balance - (amount * getBallon_price())));
+        }
+    }
     public static void main(String[] args) {
         BallonShop shop = new BallonShop("Idk",0.5);
         System.out.println(shop.canBuy(5,3));
+
     }
 }
