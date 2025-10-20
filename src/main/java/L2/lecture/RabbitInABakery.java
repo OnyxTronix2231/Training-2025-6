@@ -16,7 +16,7 @@ public class RabbitInABakery {
         double wholeCakes = (rabitsDolar - moneyLeft) / 5;
         System.out.println("whole cakes: " + wholeCakes);
 
-        boolean can40 = rabitsDolar / 4 > 40;
+        boolean can40 = rabitsDolar / 4 >= 40;
         System.out.println("can he buy 40? " + can40);
     }
 }
