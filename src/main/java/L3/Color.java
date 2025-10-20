@@ -6,7 +6,7 @@ public class Color {
     private int green;
     private int blue;
 
-        public Color(int red, int green, int blue) {
+    public Color(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -61,8 +61,16 @@ public class Color {
     public void clearColor() {
         red = 0;
         green = 0;
-        blue = 0 ;
+        blue = 0;
     }
+
+    public String toString() {
+        String redMessage = "Red: " + red;
+        String greenMessage = "Green: " + green;
+        String blueMessage = "Blue: " + blue;
+        return  redMessage + ", " + greenMessage + ", " + blueMessage;
+    }
+
     
     public static void main(String[] args) {
 
@@ -71,6 +79,8 @@ public class Color {
         Color colorGreen = new Color(0, 255, 0);
 
         Color colorBlue = new Color(0, 0, 255);
+
+        System.out.println(colorRed);
 
     }
 }
