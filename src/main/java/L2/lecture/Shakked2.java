@@ -13,7 +13,7 @@ public class Shakked2 {
       int zvovMe = myBirth/zvov;
         System.out.println(zvovMe);
 
-      int life = 365%zvov; "לתקן"
+      int life = 365%zvov;
         System.out.println(life);
 
       int myLife = myBirth/zvov;
