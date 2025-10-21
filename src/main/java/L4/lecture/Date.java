@@ -22,7 +22,7 @@ public class Date {
     private int  Year;
 
     public Date(Months months, int day, int month, int year) {
-        this.Day = ClamDay(day,months );
+        this.Day = ClampDay(day,months );
         Month = month;
         Year = year;
     }
@@ -50,7 +50,7 @@ public class Date {
     public void setYear(int year) {
         Year = year;
     }
-    public static int ClamDay(int day,Months months){
+    public static int ClampDay(int day,Months months){
         switch (months) {
             case January :
                 return MathUtil.clamp(day,1,31);
