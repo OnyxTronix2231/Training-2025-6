@@ -159,7 +159,7 @@ public class Date {
 
     @Override
     public String toString() {
-        return "Month\n" + "  Day: " + day + "\n  Month: " + month + "\n  Year: " + year;
+        return "Date\n" + "  Day: " + day + "\n  Month: " + month + "\n  Year: " + year;
     }
 
     public enum Month {
