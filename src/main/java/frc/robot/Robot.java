@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import L5.lecture.LED;
 import TrainingUtils.AddressableLEDSim;
-import TrainingUtils.KeyBinder;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Superstructure;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -24,6 +28,8 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
+    //private LED led;
+
     @Override
     public void robotInit() {
         initializeLogger();
@@ -36,8 +42,7 @@ public class Robot extends LoggedRobot {
         buffer.setRGB(0, 200, 0, 0);
         buffer.setRGB(6, 200, 0, 0);
         strip.setData(buffer);
-
-        new DriverOi().withActions();
+        //led = new LED();
     }
 
     /**
@@ -79,6 +84,7 @@ public class Robot extends LoggedRobot {
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
 
+        //led.periodic();
         CommandScheduler.getInstance().run();
     }
 
@@ -110,4 +116,6 @@ public class Robot extends LoggedRobot {
 
         Logger.start();
     }
+
+    public static final Joystick joystick = new Joystick(0);
 }
