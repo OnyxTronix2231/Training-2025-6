@@ -1,4 +1,4 @@
-package L4.lecture;
+package L4.training;
 
 public class TeamMember {
 
