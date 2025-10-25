@@ -1,7 +1,5 @@
 package L4.training;
 
-import L4.lecture.OnyxDate;
-
 public class Monkey {
     private String name;
     private OnyxDate date;
