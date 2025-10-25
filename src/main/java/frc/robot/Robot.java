@@ -5,6 +5,7 @@
 package frc.robot;
 
 import L5.lecture.LED;
+import L5.training.LEDP;
 import TrainingUtils.AddressableLEDSim;
 import TrainingUtils.KeyButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -30,7 +31,7 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends LoggedRobot {
-
+    private LEDP LEGO;
     // private LED led;
     // private KeyButton button1;
 
@@ -39,12 +40,20 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        AddressableLEDSim strip = new AddressableLEDSim();
-        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
-        strip.setLength(buffer.getLength());
+        LEGO = new LEDP(7);
+        LEGO.ColorAllLED(Color.BLUE);
 
-        buffer.setRGB(3, 0, 255, 0);
-        strip.setData(buffer);
+        //AddressableLEDSim strip = new AddressableLEDSim();
+        //AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
+        //strip.setLength(buffer.getLength());
+
+        //buffer.setRGB(0, 255, 0, 0);
+
+
+        //for (int index = 0; index < buffer.getLength(); index++) {
+        //    buffer.setRGB(index, 255, 0, 0);
+        //}
+        //strip.setData(buffer);
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
@@ -91,7 +100,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
-
+        LEGO.periodic();
         // if (button1.isPressed()) {
         //     led.fullColor(Color.RED);
         // }
