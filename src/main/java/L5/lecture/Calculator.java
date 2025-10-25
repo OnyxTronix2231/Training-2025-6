@@ -11,6 +11,14 @@ public class Calculator {
         return result;
     }
 
+    public static int factFor(int number) {
+        int result = 1;
+        for (int i = number; i > 0; i--) {
+            result *= i;
+        }
+        return result;
+    }
+
     public static double test() {
         int x = 0;
         for (int i = 0; i < 5; i++) {
@@ -20,6 +28,6 @@ public class Calculator {
     }
 
     public static void main(String[] args) {
-        System.out.println(test());
+        System.out.println(factorial(70));
     }
 }
