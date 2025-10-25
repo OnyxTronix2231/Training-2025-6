@@ -26,7 +26,6 @@ public class AddressableLEDSim {
     // original WPI_AddressableLED function
     public void setData(AddressableLEDBuffer buffer) {
         int subdivisions = buffer.getLength() / LED.length; // the simulated led length may not be equal to the buffer
-        Shuffleboard.getTab("ledsim").addNumber("numnum", ()->subdivisions);
         for (int i = 0; i < LED.length; i++) {
             LED[i].setColor(buffer.getLED8Bit(subdivisions * i));
         }
