@@ -3,11 +3,15 @@ package L5.lecture;
 public class Calculator {
     public static int factorial(int number) {
         int result = 1;
-        int num = number;
-        while (num != 0) {
-            result *= num;
-            num --;
+//        int num = number;
+//        while (num != 0) {
+//            result *= num;
+//            num --;
+//        }
+        for (int i = number; i >= 2; i--) {
+            result *= i;
         }
+
         return result;
     }
 
@@ -20,6 +24,6 @@ public class Calculator {
     }
 
     public static void main(String[] args) {
-        System.out.println(test());
+        System.out.println(factorial(5));
     }
 }
