@@ -141,7 +141,7 @@ public class Date {
                 return 28;
             case January, March, May, December, October, August, July:
                 return 31;
-            case April, September, June:
+            case April, September, June, November:
                 return 30;
             default:
                 return 0;
