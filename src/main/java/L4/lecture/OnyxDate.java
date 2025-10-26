@@ -2,7 +2,7 @@ package L4.lecture;
 
 import edu.wpi.first.math.MathUtil;
 
-public class Date {
+public class OnyxDate {
     public enum Month {
         January,
         February,
@@ -22,7 +22,7 @@ public class Date {
     private Month month;
     private int year;
 
-    public Date(int day, Month month, int year) {
+    public OnyxDate(int day, Month month, int year) {
         this.day = clampDay(day, month);
         this.month = month;
         this.year = year;
@@ -149,11 +149,50 @@ public class Date {
         this.day = clampDay(day, month);;
     }
 
+    public void sayDay (){
+        System.out.println("day:" + day);
+        System.out.println("month" + month);
+        System.out.println("year" + year);
+    }
+    public void setToyear (int newYear){
+     this.year = newYear;
+     this.month = Month.January;
+     this.day = 1;
+    }
+public  static OnyxDate getGreatest (OnyxDate d1, OnyxDate d2){
+        if (d1.getYear()> d2.getYear()){
+            return d1;
+        if (d1.getYear() < d2.getYear());
+            return d2;
+        }
+
+        if (getMonthNum (d1.getMonth()) > getMonthNum(d2.getMonth())) {
+            return d1;
+        } else if (getMonthNum (d1.getMonth()) < getMonthNum(d2.getMonth())) {
+            return d2;
+        }
+
+
+        if  (d1.getDay() > d2.getDay()) {
+            return d1;
+        } else if (d1.getDay() < d2.getDay()) {
+            return d2;
+        }
+
+        return d2;
+
+    }
+     public static OnyxDate getDistance (OnyxDate d1, OnyxDate d2){
+        int dYear = d1.getYear() - d2.getYear();
+
+     }
+
     public static void main(String[] args) {
-        Date d = new Date(50, Month.February, 2026);
+        OnyxDate d = new OnyxDate(50, Month.February, 2026);
         System.out.println(d.getDay());
         d.setDay(-15);
         System.out.println(d.getDay());
         System.out.println(d.getMonth());
+        d.sayDay();
     }
 }
