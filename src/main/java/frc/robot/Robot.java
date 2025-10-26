@@ -39,8 +39,27 @@ public class Robot extends LoggedRobot {
         AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
         strip.setLength(buffer.getLength());
 
-        buffer.setRGB(0, 200, 0, 0);
-        buffer.setRGB(6, 200, 0, 0);
+        buffer.setRGB(0, 225, 0, 0);
+        buffer.setRGB(1, 225, 0, 0);
+        buffer.setRGB(2, 225, 0, 0);
+        buffer.setRGB(3, 225, 0, 0);
+        buffer.setRGB(4, 225, 0, 0);
+        buffer.setRGB(5, 225, 0, 0);
+        buffer.setRGB(6, 225, 0, 0);
+
+        int index = 0;
+        while (index < 7 ){
+            buffer.setRGB(index, 225, 0, 0);
+            index ++;
+        }
+
+
+
+
+
+
+
+
         strip.setData(buffer);
         //led = new LED();
     }

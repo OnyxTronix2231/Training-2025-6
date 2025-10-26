@@ -161,12 +161,12 @@ public class OnyxDate {
     }
 public  static OnyxDate getGreatest (OnyxDate d1, OnyxDate d2){
         if (d1.getYear()> d2.getYear()){
-            return d1;
-        if (d1.getYear() < d2.getYear());
+            return d1;}
+        if (d1.getYear() < d2.getYear()){
             return d2;
         }
 
-        if (getMonthNum (d1.getMonth()) > getMonthNum(d2.getMonth())) {
+        /*if (getMonthNum (d1.getMonth()) > getMonthNum(d2.getMonth())) {
             return d1;
         } else if (getMonthNum (d1.getMonth()) < getMonthNum(d2.getMonth())) {
             return d2;
@@ -177,13 +177,14 @@ public  static OnyxDate getGreatest (OnyxDate d1, OnyxDate d2){
             return d1;
         } else if (d1.getDay() < d2.getDay()) {
             return d2;
-        }
+        }*/
 
-        return d2;
+        return null;
 
     }
      public static OnyxDate getDistance (OnyxDate d1, OnyxDate d2){
         int dYear = d1.getYear() - d2.getYear();
+        return null;
 
      }
 

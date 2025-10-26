@@ -57,10 +57,10 @@ public class Color {
                 color.blue*precentage/100);
     }
 
-    public string toString (){
-        string redMessage = "red: " + red;
-        string greenMessage = "green: " + green;
-        string blueMessage = "blue: " + blue;
+    public String toString (){
+        String redMessage = "red: " + red;
+        String greenMessage = "green: " + green;
+        String blueMessage = "blue: " + blue;
         return redMessage + ","  + greenMessage + ","  + blueMessage;
 
 

@@ -8,13 +8,10 @@ public class Penguin {
         this.name = name;
         if (age < 0){
             this.age = -age;
-            this.age = age;
+            this.age = age;}}
     public void sayName (){
-                System.out.println("hello" + name);
+                System.out.println("hello" + name);}
     public static  void compareAge (int penguinP1, int penguinP2){
         
                 }
             }
-        }
-    }
-}
