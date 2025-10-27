@@ -11,13 +11,13 @@ public class LED {
     private AddressableLEDSim strip;
     private AddressableLEDBuffer buffer;
 
-    public enum LEDWantedState {
+    private enum LEDWantedState {
         CW,
         CCW,
         IDLE
     }
 
-    public enum LEDSystemState {
+    private enum LEDSystemState {
         blue,
         red,
         green,

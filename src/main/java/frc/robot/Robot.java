@@ -33,7 +33,6 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 public class Robot extends LoggedRobot {
     private BarelLeds leds1;
     // private LED led;
-     private KeyButton button1;
 
     @Override
     public void robotInit() {
@@ -41,15 +40,12 @@ public class Robot extends LoggedRobot {
         Superstructure.init();
 
           leds1 = new BarelLeds(6);
-          leds1.paintAll(Color.CYAN);
-          leds1.show();
 
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
         //led.oneLed(3, Color.GREEN);
 
-        button1 = new KeyButton(1);
     }
 
     /**
