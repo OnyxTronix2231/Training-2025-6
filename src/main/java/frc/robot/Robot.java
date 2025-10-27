@@ -5,6 +5,7 @@
 package frc.robot;
 
 import L5.lecture.LED;
+import L5.training.BarelLeds;
 import TrainingUtils.AddressableLEDSim;
 import TrainingUtils.KeyButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -30,27 +31,25 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends LoggedRobot {
-
+    private BarelLeds leds1;
     // private LED led;
-    // private KeyButton button1;
+     private KeyButton button1;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        AddressableLEDSim strip = new AddressableLEDSim();
-        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
-        strip.setLength(buffer.getLength());
+          leds1 = new BarelLeds(6);
+          leds1.paintAll(Color.CYAN);
+          leds1.show();
 
-        buffer.setRGB(3, 0, 255, 0);
-        strip.setData(buffer);
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
         //led.oneLed(3, Color.GREEN);
 
-        //button1 = new KeyButton(1);
+        button1 = new KeyButton(1);
     }
 
     /**
@@ -92,9 +91,8 @@ public class Robot extends LoggedRobot {
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
 
-        // if (button1.isPressed()) {
-        //     led.fullColor(Color.RED);
-        // }
+
+        leds1.periodic();
         // led.periodic();
         CommandScheduler.getInstance().run();
     }

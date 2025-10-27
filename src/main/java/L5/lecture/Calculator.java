@@ -10,6 +10,13 @@ public class Calculator {
         }
         return result;
     }
+    public static int forFactorial(int number){
+        int result = 1;
+        for (int i = number ;i>0;i--){
+            result *=i;
+        }
+        return result;
+    }
 
     public static double test() {
         int x = 0;
