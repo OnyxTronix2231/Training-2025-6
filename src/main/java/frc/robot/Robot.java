@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import L5.training.LED;
+import L5.training.LED2;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,7 +26,7 @@ public class Robot extends LoggedRobot {
     public static final Joystick joystick = new Joystick(0);
 
     // private LED led;
-    private LED led;
+    private LED2 led;
 
     @Override
     public void robotInit() {
@@ -37,8 +37,8 @@ public class Robot extends LoggedRobot {
 //        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
 //        strip.setLength(buffer.getLength());
 
-        led = new LED(7);
-        led.makeRainbow();
+        led = new LED2(7);
+//        led.makeRainbow();
     }
 
     /**
@@ -81,7 +81,7 @@ public class Robot extends LoggedRobot {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
 
 
-//        led.periodic();
+        led.periodic();
         CommandScheduler.getInstance().run();
     }
 

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 import java.awt.*;
 
-public class LED {
+public class LED2 {
     private int length;
     private AddressableLEDBuffer buffer;
     private AddressableLEDSim led;
@@ -16,7 +16,7 @@ public class LED {
     private LEDSystemState currentState;
     private LEDWantedState wantedState;
 
-    public LED(int length) {
+    public LED2(int length) {
         this.length = length;
         this.led = new AddressableLEDSim();
         this.buffer = new AddressableLEDBuffer(length);
@@ -25,8 +25,8 @@ public class LED {
         button1 = new KeyButton(1);
         button2 = new KeyButton(2);
         button3 = new KeyButton(3);
-        this.currentState = LEDSystemState.GREEN;
-        this.wantedState = LEDWantedState.GREEN;
+        this.currentState = LEDSystemState.OFF;
+        this.wantedState = LEDWantedState.OFF;
     }
 
     public void periodic() {
@@ -37,37 +37,42 @@ public class LED {
 
     public void updateWantedState() {
         if (button1.isPressed()) {
-            wantedState = LEDWantedState.BLUE;
+            wantedState = LEDWantedState.LEFT;
         } else if (button2.isPressed()) {
-            wantedState = LEDWantedState.RED;
+            wantedState = LEDWantedState.RIGHT;
         } else if (button3.isPressed()) {
-            wantedState = LEDWantedState.GREEN;
+            wantedState = LEDWantedState.OFF;
+        } else {
+            wantedState = LEDWantedState.IDLE;
         }
     }
 
     public LEDSystemState handleStateTransition() {
         switch (wantedState) {
-            case BLUE:
+            case RIGHT:
                 switch (currentState) {
-                    case OFF, BLUE:
+                    case OFF:
                         return LEDSystemState.BLUE;
-                    case GREEN, RED:
-                        return LEDSystemState.OFF;
-                }
-            case RED:
-                switch (currentState) {
-                    case OFF, RED:
+                    case BLUE:
                         return LEDSystemState.RED;
-                    case GREEN, BLUE:
-                        return LEDSystemState.OFF;
-                }
-            case GREEN:
-                switch (currentState) {
-                    case OFF, GREEN:
+                    case RED:
                         return LEDSystemState.GREEN;
-                    case BLUE, RED:
+                    case GREEN:
                         return LEDSystemState.OFF;
                 }
+            case LEFT:
+                switch (currentState) {
+                    case OFF:
+                        return LEDSystemState.GREEN;
+                    case GREEN:
+                        return LEDSystemState.RED;
+                    case RED:
+                        return LEDSystemState.BLUE;
+                    case BLUE:
+                        return LEDSystemState.OFF;
+                }
+            case OFF:
+                return LEDSystemState.OFF;
             default:
                 return currentState;
         }
@@ -124,6 +129,6 @@ public class LED {
     }
 
     public enum LEDWantedState {
-        BLUE, RED, GREEN
+        RIGHT, LEFT, OFF, IDLE
     }
 }
