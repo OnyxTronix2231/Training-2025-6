@@ -5,6 +5,10 @@
 package frc.robot;
 
 import L5.lecture.LED;
+import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.elevator.ElevatorIO;
+import Lrobot.elevator.ElevatorIORobot;
+import Lrobot.elevator.ElevatorIOSimulation;
 import TrainingUtils.AddressableLEDSim;
 import TrainingUtils.KeyButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,6 +26,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import java.awt.*;
 
+import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 
 /**
@@ -33,18 +38,22 @@ public class Robot extends LoggedRobot {
 
     // private LED led;
     // private KeyButton button1;
+    ElevatorVisualization elevatorVisualization;
+
+    ElevatorIO elevatorIO;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        AddressableLEDSim strip = new AddressableLEDSim();
-        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
-        strip.setLength(buffer.getLength());
+        elevatorIO = new ElevatorIOSimulation();
 
-        buffer.setRGB(3, 0, 255, 0);
-        strip.setData(buffer);
+        new ElevatorVisualization(() -> {
+            ElevatorIO.ElevatorInputs inputs = new ElevatorIO.ElevatorInputs();
+            elevatorIO.updateInputs(inputs);
+            return inputs.elevatorLength;
+        });
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
@@ -91,6 +100,8 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
+        updateVisualizations();
+
 
         // if (button1.isPressed()) {
         //     led.fullColor(Color.RED);
