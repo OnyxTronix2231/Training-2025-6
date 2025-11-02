@@ -131,5 +131,17 @@ public class BarelLeds {
         }
 
     }
+    public void lightUpLedFromArr(Color []arr){
+        for (int i = 0; i < arr.length; i++) {
+            this.buffer.setRGB(i,arr[i].getRed(),arr[i].getBlue(),arr[i].getGreen());
+        }
+    }
+    public Color[] ledsColorInArr(){
+        Color []arr = new Color[buffer.getLength()];
+        for (int i =0;i<buffer.getLength();i++){
+            arr[i] = new Color(buffer.getRed(i),buffer.getBlue(i),buffer.getGreen(i));
+        }
+        return arr;
+    }
 }
 
