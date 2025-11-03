@@ -122,4 +122,26 @@ public class Led1 {
         }
         show();
     }
+
+    public void colorFromArray(Color[] colors) {
+        if (colors.length > buffer.getLength()) {
+            for (int i = 0; i < buffer.getLength(); i++) {
+                setOneLed(i, colors[i]);
+            }
+        }else {
+            for (int i = 0; i < colors.length; i++) {
+                setOneLed(i, colors[i]);
+            }
+        }
+        show();
+    }
+
+    public Color[] getBufferAsArray() {
+        Color[] c = new Color[buffer.getLength()];
+        for (int i = 0; i < buffer.getLength(); i++) {
+            c[i] = new Color(buffer.getRed(i), buffer.getGreen(i), buffer.getBlue(i));
+        }
+        return c;
+    }
+
 }
