@@ -35,5 +35,5 @@ public class Clothes {
         clothes.Wash();
         System.out.println(clothes.getSize());
     }
-    
+
 }
