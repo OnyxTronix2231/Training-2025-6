@@ -26,6 +26,6 @@ public class Dog2 extends Pet implements Noisy {
         n1.makeNoise();
         n2.makeNoise();
 
-        n2.drive(50);
+        //n2.drive(50);
     }
 }
