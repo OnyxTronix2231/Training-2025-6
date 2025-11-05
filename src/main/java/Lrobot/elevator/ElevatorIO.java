@@ -5,11 +5,8 @@ public interface ElevatorIO {
     void updateInputs(ElevatorInputs inputs);
 
     class ElevatorInputs {
-        public boolean isMicroSwitchPressed;
-
         public double elevatorLength;
         public double elevatorMotorPosition;
-        public double elevatorAppliedVolts;
         public double elevatorSupplyCurrentAmps;
         public double elevatorStatorCurrentAmps;
         public double elevatorAngularVelocityRadPerSec;

@@ -98,10 +98,8 @@ public class ElevatorIORobot implements ElevatorIO {
                 elevatorMasterMotorTemp,
                 elevatorFollowerMotorTemp
         );
-        inputs.isMicroSwitchPressed = limitSwitch.get();
         inputs.elevatorLength = ROTATIONS_TO_LENGTH(elevatorMotorPosition.getValueAsDouble(), false);
         inputs.elevatorMotorPosition = elevatorMotorPosition.getValueAsDouble();
-        inputs.elevatorAppliedVolts = elevatorAppliedVolts.getValueAsDouble();
         inputs.elevatorSupplyCurrentAmps = elevatorSupplyCurrentAmps.getValueAsDouble();
         inputs.elevatorStatorCurrentAmps = elevatorStatorCurrentAmps.getValueAsDouble();
         inputs.elevatorAngularVelocityRadPerSec = elevatorAngularVelocityRadPerSec.getValueAsDouble();

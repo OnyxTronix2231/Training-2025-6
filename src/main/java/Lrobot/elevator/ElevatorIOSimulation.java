@@ -27,11 +27,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0.0).withSlot(0);
 
-
-    class SimulatedSensors {
-        public static boolean isLimitSwitchPressed;
-    }
-
     private final StatusSignal<Angle> elevatorMotorPosition;
     private final StatusSignal<Voltage> elevatorAppliedVolts;
     private final StatusSignal<Current> elevatorSupplyCurrentAmps;
@@ -49,7 +44,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         elevatorMotor.getConfigurator().apply(getTalonFXConfiguration());
 
-        SimulatedSensors.isLimitSwitchPressed = false;
         elevatorMotorPosition = elevatorMotor.getPosition();
         elevatorAppliedVolts = elevatorMotor.getMotorVoltage();
         elevatorSupplyCurrentAmps = elevatorMotor.getSupplyCurrent();
@@ -101,25 +95,15 @@ public class ElevatorIOSimulation implements ElevatorIO {
                 elevatorAngularAccelerationRadPerSecSquared,
                 elevatorMasterMotorTemp
         );
-        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
         inputs.elevatorLength = ROTATIONS_TO_LENGTH(elevatorMotorPosition.getValueAsDouble(), true);
         inputs.elevatorMotorPosition = elevatorMotorPosition.getValueAsDouble();
-        inputs.elevatorAppliedVolts = elevatorAppliedVolts.getValueAsDouble();
         inputs.elevatorSupplyCurrentAmps = elevatorSupplyCurrentAmps.getValueAsDouble();
         inputs.elevatorStatorCurrentAmps = elevatorStatorCurrentAmps.getValueAsDouble();
         inputs.elevatorAngularVelocityRadPerSec = elevatorAngularVelocityRadPerSec.getValueAsDouble();
         inputs.elevatorAngularAccelerationRadPerSecSquared = elevatorAngularAccelerationRadPerSecSquared.getValueAsDouble();
         inputs.elevatorMasterMotorTemp = elevatorMasterMotorTemp.getValueAsDouble();
     }
-
-    public static void setLimitSwitchValue(boolean value) {
-        SimulatedSensors.isLimitSwitchPressed = value;
-    }
-
-    public static boolean getLimitSwitchValue() {
-        return SimulatedSensors.isLimitSwitchPressed;
-    }
-
+    
     @Override
     public void moveToLength(double length) {
         elevatorMotor.setControl(motionMagicVoltage.withPosition(LENGTH_TO_ROTATIONS(length, true)));
