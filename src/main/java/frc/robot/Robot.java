@@ -6,6 +6,7 @@ package frc.robot;
 
 import L5.lecture.LED;
 import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIO;
 import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
@@ -38,22 +39,15 @@ public class Robot extends LoggedRobot {
 
     // private LED led;
     // private KeyButton button1;
-    ElevatorVisualization elevatorVisualization;
 
-    ElevatorIO elevatorIO;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        elevatorIO = new ElevatorIOSimulation();
-
-        new ElevatorVisualization(() -> {
-            ElevatorIO.ElevatorInputs inputs = new ElevatorIO.ElevatorInputs();
-            elevatorIO.updateInputs(inputs);
-            return inputs.elevatorLength;
-        });
+        Elevator.init(new ElevatorIOSimulation());
+        new ElevatorVisualization();
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
