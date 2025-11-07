@@ -17,12 +17,14 @@ public class Elevator extends SubsystemBase {
     public enum WantedState {
         IDLE,
         MOVE_TO_POSITION,
+        MOVE_DUTY_CYCLE,
         HOME
     }
 
     public enum SystemState {
         IDLING,
         MOVING_TO_POSITION,
+        MOVE_DUTY_CYCLE,
         HOMING
     }
 
@@ -74,18 +76,25 @@ public class Elevator extends SubsystemBase {
                 return SystemState.IDLING;
             case MOVE_TO_POSITION:
                 return SystemState.MOVING_TO_POSITION;
+            case MOVE_DUTY_CYCLE:
+                return SystemState.MOVE_DUTY_CYCLE;
         }
         return SystemState.IDLING;
     }
 
     private void applyStates() {
         switch (systemState) {
-            case IDLING -> {
+            case IDLING:
                 elevatorIO.setDutyCycle(0);
-            }
-            case MOVING_TO_POSITION -> {
+                break;
+
+            case MOVING_TO_POSITION:
                 elevatorIO.moveToLength(wantedElevatorHeight);
-            }
+                break;
+
+            case MOVE_DUTY_CYCLE:
+                elevatorIO.setDutyCycle(wantedElevatorHeight);
+                break;
         }
     }
 
@@ -99,6 +108,14 @@ public class Elevator extends SubsystemBase {
 
     public double getElevatorAcceleration() {
         return elevatorInputs.elevatorAngularAccelerationRadPerSecSquared;
+    }
+
+    public WantedState getWantedState() {
+        return wantedState;
+    }
+
+    public SystemState getSystemState() {
+        return systemState;
     }
 
     private static Elevator instance;
