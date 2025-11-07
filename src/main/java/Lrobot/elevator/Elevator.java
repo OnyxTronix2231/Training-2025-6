@@ -118,10 +118,6 @@ public class Elevator extends SubsystemBase {
         return systemState;
     }
 
-    public void updateElevatorPID(double p, double i, double d) {
-        elevatorIO.updatePID(p, i, d);
-    }
-
     private static Elevator instance;
 
     public static void init(ElevatorIO elevatorIO) {
