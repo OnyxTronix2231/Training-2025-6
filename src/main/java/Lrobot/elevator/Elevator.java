@@ -98,6 +98,12 @@ public class Elevator extends SubsystemBase {
         }
     }
 
+    private double dutyCycle;
+
+    public void setDutyCycle(double dutyCycle) {
+        this.dutyCycle = dutyCycle;
+    }
+
     public boolean isElevatorOnTarget(double targetElevatorPosition, double elevatorTolerance) {
         return Math.abs(targetElevatorPosition - getElevatorLength()) <= elevatorTolerance;
     }

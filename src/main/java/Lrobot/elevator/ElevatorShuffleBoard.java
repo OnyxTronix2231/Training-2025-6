@@ -14,10 +14,10 @@ public class ElevatorShuffleBoard {
 
         GenericEntry dutyCycle = tab.add("target Val", 0).getEntry();
 
-
-        tab.add("move elevator to position", new InstantCommand(() -> Elevator.getInstance().setWantedState(
-                Elevator.WantedState.MOVE_DUTY_CYCLE,dutyCycle.getDouble(0))));
-
-
+        tab.add("move elevator to position", new InstantCommand(() -> {
+            Elevator.getInstance().setWantedState(
+                    Elevator.WantedState.MOVE_DUTY_CYCLE);
+            Elevator.getInstance().setDutyCycle(dutyCycle.getDouble(0));
+        }));
     }
 }
