@@ -23,7 +23,6 @@ public class ElevatorVisualization extends VisualizedSubsystem {
                 ELEVATOR_VISUALIZATION_OFFSET);
     }
 
-
     public class ElevatorVisualizationMechanism {
         private static final double ELEVATOR_X_POSITION = 3;
         private static final double ELEVATOR_Y_POSITION = 0.1;

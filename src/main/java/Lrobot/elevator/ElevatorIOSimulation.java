@@ -1,75 +1,52 @@
 package Lrobot.elevator;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import frc.robot.lib.OnyxMotorInputs;
 
 import static Lrobot.elevator.ElevatorConstants.*;
 
 public class ElevatorIOSimulation implements ElevatorIO {
 
-    private final TalonFX elevatorMotor;
+    private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
 
-    private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0.0).withSlot(0);
+    private final OnyxMotorInputs elevatorMasterMotorInputs;
+    private final OnyxMotorInputs elevatorFollowerMotorInputs;
 
-    private final StatusSignal<Angle> elevatorMotorPosition;
-    private final StatusSignal<Voltage> elevatorAppliedVolts;
-    private final StatusSignal<Current> elevatorSupplyCurrentAmps;
-    private final StatusSignal<Current> elevatorStatorCurrentAmps;
-    private final StatusSignal<AngularVelocity> elevatorAngularVelocityRadPerSec;
-    private final StatusSignal<AngularAcceleration> elevatorAngularAccelerationRadPerSecSquared;
-    private final StatusSignal<Temperature> elevatorMasterMotorTemp;
-
+    class SimulatedSensors {
+        public static boolean isLimitSwitchPressed;
+    }
 
     public ElevatorIOSimulation() {
-        elevatorMotor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
-        simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(2),
-                SingleJointedArmSim.estimateMOI(0.001, 0.001), RATIO),
-                DCMotor.getKrakenX60(2));
+        motor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
+        simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS),
+                SingleJointedArmSim.estimateMOI(SIMULATION_ELEVATOR_LENGTH_METERS, SIMULATION_ELEVATOR_MASS_KG), RATIO),
+                DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS));
 
-        elevatorMotor.getConfigurator().apply(getTalonFXConfiguration());
+        elevatorMasterMotorInputs = new OnyxMotorInputs(motor, "Arm", "elevatorMotor", ROTATIONS_TO_LENGTH_SIMULATION);
 
-        elevatorMotorPosition = elevatorMotor.getPosition();
-        elevatorAppliedVolts = elevatorMotor.getMotorVoltage();
-        elevatorSupplyCurrentAmps = elevatorMotor.getSupplyCurrent();
-        elevatorStatorCurrentAmps = elevatorMotor.getStatorCurrent();
-        elevatorAngularVelocityRadPerSec = elevatorMotor.getVelocity();
-        elevatorAngularAccelerationRadPerSecSquared = elevatorMotor.getAcceleration();
-        elevatorMasterMotorTemp = elevatorMotor.getDeviceTemp();
+        elevatorFollowerMotorInputs = new OnyxMotorInputs();
+
+        motor.getConfigurator().apply(getTalonFXConfiguration());
+
+        SimulatedSensors.isLimitSwitchPressed = false;
 
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
 
-        configuration.Slot0.kP = SIMULATION_ELEVATOR_KP;
-        configuration.Slot0.kI = SIMULATION_ELEVATOR_KI;
-        configuration.Slot0.kD = SIMULATION_ELEVATOR_KD;
-        configuration.Slot0.kG = SIMULATION_ELEVATOR_KG;
-        configuration.Slot0.kS = SIMULATION_ELEVATOR_KS;
-        configuration.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-        configuration.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
-
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-
-        configuration.MotionMagic.MotionMagicCruiseVelocity = SIMULATION_ELEVATOR_CRUISE_VELOCITY;
-        configuration.MotionMagic.MotionMagicAcceleration = SIMULATION_ELEVATOR_ACCELERATION;
-        configuration.MotionMagic.MotionMagicJerk = SIMULATION_ELEVATOR_JERK;
 
         configuration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         configuration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = LENGTH_TO_ROTATIONS(ELEVATOR_FORWARD_SOFT_LIMIT_THRESHOLD, true);
@@ -79,60 +56,40 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         configuration.HardwareLimitSwitch.ForwardLimitEnable = false;
         configuration.HardwareLimitSwitch.ReverseLimitEnable = false;
-
         return configuration;
     }
 
     @Override
     public void updateInputs(ElevatorInputs inputs) {
         updateMotor();
-        BaseStatusSignal.refreshAll(
-                elevatorMotorPosition,
-                elevatorAppliedVolts,
-                elevatorSupplyCurrentAmps,
-                elevatorStatorCurrentAmps,
-                elevatorAngularVelocityRadPerSec,
-                elevatorAngularAccelerationRadPerSecSquared,
-                elevatorMasterMotorTemp
-        );
-        inputs.elevatorLength = ROTATIONS_TO_LENGTH(elevatorMotorPosition.getValueAsDouble(), true);
-        inputs.elevatorMotorPosition = elevatorMotorPosition.getValueAsDouble();
-        inputs.elevatorSupplyCurrentAmps = elevatorSupplyCurrentAmps.getValueAsDouble();
-        inputs.elevatorStatorCurrentAmps = elevatorStatorCurrentAmps.getValueAsDouble();
-        inputs.elevatorAngularVelocityRadPerSec = elevatorAngularVelocityRadPerSec.getValueAsDouble();
-        inputs.elevatorAngularAccelerationRadPerSecSquared = elevatorAngularAccelerationRadPerSecSquared.getValueAsDouble();
-        inputs.elevatorMasterMotorTemp = elevatorMasterMotorTemp.getValueAsDouble();
-    }
-    
-    @Override
-    public void moveToLength(double length) {
-        elevatorMotor.setControl(motionMagicVoltage.withPosition(LENGTH_TO_ROTATIONS(length, true)));
+        elevatorMasterMotorInputs.updateInputs();
+        inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
+        inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
+
+        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
     }
 
-    @Override
-    public void resetElevatorPosition(double length) {
-        elevatorMotor.setPosition(LENGTH_TO_ROTATIONS(length, true));
+    public static void setLimitSwitchValue(boolean value) {
+        SimulatedSensors.isLimitSwitchPressed = value;
+    }
+
+    public static boolean getLimitSwitchValue() {
+        return SimulatedSensors.isLimitSwitchPressed;
     }
 
     @Override
     public void setDutyCycle(double dutyCycle) {
-        elevatorMotor.set(dutyCycle);
-    }
-
-    @Override
-    public void updatePID(double p, double i, double d) {
-        elevatorMotor.getConfigurator().apply(new Slot0Configs().withKP(p).withKI(i).withKD(d));
+        motor.set(dutyCycle);
     }
 
     public void updateMotor() {
-        TalonFXSimState motorSimState = elevatorMotor.getSimState();
-        elevatorMotor.getSimState().setSupplyVoltage(RobotController.getBatteryVoltage());
+        TalonFXSimState motorSimState = motor.getSimState();
+        motor.getSimState().setSupplyVoltage(RobotController.getBatteryVoltage());
 
         simulatedMotor.setInputVoltage(motorSimState.getMotorVoltage());
-        simulatedMotor.update(0.02);
+        simulatedMotor.update(SIMULATION_DT_SECONDS);
 
         motorSimState.setRawRotorPosition(simulatedMotor.getAngularPositionRotations());
-        motorSimState.setRotorVelocity(
-                Units.radiansToRotations(simulatedMotor.getAngularVelocityRadPerSec()));
+        motorSimState.setRotorVelocity(Units.radiansToRotations(simulatedMotor.getAngularVelocityRadPerSec()));
     }
 }
