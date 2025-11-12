@@ -1,6 +1,6 @@
 package L7.lecture;
 
-public class Legs {
+public class Legs extends Object {
 
     @Override
     public String toString() {
