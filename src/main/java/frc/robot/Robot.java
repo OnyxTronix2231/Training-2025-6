@@ -4,21 +4,20 @@
 
 package frc.robot;
 
-import L5.lecture.LED;
-import TrainingUtils.AddressableLEDSim;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.elevator.ElevatorIO;
+import Lrobot.elevator.ElevatorIOSimulation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Superstructure;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 
 /**
@@ -28,40 +27,20 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
-    //private LED led;
+
+    ElevatorIO elevatorIO;
+    ElevatorIO.ElevatorInputs elevatorInputs;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        AddressableLEDSim strip = new AddressableLEDSim();
-        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
-        strip.setLength(buffer.getLength());
+        elevatorIO = new ElevatorIOSimulation();
+        elevatorInputs = new ElevatorIO.ElevatorInputs();
+        elevatorIO.updateInputs(elevatorInputs);
 
-        buffer.setRGB(0, 225, 0, 0);
-        buffer.setRGB(1, 225, 0, 0);
-        buffer.setRGB(2, 225, 0, 0);
-        buffer.setRGB(3, 225, 0, 0);
-        buffer.setRGB(4, 225, 0, 0);
-        buffer.setRGB(5, 225, 0, 0);
-        buffer.setRGB(6, 225, 0, 0);
-
-        int index = 0;
-        while (index < 7 ){
-            buffer.setRGB(index, 225, 0, 0);
-            index ++;
-        }
-
-
-
-
-
-
-
-
-        strip.setData(buffer);
-        //led = new LED();
+        new ElevatorVisualization(() -> elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble());
     }
 
     /**
@@ -102,8 +81,10 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
+        elevatorIO.updateInputs(elevatorInputs);
+        elevatorIO.setDutyCycle(0.1);
+        updateVisualizations();
 
-        //led.periodic();
         CommandScheduler.getInstance().run();
     }
 
