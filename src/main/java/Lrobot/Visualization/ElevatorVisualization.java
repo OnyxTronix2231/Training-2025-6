@@ -2,13 +2,12 @@ package Lrobot.Visualization;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 import java.util.function.DoubleSupplier;
 
-import static Lrobot.elevator.ElevatorConstants.*;
+import static Lrobot.elevator.ElevatorConstants.ELEVATOR_VISUALIZATION_OFFSET;
 
 public class ElevatorVisualization extends VisualizedSubsystem {
     DoubleSupplier heightSupplier;
