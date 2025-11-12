@@ -4,9 +4,8 @@
 
 package frc.robot;
 
-import Lrobot.Visualization.ElevatorVisualization;
-import Lrobot.elevator.ElevatorIO;
-import Lrobot.elevator.ElevatorIOSimulation;
+import L3.training.Color;
+import L6.training.LED;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -16,7 +15,6 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 
 /**
@@ -26,19 +24,24 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
-    ElevatorIO elevatorIO;
-    ElevatorIO.ElevatorInputs elevatorInputs;
+    public static final Joystick joystick = new Joystick(0);
+
+    // private LED led;
+    private LED led;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        elevatorIO = new ElevatorIOSimulation();
-        elevatorInputs = new ElevatorIO.ElevatorInputs();
-        elevatorIO.updateInputs(elevatorInputs);
+//        AddressableLEDSim strip = new AddressableLEDSim();
+//        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
+//        strip.setLength(buffer.getLength());
 
-        new ElevatorVisualization(() -> elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble());
+        led = new LED(7);
+//        led.makeRainbow();
+
+        led.setColors(new Color[]{new Color(234, 234, 222), new Color(222, 123, 235), new Color(1, 88, 200)});
     }
 
     /**
@@ -79,10 +82,9 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
-        elevatorIO.updateInputs(elevatorInputs);
-        elevatorIO.setDutyCycle(0.1);
-        updateVisualizations();
 
+
+//        led.periodic();
         CommandScheduler.getInstance().run();
     }
 
@@ -114,6 +116,4 @@ public class Robot extends LoggedRobot {
 
         Logger.start();
     }
-
-    public static final Joystick joystick = new Joystick(0);
 }
