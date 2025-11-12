@@ -30,7 +30,6 @@ public class ElevatorVisualization extends VisualizedSubsystem {
         private static final double ELEVATOR_LIGAMENT_ANGLE = 90;
         private static final double ELEVATOR_LIGAMENT_LINE_WIDTH = 8;
 
-
         public static final Color8Bit ELEVATOR_LIGAMENT_COLOR = new Color8Bit(Color.kSkyBlue);
         public static final LoggedMechanismRoot2d elevatorRoot = ROBOT_MECHANISM.getRoot("elevator", ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION);
         public static final LoggedMechanismLigament2d ELEVATOR = elevatorRoot.append(
