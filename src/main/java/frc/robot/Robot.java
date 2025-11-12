@@ -4,25 +4,20 @@
 
 package frc.robot;
 
-import L5.lecture.LED;
-import L5.training.BarelLeds;
-import TrainingUtils.AddressableLEDSim;
-import TrainingUtils.KeyButton;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.elevator.ElevatorIO;
+import Lrobot.elevator.ElevatorIOSimulation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Superstructure;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import java.awt.*;
-
+import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 
 /**
@@ -31,21 +26,20 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends LoggedRobot {
-    private BarelLeds leds1;
-    // private LED led;
+
+    ElevatorIO elevatorIO;
+    ElevatorIO.ElevatorInputs elevatorInputs;
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-          leds1 = new BarelLeds(6);
+        elevatorIO = new ElevatorIOSimulation();
+        elevatorInputs = new ElevatorIO.ElevatorInputs();
+        elevatorIO.updateInputs(elevatorInputs);
 
-
-        // led = new LED(7);
-        //led.fullColor(Color.RED);
-        //led.oneLed(3, Color.GREEN);
-
+        new ElevatorVisualization(() -> elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble());
     }
 
     /**
@@ -86,10 +80,10 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
-
-
-        leds1.periodic();
-        // led.periodic();
+        elevatorIO.updateInputs(elevatorInputs);
+        elevatorIO.setDutyCycle(0.1);
+        updateVisualizations();
+        
         CommandScheduler.getInstance().run();
     }
 
