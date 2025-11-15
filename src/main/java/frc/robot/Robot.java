@@ -5,7 +5,7 @@
 package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
-import Lrobot.elevator.ElevatorIO;
+import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIOSimulation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -26,19 +26,23 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
-    ElevatorIO elevatorIO;
-    ElevatorIO.ElevatorInputs elevatorInputs;
+    // private LED led;
+    // private KeyButton button1;
+
 
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        elevatorIO = new ElevatorIOSimulation();
-        elevatorInputs = new ElevatorIO.ElevatorInputs();
-        elevatorIO.updateInputs(elevatorInputs);
+        Elevator.init(new ElevatorIOSimulation());
+        new ElevatorVisualization();
 
-        new ElevatorVisualization(() -> elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble());
+        // led = new LED(7);
+        //led.fullColor(Color.RED);
+        //led.oneLed(3, Color.GREEN);
+
+        //button1 = new KeyButton(1);
     }
 
     /**
@@ -79,10 +83,13 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
-        elevatorIO.updateInputs(elevatorInputs);
-        elevatorIO.setDutyCycle(0.1);
         updateVisualizations();
 
+
+        // if (button1.isPressed()) {
+        //     led.fullColor(Color.RED);
+        // }
+        // led.periodic();
         CommandScheduler.getInstance().run();
     }
 
