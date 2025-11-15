@@ -4,28 +4,17 @@
 
 package frc.robot;
 
-import L5.lecture.LED;
 import Lrobot.Visualization.ElevatorVisualization;
 import Lrobot.elevator.Elevator;
-import Lrobot.elevator.ElevatorIO;
-import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
-import TrainingUtils.AddressableLEDSim;
-import TrainingUtils.KeyButton;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Superstructure;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
-
-import java.awt.*;
 
 import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
