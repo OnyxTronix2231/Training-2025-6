@@ -27,7 +27,7 @@ public class Hinge extends SubsystemBase {
 
     @Override
     public void periodic() {
-        hingeIO.updateInputs();
+        this.hingeIO.updateInputs(HingeIO.HingeInputs);
         updateWantedState();
         currentState = handleStateTransition();
         applyState();
