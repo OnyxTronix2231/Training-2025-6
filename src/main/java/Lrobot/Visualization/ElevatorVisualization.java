@@ -1,5 +1,6 @@
 package Lrobot.Visualization;
 
+import Lrobot.elevator.Elevator;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
@@ -10,15 +11,15 @@ import java.util.function.DoubleSupplier;
 import static Lrobot.elevator.ElevatorConstants.ELEVATOR_VISUALIZATION_OFFSET;
 
 public class ElevatorVisualization extends VisualizedSubsystem {
-    DoubleSupplier heightSupplier;
+    private Elevator elevator;
 
-    public ElevatorVisualization(DoubleSupplier heightSupplier) {
-        this.heightSupplier = heightSupplier;
+    public ElevatorVisualization() {
+        elevator = Elevator.getInstance();
     }
 
     @Override
     void updateVisualization() {
-        ElevatorVisualizationMechanism.ELEVATOR.setLength(heightSupplier.getAsDouble() +
+        ElevatorVisualizationMechanism.ELEVATOR.setLength(elevator.getElevatorLength() +
                 ELEVATOR_VISUALIZATION_OFFSET);
     }
 
