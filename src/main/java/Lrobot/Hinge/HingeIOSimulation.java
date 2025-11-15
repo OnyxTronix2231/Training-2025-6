@@ -19,8 +19,9 @@ public class HingeIOSimulation implements HingeIO {
 
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
-
     private final OnyxMotorInputs hingeMotorInputs;
+
+
 
     public HingeIOSimulation() {
         motor = new TalonFX(HINGE_ID);
