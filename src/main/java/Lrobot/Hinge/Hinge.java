@@ -19,7 +19,8 @@ public class Hinge extends SubsystemBase {
     private SystemState currentState;
     private WantedState wantedState;
     private HingeIO hingeIO;
-    private HingeIO.HingeInputs hingeInputs;
+
+    private final HingeIO.HingeInputs hingeInputs;
     private KeyButton button1;
     private KeyButton button2;
 
