@@ -6,13 +6,27 @@ public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
+    private boolean isLocked;
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
+    }
 
     public enum WantedState {
-        IDLE
+        IDLE,
+        TOGGLE,
+        OPEN,
+        CLOSE
     }
 
     public enum SystemState {
-        IDLING
+        IDLING,
+        OPENING,
+        CLOSING
     }
 
     private WantedState wantedState;
@@ -50,15 +64,31 @@ public class Elevator extends SubsystemBase {
         switch (wantedState) {
             case IDLE:
                 return SystemState.IDLING;
+            case TOGGLE:
+                if (SystemState.OPENING == systemState)
+                    wantedState = WantedState.CLOSE;
+                if (SystemState.CLOSING == systemState)
+                    wantedState = WantedState.OPEN;
+            case OPEN:
+                if (!isLocked)
+                    return SystemState.OPENING;
+            case CLOSE:
+                return SystemState.CLOSING;
         }
         return SystemState.IDLING;
     }
 
     private void applyStates() {
         switch (systemState) {
-            case IDLING -> {
+            case IDLING:
                 elevatorIO.setDutyCycle(0);
-            }
+                break;
+            case OPENING:
+                elevatorIO.setDutyCycle(0.1);
+                break;
+            case CLOSING:
+                elevatorIO.setDutyCycle(-0.1);
+                break;
         }
     }
 
