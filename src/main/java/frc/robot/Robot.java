@@ -7,6 +7,7 @@ package frc.robot;
 import Lrobot.Visualization.ElevatorVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIOSimulation;
+import Lrobot.elevator.ElevatorShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -37,7 +38,7 @@ public class Robot extends LoggedRobot {
 
         Elevator.init(new ElevatorIOSimulation());
         new ElevatorVisualization();
-
+        new ElevatorShuffleboard();
         // led = new LED(7);
         //led.fullColor(Color.RED);
         //led.oneLed(3, Color.GREEN);
@@ -50,6 +51,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
+        Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE);
     }
 
     /**
@@ -65,6 +67,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void teleopInit() {
         Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);
+        Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN);
     }
 
     @Override

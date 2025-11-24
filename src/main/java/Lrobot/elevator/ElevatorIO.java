@@ -13,5 +13,7 @@ public interface ElevatorIO {
         public OnyxMotorInputs elevatorFollowerInputs;
     }
 
+    double getCurrent();
+
     void setDutyCycle(double dutyCycle);
 }
