@@ -2,6 +2,8 @@ package Lrobot.elevator;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import org.littletonrobotics.junction.Logger;
+
 public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
@@ -44,6 +46,7 @@ public class Elevator extends SubsystemBase {
         systemState = handleStateTransition();
 
         applyStates();
+        Logger.recordOutput("Subsystems/Elevator/test",elevatorIO.test());
     }
 
     public SystemState handleStateTransition() {
@@ -52,6 +55,12 @@ public class Elevator extends SubsystemBase {
                 return SystemState.IDLING;
         }
         return SystemState.IDLING;
+    }
+    public int test() {
+        return elevatorIO.test();
+    }
+    public WantedState getWantedState() {
+        return wantedState;
     }
 
     private void applyStates() {
