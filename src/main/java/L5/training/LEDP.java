@@ -129,7 +129,7 @@ public class LEDP {
     }
 
     public void colorFromArray(Color[] colors) {
-        if ()
+
         for (int i = 0; i < colors.length; i++) {
             ColorOneLED(i, colors[i]);
 
@@ -138,5 +138,5 @@ public class LEDP {
         }
     }
 
-}
+
 

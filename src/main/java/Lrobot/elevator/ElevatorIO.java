@@ -14,4 +14,8 @@ public interface ElevatorIO {
     }
 
     void setDutyCycle(double dutyCycle);
+
+    default int Five() {
+        return 5;
+    }
 }
