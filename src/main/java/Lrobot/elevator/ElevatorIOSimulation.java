@@ -28,6 +28,12 @@ public class ElevatorIOSimulation implements ElevatorIO {
         public static boolean isLimitSwitchPressed;
     }
 
+    public double getCurrent()
+    {
+        return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
+    }
+
+
     public ElevatorIOSimulation() {
         motor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
         simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS),

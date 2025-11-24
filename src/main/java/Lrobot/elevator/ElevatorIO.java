@@ -14,5 +14,7 @@ public interface ElevatorIO {
     }
     int test();
 
+    double getCurrent();
+
     void setDutyCycle(double dutyCycle);
 }

@@ -10,11 +10,15 @@ public class Elevator extends SubsystemBase {
     private final ElevatorIO elevatorIO;
 
     public enum WantedState {
-        IDLE
+        IDLE,
+        OPEN,
+        CLOSE
     }
 
     public enum SystemState {
-        IDLING
+        IDLING,
+        OPENING,
+        CLOSING
     }
 
     private WantedState wantedState;
@@ -41,33 +45,38 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
-        this.elevatorIO.updateInputs(elevatorInputs);
-
+        elevatorIO.updateInputs(elevatorInputs);
         systemState = handleStateTransition();
-
+        elevatorInputs.elevatorMasterInputs.log();
         applyStates();
-        Logger.recordOutput("Subsystems/Elevator/test",elevatorIO.test());
+
+//        Logger.recordOutput("Subsystems/Elevator/Current",
+//                elevatorIO.getCurrent());
     }
 
     public SystemState handleStateTransition() {
         switch (wantedState) {
             case IDLE:
                 return SystemState.IDLING;
+            case OPEN:
+                return SystemState.OPENING;
+            case CLOSE:
+                return SystemState.CLOSING;
         }
         return SystemState.IDLING;
-    }
-    public int test() {
-        return elevatorIO.test();
-    }
-    public WantedState getWantedState() {
-        return wantedState;
     }
 
     private void applyStates() {
         switch (systemState) {
-            case IDLING -> {
+            case IDLING:
                 elevatorIO.setDutyCycle(0);
-            }
+                break;
+            case OPENING:
+                elevatorIO.setDutyCycle(0.1);
+                break;
+            case CLOSING:
+                elevatorIO.setDutyCycle(-0.1);
+                break;
         }
     }
 
