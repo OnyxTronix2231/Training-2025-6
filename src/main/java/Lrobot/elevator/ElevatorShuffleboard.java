@@ -11,8 +11,9 @@ public class ElevatorShuffleboard {
         ShuffleboardTab tab = Shuffleboard.getTab("elevator");
 
         tab.addDouble("Elevator length", ()-> Elevator.getInstance().getElevatorLength());
-//        tab.add("Close", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
-//        tab.add("Open", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
+
+        tab.add("Close", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
+        tab.add("Open", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
 
     }
 

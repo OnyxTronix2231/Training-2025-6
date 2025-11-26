@@ -50,8 +50,8 @@ public class Elevator extends SubsystemBase {
         elevatorInputs.elevatorMasterInputs.log();
         applyStates();
 
-//        Logger.recordOutput("Subsystems/Elevator/Current",
-//                elevatorIO.getCurrent());
+        Logger.recordOutput("Subsystems/Elevator/test",
+                elevatorIO.test());
     }
 
     public SystemState handleStateTransition() {

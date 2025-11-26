@@ -9,7 +9,7 @@ public class ElevatorShuffleBored {
         ShuffleboardTab tab = Shuffleboard.getTab("elevator");
 
         tab.addDouble("Elevator length", ()-> Elevator.getInstance().getElevatorLength());
-        tab.addInteger("test",()-> Elevator.getInstance().test());
-        tab.addString("wanted state",()-> Elevator.getInstance().getWantedState().toString());
+//        tab.addInteger("test",()-> Elevator.getInstance().test());
+//        tab.addString("wanted state",()-> Elevator.getInstance().getWantedState().toString());
     }
 }
