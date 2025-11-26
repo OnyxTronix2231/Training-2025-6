@@ -1,6 +1,8 @@
 package Lrobot.Hinge;
 
+import Lrobot.elevator.Elevator;
 import TrainingUtils.KeyButton;
+import com.fasterxml.jackson.databind.util.RawValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hinge extends SubsystemBase {
@@ -21,8 +23,6 @@ public class Hinge extends SubsystemBase {
     private HingeIO hingeIO;
 
     private final HingeIO.HingeInputs hingeInputs;
-    private KeyButton button1;
-    private KeyButton button2;
 
     public Hinge(HingeIO hingeIO) {
         this.hingeIO = hingeIO;
@@ -31,29 +31,20 @@ public class Hinge extends SubsystemBase {
 
         this.hingeIO.updateInputs(hingeInputs);
 
+
+
         wantedState = WantedState.IDLE;
         currentState = SystemState.IDLING;
-        button1 = new KeyButton(1);
-        button2 = new KeyButton(2);
     }
 
     @Override
     public void periodic() {
         this.hingeIO.updateInputs(hingeInputs);
-        updateWantedState();
         currentState = handleStateTransition();
         applyState();
     }
-    public void updateWantedState() {
-        if (button1.isPressed()) {
-            wantedState = WantedState.OPEN;
-        }
-        else if (button2.isPressed()) {
-            wantedState = WantedState.CLOSE;
-        }
-        else {
-            wantedState = WantedState.IDLE;
-        }
+    public void setWantedState(WantedState wantedState) {
+        this.wantedState = wantedState;
     }
 
     public SystemState handleStateTransition () {
@@ -81,4 +72,18 @@ public class Hinge extends SubsystemBase {
                 break;
         }
     }
+
+    private static Hinge instance;
+    public  double getHingeAngle() {
+        return hingeInputs.hingeMotorInputs.getMotorRawValue();
+    }
+    public static void init(HingeIO hingeIO ){
+        if (instance == null) {
+            instance = new Hinge(hingeIO);
+        }
+    }
+    public static Hinge getInstance() {
+        return instance;
+    }
+
 }

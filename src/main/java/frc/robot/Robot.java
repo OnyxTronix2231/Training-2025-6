@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import Lrobot.Hinge.Hinge;
+import Lrobot.Hinge.HingeIOSimulation;
+import Lrobot.Hinge.HingeShuffleborad;
 import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
@@ -39,11 +43,10 @@ public class Robot extends LoggedRobot {
         Elevator.init(new ElevatorIOSimulation());
         new ElevatorVisualization();
         new ElevatorShuffleboard();
-        // led = new LED(7);
-        //led.fullColor(Color.RED);
-        //led.oneLed(3, Color.GREEN);
 
-        //button1 = new KeyButton(1);
+        Hinge.init(new HingeIOSimulation());
+        new HingeVisualization();
+        new HingeShuffleborad();
     }
 
     /**
