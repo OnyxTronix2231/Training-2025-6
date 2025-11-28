@@ -5,9 +5,13 @@
 package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
+import Lrobot.hinge.HingeIOSimulation;
+import Lrobot.hinge.HingeJava;
+import Lrobot.hinge.HingeShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -39,6 +43,10 @@ public class Robot extends LoggedRobot {
         Elevator.init(new ElevatorIOSimulation());
         new ElevatorVisualization();
         new ElevatorShuffleboard();
+
+        HingeJava.init(new HingeIOSimulation());
+        new HingeVisualization();
+        new HingeShuffleboard();
 
         // led = new LED(7);
         //led.fullColor(Color.RED);

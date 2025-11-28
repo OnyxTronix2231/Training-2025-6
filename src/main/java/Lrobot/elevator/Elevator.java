@@ -87,7 +87,7 @@ public class Elevator extends SubsystemBase {
         return instance;
     }
 
-    public int Five() {
+    public int five() {
         return 5;
     }
 

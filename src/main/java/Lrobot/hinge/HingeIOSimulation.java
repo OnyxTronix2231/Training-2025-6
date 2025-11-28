@@ -62,6 +62,7 @@ public class HingeIOSimulation implements HingeIO {
     public void updateInputs(HingeInputs inputs) {
         updateMotor();
         hingeMotorInputs.updateInputs();
+        hingeFollowerMotorInputs.updateInputs();
         inputs.hingeMotorInputs = hingeFollowerMotorInputs;
 
     }
