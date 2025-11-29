@@ -1,6 +1,7 @@
 package Lrobot.hinge;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -21,6 +22,8 @@ public class HingeIOSimulation implements HingeIO {
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
 
+    private PositionVoltage positionVoltage;
+
     private final OnyxMotorInputs hingeMotorInputs;
 
     public HingeIOSimulation() {
@@ -34,12 +37,17 @@ public class HingeIOSimulation implements HingeIO {
         motor.getConfigurator().apply(getTalonFXConfiguration());
 
         motor.setNeutralMode(NeutralModeValue.Brake);
+
+        positionVoltage = new PositionVoltage(0);
+
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
 
         configuration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        configuration.Slot0.kP = 1.0;
 
         return configuration;
     }
@@ -56,6 +64,11 @@ public class HingeIOSimulation implements HingeIO {
     @Override
     public void setDutyCycle(double dutyCycle) {
         motor.set(dutyCycle);
+    }
+
+    @Override
+    public void setWantedAngle(double angle) {
+        motor.setControl(positionVoltage.withPosition(ANGLES_TO_ROTATIONS(angle)));
     }
 
     public void updateMotor() {

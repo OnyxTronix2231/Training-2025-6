@@ -5,8 +5,13 @@
 package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIOSimulation;
+import Lrobot.elevator.ElevatorShuffleboard;
+import Lrobot.hinge.Hinge;
+import Lrobot.hinge.HingeIOSimulation;
+import Lrobot.hinge.HingeShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -37,6 +42,11 @@ public class Robot extends LoggedRobot {
 
         Elevator.init(new ElevatorIOSimulation());
         new ElevatorVisualization();
+        new ElevatorShuffleboard();
+
+        Hinge.init(new HingeIOSimulation());
+        new HingeVisualization();
+        new HingeShuffleboard();
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
@@ -93,7 +103,10 @@ public class Robot extends LoggedRobot {
         // }
         // led.periodic();
         CommandScheduler.getInstance().run();
+
+
     }
+
 
     /**
      * This function is called once each time the robot enters test mode.

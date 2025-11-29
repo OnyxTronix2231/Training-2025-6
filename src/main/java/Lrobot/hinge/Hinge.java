@@ -25,6 +25,18 @@ public class Hinge extends SubsystemBase {
         this.wantedState = wantedState;
     }
 
+    public WantedState getWantedState() {
+        return wantedState;
+    }
+
+    public double getHingeAngle() {
+        return hingeInputs.hingeInputs.getMotorValue().getAsDouble();
+    }
+
+    public void setWantedAngle(double angle) {
+        hingeIO.setWantedAngle(angle);
+    }
+
     public Hinge(HingeIO hingeIO) {
         this.hingeIO = hingeIO;
 
@@ -63,10 +75,10 @@ public class Hinge extends SubsystemBase {
                 hingeIO.setDutyCycle(0);
                 break;
             case OPENING:
-                hingeIO.setDutyCycle(0.1);
+                hingeIO.setDutyCycle(0.3);
                 break;
             case CLOSING:
-                hingeIO.setDutyCycle(-0.1);
+                hingeIO.setDutyCycle(-0.3);
                 break;
         }
     }

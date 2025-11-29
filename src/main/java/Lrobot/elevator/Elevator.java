@@ -1,6 +1,7 @@
 package Lrobot.elevator;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends SubsystemBase {
 
@@ -36,6 +37,10 @@ public class Elevator extends SubsystemBase {
         this.wantedState = wantedState;
     }
 
+    public WantedState getWantedState() {
+        return wantedState;
+    }
+
     public double getElevatorLength() {
         return elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble();
     }
@@ -58,6 +63,9 @@ public class Elevator extends SubsystemBase {
         systemState = handleStateTransition();
 
         applyStates();
+
+        elevatorInputs.elevatorMasterInputs.log();
+        Logger.recordOutput("test/testValue", five());
     }
 
     public SystemState handleStateTransition() {
@@ -76,6 +84,10 @@ public class Elevator extends SubsystemBase {
                 return SystemState.CLOSING;
         }
         return SystemState.IDLING;
+    }
+
+    public int five() {
+        return 5;
     }
 
     private void applyStates() {

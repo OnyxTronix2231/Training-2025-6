@@ -11,4 +11,6 @@ public interface HingeIO {
     }
 
     void setDutyCycle(double dutyCycle);
+
+    void setWantedAngle(double angle);
 }
