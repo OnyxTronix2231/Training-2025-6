@@ -13,6 +13,9 @@ public interface ElevatorIO {
         public OnyxMotorInputs elevatorFollowerInputs;
     }
 
+    double getCurrent();
+
+    boolean isMicroswitchPressed();
 
     void setDutyCycle(double dutyCycle);
 }

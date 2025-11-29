@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
@@ -27,6 +28,17 @@ public class ElevatorIOSimulation implements ElevatorIO {
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
     }
+
+    public boolean isMicroswitchPressed()
+    {
+        return SimulatedSensors.isLimitSwitchPressed;
+    }
+
+    public double getCurrent()
+    {
+        return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
+    }
+
 
     public ElevatorIOSimulation() {
         motor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
