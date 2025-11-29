@@ -1,6 +1,7 @@
 package Lrobot.elevator;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends SubsystemBase {
@@ -9,11 +10,15 @@ public class Elevator extends SubsystemBase {
     private final ElevatorIO elevatorIO;
 
     public enum WantedState {
-        CLOSE, OPEN, IDLE
+        IDLE,
+        OPEN,
+        CLOSE
     }
 
     public enum SystemState {
-        IDLING, CLOSING, OPENING
+        IDLING,
+        OPENING,
+        CLOSING
     }
 
     private WantedState wantedState;
@@ -25,6 +30,16 @@ public class Elevator extends SubsystemBase {
 
     public double getElevatorLength() {
         return elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble();
+    }
+
+    public void setMicroswitch(boolean isPressed)
+    {
+        ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
+    }
+
+    public boolean isMicroswitchPressed()
+    {
+        return elevatorIO.isMicroswitchPressed();
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -40,12 +55,13 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
-        this.elevatorIO.updateInputs(elevatorInputs);
-
+        elevatorIO.updateInputs(elevatorInputs);
         systemState = handleStateTransition();
-        Logger.recordOutput("Test/Test/Test", elevatorIO.Five());
-
+        elevatorInputs.elevatorMasterInputs.log();
         applyStates();
+
+//        Logger.recordOutput("Subsystems/Elevator/Current",
+//                elevatorIO.getCurrent());
     }
 
     public SystemState handleStateTransition() {
@@ -71,7 +87,6 @@ public class Elevator extends SubsystemBase {
             case CLOSING:
                 elevatorIO.setDutyCycle(-0.1);
                 break;
-
         }
     }
 
@@ -86,14 +101,4 @@ public class Elevator extends SubsystemBase {
     public static Elevator getInstance() {
         return instance;
     }
-
-    public int five() {
-        return 5;
-    }
-
-    public WantedState getWantedState() {
-        return wantedState;
-    }
-
 }
-
