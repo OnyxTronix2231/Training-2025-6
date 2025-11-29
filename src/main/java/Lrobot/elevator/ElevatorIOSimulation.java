@@ -73,9 +73,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
         return configuration;
     }
 
-    public boolean isMicroSwitchPressed() {
-        return SimulatedSensors.isLimitSwitchPressed;
-    }
 
     @Override
     public void updateInputs(ElevatorInputs inputs) {
@@ -92,7 +89,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
         return 5;
     }
 
-    public static void setLimitSwitchValue(boolean value) {
+    public void setLimitSwitchValue(boolean value) {
         SimulatedSensors.isLimitSwitchPressed = value;
     }
 
