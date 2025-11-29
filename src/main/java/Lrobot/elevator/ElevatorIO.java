@@ -15,5 +15,7 @@ public interface ElevatorIO {
 
     double getCurrent();
 
+    boolean isMicroswitchPressed();
+
     void setDutyCycle(double dutyCycle);
 }
