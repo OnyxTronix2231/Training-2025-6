@@ -83,8 +83,9 @@ public class Elevator extends SubsystemBase {
     public void setLimitSwitchValue(boolean value) {
         ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = value;
     }
-    public static boolean getLimitSwitchValue() {
-        return ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed;
+
+    public boolean getLimitSwitchValue() {
+        return elevatorIO.getLimitSwitchValue();
     }
 
 

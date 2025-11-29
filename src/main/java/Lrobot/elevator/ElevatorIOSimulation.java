@@ -25,7 +25,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
 
-    private Debouncer isMicroSwitchPressed;
+    private Debouncer microSwitchDebouncer;
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
@@ -53,7 +53,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         SimulatedSensors.isLimitSwitchPressed = false;
 
-        isMicroSwitchPressed = new Debouncer(1, Debouncer.DebounceType.kBoth);
+        microSwitchDebouncer = new Debouncer(2, Debouncer.DebounceType.kBoth);
 
     }
 
@@ -93,8 +93,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
         SimulatedSensors.isLimitSwitchPressed = value;
     }
 
-    public static boolean getLimitSwitchValue() {
-        return SimulatedSensors.isLimitSwitchPressed;
+    public boolean getLimitSwitchValue() {
+        return microSwitchDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
     }
 
     @Override

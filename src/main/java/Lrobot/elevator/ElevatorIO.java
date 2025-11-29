@@ -12,6 +12,8 @@ public interface ElevatorIO {
         public OnyxMotorInputs elevatorMasterInputs;
         public OnyxMotorInputs elevatorFollowerInputs;
     }
+    boolean getLimitSwitchValue();
+
     int test();
 
     double getCurrent();
