@@ -4,7 +4,7 @@ import java.util.function.DoubleUnaryOperator;
 
 public class HingeConstants {
 
-    public static final int HINGE_MOTOR_ID = 9;
+    public static final int HINGE_MOTOR_ID = 10;
 
     public static final double SIMULATION_HINGE_LENGTH_METERS = 0.001;
     public static final double SIMULATION_HINGE_MASS_KG = 0.001;

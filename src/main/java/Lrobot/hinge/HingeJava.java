@@ -8,7 +8,7 @@ public class HingeJava extends SubsystemBase {
     private final HingeIO hingeIO;
 
     public double getHingeAngle() {
-        return hingeInputs.hingeInputs.getMotorValue().getAsDouble();
+        return hingeInputs.hingeMotorInputs.getMotorValue().getAsDouble();
     }
 
     public enum WantedState {
@@ -31,7 +31,7 @@ public class HingeJava extends SubsystemBase {
     }
 
     public double getHingeLength() {
-        return hingeInputs.hingeInputs.getMotorValue().getAsDouble();
+        return hingeInputs.hingeMotorInputs.getMotorValue().getAsDouble();
     }
 
     public HingeJava(HingeIO hingeIO) {

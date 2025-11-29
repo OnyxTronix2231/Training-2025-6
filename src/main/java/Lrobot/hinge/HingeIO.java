@@ -9,7 +9,6 @@ public interface HingeIO {
     class HingeInputs {
 
         public OnyxMotorInputs hingeMotorInputs;
-        public OnyxMotorInputs hingeInputs;
     }
 
     void setDutyCycle(double dutyCycle);

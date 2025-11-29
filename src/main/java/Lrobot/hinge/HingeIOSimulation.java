@@ -21,7 +21,6 @@ public class HingeIOSimulation implements HingeIO {
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
     private final OnyxMotorInputs hingeMotorInputs;
-    private final OnyxMotorInputs hingeFollowerMotorInputs;
 
     public HingeIOSimulation() {
         motor = new TalonFX(HINGE_MOTOR_ID);
@@ -29,13 +28,11 @@ public class HingeIOSimulation implements HingeIO {
                 SingleJointedArmSim.estimateMOI(SIMULATION_ELEVATOR_LENGTH_METERS, SIMULATION_ELEVATOR_MASS_KG), RATIO),
                 DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS));
 
-        hingeMotorInputs = new OnyxMotorInputs(motor, "Arm", "elevatorMotor", ROTATIONS_TO_LENGTH_SIMULATION);
+        hingeMotorInputs = new OnyxMotorInputs(motor, "Hinge", "hingeMotor");
 
-        hingeFollowerMotorInputs = new OnyxMotorInputs();
+//        motor.getConfigurator().apply(getTalonFXConfiguration());
 
-        motor.getConfigurator().apply(getTalonFXConfiguration());
-
-        motor.setNeutralMode(NeutralModeValue.Brake);
+//        motor.setNeutralMode(NeutralModeValue.Brake);
 
     }
 
@@ -62,9 +59,8 @@ public class HingeIOSimulation implements HingeIO {
     public void updateInputs(HingeInputs inputs) {
         updateMotor();
         hingeMotorInputs.updateInputs();
-        hingeFollowerMotorInputs.updateInputs();
-        inputs.hingeMotorInputs = hingeFollowerMotorInputs;
 
+        inputs.hingeMotorInputs = hingeMotorInputs;
     }
 
     @Override
