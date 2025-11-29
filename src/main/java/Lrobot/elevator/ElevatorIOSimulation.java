@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
@@ -23,6 +24,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
+
+    private Debouncer isMicroSwitchPressed;
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
@@ -50,6 +53,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         SimulatedSensors.isLimitSwitchPressed = false;
 
+        isMicroSwitchPressed = new Debouncer(1, Debouncer.DebounceType.kBoth);
+
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
@@ -66,6 +71,10 @@ public class ElevatorIOSimulation implements ElevatorIO {
         configuration.HardwareLimitSwitch.ForwardLimitEnable = false;
         configuration.HardwareLimitSwitch.ReverseLimitEnable = false;
         return configuration;
+    }
+
+    public boolean isMicroSwitchPressed() {
+        return SimulatedSensors.isLimitSwitchPressed;
     }
 
     @Override
