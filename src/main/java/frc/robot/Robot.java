@@ -6,6 +6,7 @@ package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
 import Lrobot.elevator.Elevator;
+import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
@@ -36,14 +37,8 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorVisualization();
+        Elevator.init(new ElevatorIORobot());
         new ElevatorShuffleboard();
-        // led = new LED(7);
-        //led.fullColor(Color.RED);
-        //led.oneLed(3, Color.GREEN);
-
-        //button1 = new KeyButton(1);
     }
 
     /**
