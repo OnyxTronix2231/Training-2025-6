@@ -12,6 +12,9 @@ import Lrobot.elevator.ElevatorShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.BallIntake;
+import frc.robot.subsystems.BallIntakeIORobot;
+import frc.robot.subsystems.BallIntakeShuffleBoard;
 import frc.robot.subsystems.Superstructure;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -39,6 +42,9 @@ public class Robot extends LoggedRobot {
 
         Elevator.init(new ElevatorIORobot());
         new ElevatorShuffleboard();
+
+        BallIntake.init(new BallIntakeIORobot());
+        new BallIntakeShuffleBoard();
     }
 
     /**
