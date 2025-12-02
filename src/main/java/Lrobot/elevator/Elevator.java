@@ -1,5 +1,6 @@
 package Lrobot.elevator;
 
+import L5.training.LEDP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import org.littletonrobotics.junction.Logger;
@@ -8,6 +9,10 @@ public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
+
+    public WantedState getWantedState() {
+        return wantedState;
+    }
 
     public enum WantedState {
         IDLE,

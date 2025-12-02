@@ -31,8 +31,11 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     public boolean isMicroswitchPressed()
     {
-        return SimulatedSensors.isLimitSwitchPressed;
+
+        return swithDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
     }
+
+    private Debouncer swithDebouncer;
 
     public double getCurrent()
     {
@@ -55,6 +58,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
         motor.setNeutralMode(NeutralModeValue.Brake);
 
         SimulatedSensors.isLimitSwitchPressed = false;
+
+        swithDebouncer = new Debouncer(2);
 
     }
 
