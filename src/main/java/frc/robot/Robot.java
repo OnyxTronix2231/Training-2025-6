@@ -7,6 +7,7 @@ package frc.robot;
 import Lrobot.Visualization.ElevatorVisualization;
 import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
+import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
 import Lrobot.hinge.HingeIOSimulation;
@@ -40,10 +41,9 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorVisualization();
+        Elevator.init(new ElevatorIORobot());
         new ElevatorShuffleboard();
-
+        
         HingeJava.init(new HingeIOSimulation());
         new HingeVisualization();
         new HingeShuffleboard();
