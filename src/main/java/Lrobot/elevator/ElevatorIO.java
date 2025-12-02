@@ -14,7 +14,6 @@ public interface ElevatorIO {
     }
     boolean getLimitSwitchValue();
 
-    int test();
 
     double getCurrent();
 

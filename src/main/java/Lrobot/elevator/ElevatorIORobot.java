@@ -1,5 +1,4 @@
 package Lrobot.elevator;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -11,6 +10,7 @@ import frc.robot.lib.OnyxMotorInputs;
 import frc.robot.lib.PID.PIDValues;
 
 import static Lrobot.elevator.ElevatorConstants.*;
+
 
 public class ElevatorIORobot implements ElevatorIO{
     private final TalonFX masterMotor;
@@ -69,6 +69,11 @@ public class ElevatorIORobot implements ElevatorIO{
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
         inputs.isMicroSwitchPressed = limitSwitch.get();
+    }
+
+    @Override
+    public boolean getLimitSwitchValue() {
+        return false;
     }
 
     @Override
