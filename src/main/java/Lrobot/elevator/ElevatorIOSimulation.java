@@ -31,6 +31,11 @@ public class ElevatorIOSimulation implements ElevatorIO {
         public static boolean isLimitSwitchPressed;
     }
 
+    public boolean isMicroswitchPressed()
+    {
+        return SimulatedSensors.isLimitSwitchPressed;
+    }
+
     public double getCurrent()
     {
         return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();

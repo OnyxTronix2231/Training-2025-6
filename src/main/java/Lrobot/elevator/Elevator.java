@@ -32,6 +32,16 @@ public class Elevator extends SubsystemBase {
         return elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble();
     }
 
+    public void setMicroswitch(boolean isPressed)
+    {
+        ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
+    }
+
+    public boolean isMicroswitchPressed()
+    {
+        return elevatorIO.isMicroswitchPressed();
+    }
+
     public Elevator(ElevatorIO elevatorIO) {
         this.elevatorIO = elevatorIO;
 

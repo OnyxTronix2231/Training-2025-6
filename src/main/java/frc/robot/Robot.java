@@ -10,6 +10,7 @@ import Lrobot.Hinge.HingeShuffleborad;
 import Lrobot.Visualization.ElevatorVisualization;
 import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
+import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,8 +41,7 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorVisualization();
+        Elevator.init(new ElevatorIORobot());
         new ElevatorShuffleboard();
 
         Hinge.init(new HingeIOSimulation());
