@@ -8,7 +8,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.lib.OnyxMotorInputs;
-import frc.robot.lib.PID.PIDValues;
 
 import static Lrobot.elevator.ElevatorConstants.*;
 
