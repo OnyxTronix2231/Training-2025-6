@@ -8,13 +8,13 @@ public class ElevatorShuffleboard {
 
         public ElevatorShuffleboard() {
 
-            ShuffleboardTab Tab = Shuffleboard.getTab("Elevator");
+            ShuffleboardTab tab = Shuffleboard.getTab("Elevator");
 
-            Tab.addBoolean("Micro Switch Pressed", (()-> Elevator.getInstance().isMicroswitchPressed()));
-            Tab.add("Toggle", new InstantCommand(()-> ElevatorIOSimulation.setLimitSwitchValue(!Elevator.getInstance().isMicroswitchPressed())));
-            Tab.addDouble("Elevator length", ()-> Elevator.getInstance().getElevatorLength());
-            Tab.addString("Wanted State", ()-> Elevator.getInstance().getWantedState().toString());
-            Tab.add("Close", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
-            Tab.add("Open", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
+            tab.addBoolean("Micro Switch Pressed", (()-> Elevator.getInstance().isMicroswitchPressed()));
+            tab.add("Toggle", new InstantCommand(()-> ElevatorIOSimulation.setLimitSwitchValue(!Elevator.getInstance().isMicroswitchPressed())));
+            tab.addDouble("Elevator length", ()-> Elevator.getInstance().getElevatorLength());
+            tab.addString("Wanted State", ()-> Elevator.getInstance().getWantedState().toString());
+            tab.add("Close", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
+            tab.add("Open", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
         }
     }
