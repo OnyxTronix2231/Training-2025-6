@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.ballIntake.BallIntake;
+import frc.robot.subsystems.ballIntake.BallIntakeIORobot;
+import frc.robot.subsystems.ballIntake.BallIntakeShuffleboard;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -37,8 +40,11 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIORobot());
-        new ElevatorShuffleboard();
+//        Elevator.init(new ElevatorIORobot());
+//        new ElevatorShuffleboard();
+
+        BallIntake.init(new BallIntakeIORobot());
+        new BallIntakeShuffleboard();
     }
 
     /**
@@ -46,7 +52,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
-        Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE);
+//        Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE);
     }
 
     /**
@@ -62,7 +68,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void teleopInit() {
         Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);
-        Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN);
+//        Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN);
     }
 
     @Override
