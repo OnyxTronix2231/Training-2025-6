@@ -29,10 +29,11 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
+        public static boolean isSensor1Pressed;
+        public static boolean isSensor2Pressed;
     }
 
-    public boolean isMicroswitchPressed()
-    {
+    public boolean isMicroswitchPressed() {
         return SimulatedSensors.isLimitSwitchPressed;
     }
 
@@ -86,7 +87,10 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
+
         inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
+        inputs.isSensor1Pressed = SimulatedSensors.isSensor1Pressed;
+        inputs.isSensor2Pressed = SimulatedSensors.isSensor2Pressed;
     }
 
 
@@ -96,6 +100,16 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     public boolean getLimitSwitchValue() {
         return microSwitchDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
+    }
+
+    @Override
+    public boolean isSensor1() {
+        return SimulatedSensors.isSensor1Pressed;
+    }
+
+    @Override
+    public boolean isSensor2() {
+        return SimulatedSensors.isSensor2Pressed;
     }
 
     @Override

@@ -15,9 +15,13 @@ public class ElevatorShuffleboard {
         tab.add("toggleMicroSwitch",new InstantCommand(() -> Elevator.getInstance().setLimitSwitchValue(!Elevator.getInstance().getLimitSwitchValue())));
         tab.add("Close", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
         tab.add("Open", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
-        tab.add("censor1",new InstantCommand(() -> Elevator.getInstance().isCensor1()));
-        tab.add("censor2", new InstantCommand(() -> Elevator.getInstance().isCensor2()));
+        tab.add("setSensorsState", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.SENSOR)));
 
+        tab.addBoolean("sensor1Value",() -> Elevator.getInstance().isSensor1());
+        tab.addBoolean("sensor2Value",() -> Elevator.getInstance().isSensor2());
+        tab.add("setSensor1",new InstantCommand(() -> Elevator.getInstance().setSensor1Value(!Elevator.getInstance().isSensor1())));
+        tab.add("setSensor2", new InstantCommand(() -> Elevator.getInstance().setSensor2Value(!Elevator.getInstance().isSensor2())));
+        tab.addString("WantedState",() -> Elevator.getInstance().getWantedState().toString());
 
 
     }

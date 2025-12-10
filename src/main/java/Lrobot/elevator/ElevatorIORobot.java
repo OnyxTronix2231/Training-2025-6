@@ -77,6 +77,16 @@ public class ElevatorIORobot implements ElevatorIO{
     }
 
     @Override
+    public boolean isSensor1() {
+        return false;
+    }
+
+    @Override
+    public boolean isSensor2() {
+        return false;
+    }
+
+    @Override
     public double getCurrent() {
         return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
     }

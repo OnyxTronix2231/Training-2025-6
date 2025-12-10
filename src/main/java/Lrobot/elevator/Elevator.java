@@ -2,20 +2,17 @@ package Lrobot.elevator;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import org.littletonrobotics.junction.Logger;
-
 public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
 
-    private boolean censor1;
-    private boolean censor2;
 
     public enum WantedState {
         IDLE,
         OPEN,
-        CLOSE
+        CLOSE,
+        SENSOR
     }
 
     public enum SystemState {
@@ -40,25 +37,21 @@ public class Elevator extends SubsystemBase {
         ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
     }
 
-    public boolean isCensor1() {
-        return censor1;
+    public boolean isSensor1() {
+        return elevatorIO.isSensor1();
     }
 
-    public void setCensor1(boolean censor1) {
-        this.censor1 = censor1;
-    }
-
-    public boolean isCensor2() {
-        return censor2;
-    }
-
-    public void setCensor2(boolean censor2) {
-        this.censor2 = censor2;
+    public boolean isSensor2() {
+        return elevatorIO.isSensor2();
     }
 
     public boolean isMicroswitchPressed()
     {
         return elevatorIO.isMicroswitchPressed();
+    }
+
+    public WantedState getWantedState() {
+        return wantedState;
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -86,11 +79,21 @@ public class Elevator extends SubsystemBase {
     public SystemState handleStateTransition() {
         switch (wantedState) {
             case IDLE:
-                if (censor1 && censor2){return SystemState.IDLING;}
+                return SystemState.IDLING;
             case OPEN:
-                if (censor1 && !censor2) {return SystemState.OPENING;}
+                return SystemState.OPENING;
             case CLOSE:
-                if (!censor1 && censor2){return SystemState.CLOSING;}
+                return SystemState.CLOSING;
+            case SENSOR:
+                if (!isSensor1() && isSensor2()) {
+                    return SystemState.CLOSING;
+                }
+                else if (isSensor1() && !isSensor2()) {
+                    return SystemState.OPENING;
+                }
+                else if (isSensor1() && isSensor2()) {
+                    return SystemState.IDLING;
+                }
         }
         return SystemState.IDLING;
     }
@@ -117,6 +120,13 @@ public class Elevator extends SubsystemBase {
         return elevatorIO.getLimitSwitchValue();
     }
 
+    public void setSensor1Value(boolean value) {
+        ElevatorIOSimulation.SimulatedSensors.isSensor1Pressed = value;
+    }
+
+    public void setSensor2Value(boolean value) {
+        ElevatorIOSimulation.SimulatedSensors.isSensor2Pressed = value;
+    }
 
     private static Elevator instance;
 

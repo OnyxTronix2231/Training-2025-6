@@ -44,11 +44,12 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        BallIntake.init(new BallIntakeIORobot());
-        new BallIntakeShuffleBoard();
+        //BallIntake.init(new BallIntakeIORobot());
+        //new BallIntakeShuffleBoard();
 
-//        Elevator.init(new ElevatorIORobot());
-//        new ElevatorShuffleboard();
+      Elevator.init(new ElevatorIOSimulation());
+      new ElevatorShuffleboard();
+      new ElevatorVisualization();
 
 //        Hinge.init(new HingeIOSimulation());
 //        new HingeVisualization();
