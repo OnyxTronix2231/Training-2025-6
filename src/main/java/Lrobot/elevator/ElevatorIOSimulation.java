@@ -1,7 +1,6 @@
 package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -27,15 +26,29 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
+        public static boolean isFirstSensorPressed;
+        public static boolean isSecondSensorPressed;
     }
 
     public boolean isMicroswitchPressed()
     {
 
-        return swithDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
+        return swichDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
     }
 
-    private Debouncer swithDebouncer;
+    public boolean isFirstSensorPressed()
+    {
+        return firstDebouncer.calculate(SimulatedSensors.isFirstSensorPressed);
+    }
+
+    public boolean isSecondSensorPressed()
+    {
+        return secondDebouncer.calculate(SimulatedSensors.isSecondSensorPressed);
+    }
+    
+    private Debouncer swichDebouncer;
+    private Debouncer firstDebouncer;
+    private Debouncer secondDebouncer;
 
     public double getCurrent()
     {
@@ -59,8 +72,11 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         SimulatedSensors.isLimitSwitchPressed = false;
 
-        swithDebouncer = new Debouncer(2);
+        swichDebouncer = new Debouncer(2);
 
+        firstDebouncer = new Debouncer(0.2);
+
+        secondDebouncer = new Debouncer(0.2);
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
@@ -87,6 +103,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
         inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
+        inputs.isFirstSensorPressed = SimulatedSensors.isFirstSensorPressed;
+        inputs.isSecondSensorPressed = SimulatedSensors.isSecondSensorPressed;
     }
 
     public static void setLimitSwitchValue(boolean value) {
@@ -95,6 +113,22 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     public static boolean getLimitSwitchValue() {
         return SimulatedSensors.isLimitSwitchPressed;
+    }
+
+    public static boolean setFirstSensorValue(boolean value) {
+        return SimulatedSensors.isFirstSensorPressed = value;
+    }
+
+    public static boolean getFirstSensorValue() {
+        return SimulatedSensors.isFirstSensorPressed;
+    }
+
+    public static boolean setSecondSensorValue(boolean value) {
+        return SimulatedSensors.isSecondSensorPressed = value;
+    }
+
+    public static boolean getSecondSensorValue() {
+        return SimulatedSensors.isSecondSensorPressed;
     }
 
     @Override

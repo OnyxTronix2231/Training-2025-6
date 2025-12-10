@@ -16,5 +16,11 @@ public class ElevatorShuffleboard {
             tab.addString("Wanted State", ()-> Elevator.getInstance().getWantedState().toString());
             tab.add("Close", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
             tab.add("Open", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
+            tab.add("Take in", new InstantCommand(()-> Elevator.getInstance().setWantedState(Elevator.WantedState.TAKE_IN)));
+
+            tab.addBoolean("First Sensor Pressed", ()-> Elevator.getInstance().isFirstSensorPressed());
+            tab.add("Toggle First Sensor", new InstantCommand(()-> ElevatorIOSimulation.setFirstSensorValue(!Elevator.getInstance().isFirstSensorPressed())));
+            tab.addBoolean("Second Sensor Pressed", ()-> Elevator.getInstance().isSecondSensorPressed());
+            tab.add("Toggle Second Sensor", new InstantCommand(()-> ElevatorIOSimulation.setSecondSensorValue(!Elevator.getInstance().isSecondSensorPressed())));
         }
     }

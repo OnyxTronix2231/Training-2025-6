@@ -12,7 +12,7 @@ import frc.robot.lib.PID.PIDValues;
 
 import static Lrobot.elevator.ElevatorConstants.*;
 
-public class ElevatorIORobot implements ElevatorIO{
+public class ElevatorIORobot implements ElevatorIO {
     private final TalonFX masterMotor;
     private final TalonFX followerMotor;
 
@@ -79,6 +79,16 @@ public class ElevatorIORobot implements ElevatorIO{
     @Override
     public boolean isMicroswitchPressed() {
         return limitSwitch.get();
+    }
+
+    @Override
+    public boolean isFirstSensorPressed() {
+        return false;
+    }
+
+    @Override
+    public boolean isSecondSensorPressed() {
+        return false;
     }
 
     @Override

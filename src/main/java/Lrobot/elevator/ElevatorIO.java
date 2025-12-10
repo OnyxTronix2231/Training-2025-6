@@ -8,6 +8,8 @@ public interface ElevatorIO {
 
     class ElevatorInputs {
         public boolean isMicroSwitchPressed;
+        public boolean isFirstSensorPressed;
+        public boolean isSecondSensorPressed;
 
         public OnyxMotorInputs elevatorMasterInputs;
         public OnyxMotorInputs elevatorFollowerInputs;
@@ -16,6 +18,10 @@ public interface ElevatorIO {
     double getCurrent();
 
     boolean isMicroswitchPressed();
+
+    boolean isFirstSensorPressed();
+
+    boolean isSecondSensorPressed();
 
     void setDutyCycle(double dutyCycle);
 

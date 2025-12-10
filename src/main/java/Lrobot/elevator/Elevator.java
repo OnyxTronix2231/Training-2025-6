@@ -17,7 +17,8 @@ public class Elevator extends SubsystemBase {
     public enum WantedState {
         IDLE,
         OPEN,
-        CLOSE
+        CLOSE,
+        TAKE_IN
     }
 
     public enum SystemState {
@@ -45,6 +46,16 @@ public class Elevator extends SubsystemBase {
     public boolean isMicroswitchPressed()
     {
         return elevatorIO.isMicroswitchPressed();
+    }
+
+    public boolean isFirstSensorPressed()
+    {
+        return elevatorIO.isFirstSensorPressed();
+    }
+
+    public boolean isSecondSensorPressed()
+    {
+        return elevatorIO.isSecondSensorPressed();
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -77,6 +88,14 @@ public class Elevator extends SubsystemBase {
                 return SystemState.OPENING;
             case CLOSE:
                 return SystemState.CLOSING;
+            case TAKE_IN:
+                if (elevatorIO.isFirstSensorPressed() && !elevatorIO.isSecondSensorPressed()) {
+                    return SystemState.OPENING;
+                } else if (!elevatorIO.isFirstSensorPressed() && elevatorIO.isSecondSensorPressed()) {
+                    return SystemState.CLOSING;
+                } else
+                    return SystemState.IDLING;
+
         }
         return SystemState.IDLING;
     }
