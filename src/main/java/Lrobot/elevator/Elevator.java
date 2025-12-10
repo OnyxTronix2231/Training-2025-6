@@ -9,6 +9,9 @@ public class Elevator extends SubsystemBase {
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
 
+    private boolean censor1;
+    private boolean censor2;
+
     public enum WantedState {
         IDLE,
         OPEN,
@@ -35,6 +38,22 @@ public class Elevator extends SubsystemBase {
     public void setMicroswitch(boolean isPressed)
     {
         ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
+    }
+
+    public boolean isCensor1() {
+        return censor1;
+    }
+
+    public void setCensor1(boolean censor1) {
+        this.censor1 = censor1;
+    }
+
+    public boolean isCensor2() {
+        return censor2;
+    }
+
+    public void setCensor2(boolean censor2) {
+        this.censor2 = censor2;
     }
 
     public boolean isMicroswitchPressed()
@@ -67,11 +86,11 @@ public class Elevator extends SubsystemBase {
     public SystemState handleStateTransition() {
         switch (wantedState) {
             case IDLE:
-                return SystemState.IDLING;
+                if (censor1 && censor2){return SystemState.IDLING;}
             case OPEN:
-                return SystemState.OPENING;
+                if (censor1 && !censor2) {return SystemState.OPENING;}
             case CLOSE:
-                return SystemState.CLOSING;
+                if (!censor1 && censor2){return SystemState.CLOSING;}
         }
         return SystemState.IDLING;
     }

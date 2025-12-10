@@ -15,6 +15,8 @@ public class ElevatorShuffleboard {
         tab.add("toggleMicroSwitch",new InstantCommand(() -> Elevator.getInstance().setLimitSwitchValue(!Elevator.getInstance().getLimitSwitchValue())));
         tab.add("Close", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE)));
         tab.add("Open", new InstantCommand(() -> Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN)));
+        tab.add("censor1",new InstantCommand(() -> Elevator.getInstance().isCensor1()));
+        tab.add("censor2", new InstantCommand(() -> Elevator.getInstance().isCensor2()));
 
 
 

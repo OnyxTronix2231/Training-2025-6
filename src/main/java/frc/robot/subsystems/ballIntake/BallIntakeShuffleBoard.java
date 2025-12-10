@@ -13,6 +13,5 @@ public class BallIntakeShuffleBoard {
         tab.add("IDLE",new InstantCommand(() -> BallIntake.getInstance().setWantedState(BallIntake.WantedState.IDLE)));
         tab.add("INTAKE",new InstantCommand(() -> BallIntake.getInstance().setWantedState(BallIntake.WantedState.INTAKE)));
         tab.add("EJECT",new InstantCommand(() -> BallIntake.getInstance().setWantedState(BallIntake.WantedState.EJECT)));
-
     }
 }
