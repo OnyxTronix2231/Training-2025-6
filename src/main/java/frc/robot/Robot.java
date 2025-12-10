@@ -60,7 +60,6 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
-        Elevator.getInstance().setLocked(!Elevator.getInstance().isLocked());
     }
 
     /**

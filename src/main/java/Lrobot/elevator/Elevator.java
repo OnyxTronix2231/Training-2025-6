@@ -1,25 +1,16 @@
 package Lrobot.elevator;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
-    private boolean isLocked;
-
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    public void setLocked(boolean locked) {
-        isLocked = locked;
-    }
 
     public enum WantedState {
         IDLE,
         TOGGLE,
+        AUTO,
         OPEN,
         CLOSE
     }
@@ -65,7 +56,6 @@ public class Elevator extends SubsystemBase {
         applyStates();
 
         elevatorInputs.elevatorMasterInputs.log();
-        Logger.recordOutput("test/testValue", five());
     }
 
     public SystemState handleStateTransition() {
@@ -78,16 +68,19 @@ public class Elevator extends SubsystemBase {
                 if (SystemState.CLOSING == systemState)
                     wantedState = WantedState.OPEN;
             case OPEN:
-                if (!isLocked)
-                    return SystemState.OPENING;
+                return SystemState.OPENING;
             case CLOSE:
                 return SystemState.CLOSING;
+            case AUTO:
+                if (elevatorIO.isFirstSwitchPressed() == elevatorIO.isSecondSwitchPressed()) {
+                    return SystemState.IDLING;
+                } else if (elevatorIO.isFirstSwitchPressed()) {
+                    return SystemState.OPENING;
+                } else {
+                    return SystemState.CLOSING;
+                }
         }
         return SystemState.IDLING;
-    }
-
-    public int five() {
-        return 5;
     }
 
     private void applyStates() {
@@ -105,6 +98,14 @@ public class Elevator extends SubsystemBase {
     }
 
     private static Elevator instance;
+
+    public boolean isFirstSwitchPressed() {
+        return elevatorIO.isFirstSwitchPressed();
+    }
+
+    public boolean isSecondSwitchPressed() {
+        return elevatorIO.isSecondSwitchPressed();
+    }
 
     public static void init(ElevatorIO elevatorIO) {
         if (instance == null) {

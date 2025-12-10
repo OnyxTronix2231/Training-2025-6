@@ -1,7 +1,6 @@
 package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -24,18 +23,23 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
+    private final Debouncer firstSwitchDebouncer;
+    private final Debouncer secondSwitchDebouncer;
 
     class SimulatedSensors {
-        public static boolean isLimitSwitchPressed;
+        public static boolean isFirstSwitchPressed = false;
+        public static boolean isSecondSwitchPressed = false;
     }
 
-    public boolean isMicroswitchPressed()
-    {
-        return SimulatedSensors.isLimitSwitchPressed;
+    public boolean isFirstSwitchPressed() {
+        return firstSwitchDebouncer.calculate(SimulatedSensors.isFirstSwitchPressed);
     }
 
-    public double getCurrent()
-    {
+    public boolean isSecondSwitchPressed() {
+        return secondSwitchDebouncer.calculate(SimulatedSensors.isSecondSwitchPressed);
+    }
+
+    public double getCurrent() {
         return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
     }
 
@@ -54,8 +58,10 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         motor.setNeutralMode(NeutralModeValue.Brake);
 
-        SimulatedSensors.isLimitSwitchPressed = false;
-
+        SimulatedSensors.isFirstSwitchPressed = false;
+        SimulatedSensors.isSecondSwitchPressed = false;
+        firstSwitchDebouncer = new Debouncer(0.1, Debouncer.DebounceType.kBoth);
+        secondSwitchDebouncer = new Debouncer(0.1, Debouncer.DebounceType.kBoth);
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
@@ -81,15 +87,24 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
-        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
+        inputs.isFirstSwitchPressed = SimulatedSensors.isFirstSwitchPressed;
+        inputs.isSecondSwitchPressed = SimulatedSensors.isSecondSwitchPressed;
     }
 
-    public static void setLimitSwitchValue(boolean value) {
-        SimulatedSensors.isLimitSwitchPressed = value;
+    public static void setFirstSwitchValue(boolean value) {
+        SimulatedSensors.isFirstSwitchPressed = value;
     }
 
-    public static boolean getLimitSwitchValue() {
-        return SimulatedSensors.isLimitSwitchPressed;
+    public static boolean getFirstSwitchValue() {
+        return SimulatedSensors.isFirstSwitchPressed;
+    }
+
+    public static void setSecondSwitchValue(boolean value) {
+        SimulatedSensors.isSecondSwitchPressed = value;
+    }
+
+    public static boolean getSecondSwitchValue() {
+        return SimulatedSensors.isSecondSwitchPressed;
     }
 
     @Override
