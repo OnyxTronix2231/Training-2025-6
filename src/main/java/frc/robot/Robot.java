@@ -5,13 +5,10 @@
 package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
-import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
+import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
 import Lrobot.elevator.ElevatorShuffleboard;
-import Lrobot.hinge.Hinge;
-import Lrobot.hinge.HingeIOSimulation;
-import Lrobot.hinge.HingeShuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -40,19 +37,8 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorVisualization();
+        Elevator.init(new ElevatorIORobot());
         new ElevatorShuffleboard();
-
-        Hinge.init(new HingeIOSimulation());
-        new HingeVisualization();
-        new HingeShuffleboard();
-
-        // led = new LED(7);
-        //led.fullColor(Color.RED);
-        //led.oneLed(3, Color.GREEN);
-
-        //button1 = new KeyButton(1);
     }
 
     /**
@@ -60,6 +46,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
+        Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE);
     }
 
     /**
@@ -75,7 +62,7 @@ public class Robot extends LoggedRobot {
     @Override
     public void teleopInit() {
         Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);
-        Elevator.getInstance().setWantedState(Elevator.WantedState.TOGGLE);
+        Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN);
     }
 
     @Override
@@ -102,10 +89,7 @@ public class Robot extends LoggedRobot {
         // }
         // led.periodic();
         CommandScheduler.getInstance().run();
-
-
     }
-
 
     /**
      * This function is called once each time the robot enters test mode.
