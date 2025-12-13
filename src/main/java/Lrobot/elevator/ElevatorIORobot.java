@@ -3,6 +3,7 @@ package Lrobot.elevator;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -21,6 +22,7 @@ public class ElevatorIORobot implements ElevatorIO {
 
     private final DigitalInput limitSwitch;
 
+    private final PositionVoltage positionController;
 
     public ElevatorIORobot() {
         masterMotor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
@@ -38,10 +40,14 @@ public class ElevatorIORobot implements ElevatorIO {
         followerMotor.setControl(new Follower(ELEVATOR_MASTER_MOTOR_ID, true));
 
         limitSwitch = new DigitalInput(ELEVATOR_LIMIT_SWITCH_CHANEL);
+
+        positionController = new PositionVoltage(0);
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
+
+        configuration.Slot0 = ELEVATOR_PID_VALUES.pidValuesToSlot0Configs();
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
@@ -94,6 +100,12 @@ public class ElevatorIORobot implements ElevatorIO {
     @Override
     public void setDutyCycle(double dutyCycle) {
         masterMotor.set(dutyCycle);
+    }
+
+    @Override
+    public void moveToLength(double length) {
+        masterMotor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,false)));
+
     }
 
 }

@@ -1,37 +1,42 @@
 package Lrobot.elevator;
 
-import L5.training.LEDP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import org.littletonrobotics.junction.Logger;
 
 public class Elevator extends SubsystemBase {
 
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
 
-    public WantedState getWantedState() {
-        return wantedState;
-    }
+    private double wantedLength;
 
     public enum WantedState {
         IDLE,
         OPEN,
         CLOSE,
-        TAKE_IN
+        MOVE_TO_POSITION
     }
 
     public enum SystemState {
         IDLING,
         OPENING,
-        CLOSING
+        CLOSING,
+        MOVING_TO_POSITION
     }
 
     private WantedState wantedState;
     private SystemState systemState;
 
+    public WantedState getWantedState() {
+        return wantedState;
+    }
+
     public void setWantedState(WantedState wantedState) {
         this.wantedState = wantedState;
+    }
+
+    public void setWantedState(WantedState wantedState, double wantedLength) {
+        this.wantedState = wantedState;
+        this.wantedLength = wantedLength;
     }
 
     public double getElevatorLength() {
@@ -46,16 +51,6 @@ public class Elevator extends SubsystemBase {
     public boolean isMicroswitchPressed()
     {
         return elevatorIO.isMicroswitchPressed();
-    }
-
-    public boolean isFirstSensorPressed()
-    {
-        return elevatorIO.isFirstSensorPressed();
-    }
-
-    public boolean isSecondSensorPressed()
-    {
-        return elevatorIO.isSecondSensorPressed();
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -76,8 +71,6 @@ public class Elevator extends SubsystemBase {
         elevatorInputs.elevatorMasterInputs.log();
         applyStates();
 
-//        Logger.recordOutput("Subsystems/Elevator/Current",
-//                elevatorIO.getCurrent());
     }
 
     public SystemState handleStateTransition() {
@@ -88,14 +81,8 @@ public class Elevator extends SubsystemBase {
                 return SystemState.OPENING;
             case CLOSE:
                 return SystemState.CLOSING;
-            case TAKE_IN:
-                if (elevatorIO.isFirstSensorPressed() && !elevatorIO.isSecondSensorPressed()) {
-                    return SystemState.OPENING;
-                } else if (!elevatorIO.isFirstSensorPressed() && elevatorIO.isSecondSensorPressed()) {
-                    return SystemState.CLOSING;
-                } else
-                    return SystemState.IDLING;
-
+            case MOVE_TO_POSITION:
+                return SystemState.MOVING_TO_POSITION;
         }
         return SystemState.IDLING;
     }
@@ -111,6 +98,9 @@ public class Elevator extends SubsystemBase {
             case CLOSING:
                 elevatorIO.setDutyCycle(-0.1);
                 break;
+            case MOVING_TO_POSITION:
+                elevatorIO.moveToLength(wantedLength);
+                 break;
         }
     }
 
