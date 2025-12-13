@@ -1,13 +1,11 @@
 package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
-import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
@@ -32,14 +30,22 @@ public class ElevatorIOSimulation implements ElevatorIO {
         public static boolean isLimitSwitchPressed;
     }
 
-    public boolean isMicroswitchPressed()
-    {
+    public boolean isMicroswitchPressed() {
         return SimulatedSensors.isLimitSwitchPressed;
     }
 
-    public double getCurrent()
-    {
+    public double getCurrent() {
         return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
+    }
+
+    @Override
+    public boolean isFirstSwitchPressed() {
+        return false;
+    }
+
+    @Override
+    public boolean isSecondSwitchPressed() {
+        return false;
     }
 
 
@@ -87,7 +93,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
-        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
+//        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
     }
 
     public static void setLimitSwitchValue(boolean value) {
@@ -105,7 +111,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     @Override
     public void moveToLength(double length) {
-        motor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,true)));
+        motor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length, true)));
     }
 
     public void updateMotor() {

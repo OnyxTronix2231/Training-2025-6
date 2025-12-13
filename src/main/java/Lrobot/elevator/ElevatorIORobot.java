@@ -2,18 +2,16 @@ package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.lib.OnyxMotorInputs;
-import frc.robot.lib.PID.PIDValues;
 
 import static Lrobot.elevator.ElevatorConstants.*;
 
-public class ElevatorIORobot implements ElevatorIO{
+public class ElevatorIORobot implements ElevatorIO {
     private final TalonFX masterMotor;
     private final TalonFX followerMotor;
 
@@ -29,7 +27,7 @@ public class ElevatorIORobot implements ElevatorIO{
         followerMotor = new TalonFX(ELEVATOR_FOLLOWER_MOTOR_ID);
 
         elevatorMasterMotorInputs = new OnyxMotorInputs(masterMotor, "Elevator", "elevatorMaster", ROTATIONS_TO_LENGTH_ROBOT);
-        elevatorFollowerMotorInputs = new OnyxMotorInputs(followerMotor, "Elevator","elevatorFollower", ROTATIONS_TO_LENGTH_ROBOT);
+        elevatorFollowerMotorInputs = new OnyxMotorInputs(followerMotor, "Elevator", "elevatorFollower", ROTATIONS_TO_LENGTH_ROBOT);
 
         elevatorMasterMotorInputs.updateInputs();
         elevatorFollowerMotorInputs.updateInputs();
@@ -74,7 +72,7 @@ public class ElevatorIORobot implements ElevatorIO{
         elevatorFollowerMotorInputs.updateInputs();
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
-        inputs.isMicroSwitchPressed = limitSwitch.get();
+//        inputs.isMicroSwitchPressed = limitSwitch.get();
     }
 
     @Override
@@ -83,6 +81,16 @@ public class ElevatorIORobot implements ElevatorIO{
     }
 
     @Override
+    public boolean isFirstSwitchPressed() {
+        return false;
+    }
+
+    @Override
+    public boolean isSecondSwitchPressed() {
+        return false;
+    }
+
+    //    @Override
     public boolean isMicroswitchPressed() {
         return limitSwitch.get();
     }
@@ -94,8 +102,7 @@ public class ElevatorIORobot implements ElevatorIO{
 
     @Override
     public void moveToLength(double length) {
-        masterMotor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,false)));
-
+        masterMotor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length, false)));
     }
 
 }

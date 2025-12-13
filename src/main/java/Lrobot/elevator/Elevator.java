@@ -43,14 +43,13 @@ public class Elevator extends SubsystemBase {
         return elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble();
     }
 
-    public void setMicroswitch(boolean isPressed)
-    {
+    public void setMicroswitch(boolean isPressed) {
         ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
     }
 
-    public boolean isMicroswitchPressed()
-    {
-        return elevatorIO.isMicroswitchPressed();
+    public boolean isMicroswitchPressed() {
+//        return elevatorIO.isMicroswitchPressed();
+        return false;
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -100,7 +99,7 @@ public class Elevator extends SubsystemBase {
                 break;
             case MOVING_TO_POSITION:
                 elevatorIO.moveToLength(wantedLength);
-                 break;
+                break;
         }
     }
 

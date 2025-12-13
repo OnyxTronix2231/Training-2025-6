@@ -4,15 +4,14 @@
 
 package frc.robot;
 
-import Lrobot.Visualization.ElevatorVisualization;
-import Lrobot.elevator.Elevator;
-import Lrobot.elevator.ElevatorIORobot;
-import Lrobot.elevator.ElevatorIOSimulation;
-import Lrobot.elevator.ElevatorShuffleboard;
+import Lrobot.Visualization.WristVisualization;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.wrist.Wrist;
+import frc.robot.subsystems.wrist.WristIOSimulation;
+import frc.robot.subsystems.wrist.WristShuffleboard;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -28,18 +27,18 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
-    // private LED led;
-    // private KeyButton button1;
-
-
     @Override
     public void robotInit() {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorShuffleboard();
-        new ElevatorVisualization();
+//        Elevator.init(new ElevatorIOSimulation());
+//        new ElevatorShuffleboard();
+//        new ElevatorVisualization();
+
+        Wrist.init(new WristIOSimulation());
+        new WristShuffleboard();
+        new WristVisualization();
     }
 
     /**
