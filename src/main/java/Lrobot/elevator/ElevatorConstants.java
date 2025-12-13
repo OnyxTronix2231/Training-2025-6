@@ -1,6 +1,10 @@
 package Lrobot.elevator;
 
 
+import com.ctre.phoenix6.signals.GravityTypeValue;
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
+import frc.robot.lib.PID.PIDValues;
+
 import java.util.function.DoubleUnaryOperator;
 
 public class ElevatorConstants {
@@ -12,6 +16,24 @@ public class ElevatorConstants {
 
     public static final double ELEVATOR_FORWARD_SOFT_LIMIT_THRESHOLD = 1.3;
     public static final double ELEVATOR_REVERSE_SOFT_LIMIT_THRESHOLD = 0.002;
+
+    public static final double ELEVATOR_KP = 10;
+    public static final double ELEVATOR_KI = 0;
+    public static final double ELEVATOR_KD = 0;
+    public static final double ELEVATOR_KG = 0.035;
+    public static final double ELEVATOR_KS = 0;
+    public static final double ELEVATOR_KV = 0;
+    public static final double ELEVATOR_KA = 0;
+    public static final PIDValues ELEVATOR_PID_VALUES = new PIDValues(
+            ELEVATOR_KP,
+            ELEVATOR_KI,
+            ELEVATOR_KD,
+            ELEVATOR_KG,
+            ELEVATOR_KS,
+            ELEVATOR_KV,
+            ELEVATOR_KA,
+            GravityTypeValue.Elevator_Static,
+            StaticFeedforwardSignValue.UseVelocitySign);
 
     public static final double RATIO = 56 / 9.0;
     public static final double RADIUS = 0.0573 / 2.0;
@@ -50,6 +72,24 @@ public class ElevatorConstants {
     public static final double SIMULATION_ELEVATOR_LENGTH_METERS = 0.001;
     public static final double SIMULATION_ELEVATOR_MASS_KG = 0.001;
     public static final int SIMULATION_ELEVATOR_NUM_OF_MOTORS = 2;
+
+    public static final double SIMULATION_ELEVATOR_KP = 2;
+    public static final double SIMULATION_ELEVATOR_KI = 0;
+    public static final double SIMULATION_ELEVATOR_KD = 0;
+    public static final double SIMULATION_ELEVATOR_KG = 0;
+    public static final double SIMULATION_ELEVATOR_KS = 0;
+    public static final double SIMULATION_ELEVATOR_KV = 0;
+    public static final double SIMULATION_ELEVATOR_KA = 0;
+    public static final PIDValues SIMULATION_ELEVATOR_PID_VALUES = new PIDValues(
+            SIMULATION_ELEVATOR_KP,
+            SIMULATION_ELEVATOR_KI,
+            SIMULATION_ELEVATOR_KD,
+            SIMULATION_ELEVATOR_KG,
+            SIMULATION_ELEVATOR_KS,
+            SIMULATION_ELEVATOR_KV,
+            SIMULATION_ELEVATOR_KA,
+            GravityTypeValue.Elevator_Static,
+            StaticFeedforwardSignValue.UseVelocitySign);
 
     public static final double SIMULATION_DT_SECONDS = 0.02;
 

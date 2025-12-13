@@ -1,6 +1,8 @@
 package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -23,23 +25,20 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
-    private final Debouncer firstSwitchDebouncer;
-    private final Debouncer secondSwitchDebouncer;
+
+    private final PositionVoltage positionController;
 
     class SimulatedSensors {
-        public static boolean isFirstSwitchPressed = false;
-        public static boolean isSecondSwitchPressed = false;
+        public static boolean isLimitSwitchPressed;
     }
 
-    public boolean isFirstSwitchPressed() {
-        return firstSwitchDebouncer.calculate(SimulatedSensors.isFirstSwitchPressed);
+    public boolean isMicroswitchPressed()
+    {
+        return SimulatedSensors.isLimitSwitchPressed;
     }
 
-    public boolean isSecondSwitchPressed() {
-        return secondSwitchDebouncer.calculate(SimulatedSensors.isSecondSwitchPressed);
-    }
-
-    public double getCurrent() {
+    public double getCurrent()
+    {
         return elevatorMasterMotorInputs.getMotorStatorCurrentAmps();
     }
 
@@ -58,14 +57,15 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         motor.setNeutralMode(NeutralModeValue.Brake);
 
-        SimulatedSensors.isFirstSwitchPressed = false;
-        SimulatedSensors.isSecondSwitchPressed = false;
-        firstSwitchDebouncer = new Debouncer(0.1, Debouncer.DebounceType.kBoth);
-        secondSwitchDebouncer = new Debouncer(0.1, Debouncer.DebounceType.kBoth);
+        SimulatedSensors.isLimitSwitchPressed = false;
+
+        positionController = new PositionVoltage(0);
+
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
+        configuration.Slot0 = SIMULATION_ELEVATOR_PID_VALUES.pidValuesToSlot0Configs();
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
@@ -87,29 +87,25 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
-        inputs.isFirstSwitchPressed = SimulatedSensors.isFirstSwitchPressed;
-        inputs.isSecondSwitchPressed = SimulatedSensors.isSecondSwitchPressed;
+        inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
     }
 
-    public static void setFirstSwitchValue(boolean value) {
-        SimulatedSensors.isFirstSwitchPressed = value;
+    public static void setLimitSwitchValue(boolean value) {
+        SimulatedSensors.isLimitSwitchPressed = value;
     }
 
-    public static boolean getFirstSwitchValue() {
-        return SimulatedSensors.isFirstSwitchPressed;
-    }
-
-    public static void setSecondSwitchValue(boolean value) {
-        SimulatedSensors.isSecondSwitchPressed = value;
-    }
-
-    public static boolean getSecondSwitchValue() {
-        return SimulatedSensors.isSecondSwitchPressed;
+    public static boolean getLimitSwitchValue() {
+        return SimulatedSensors.isLimitSwitchPressed;
     }
 
     @Override
     public void setDutyCycle(double dutyCycle) {
         motor.set(dutyCycle);
+    }
+
+    @Override
+    public void moveToLength(double length) {
+        motor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,true)));
     }
 
     public void updateMotor() {

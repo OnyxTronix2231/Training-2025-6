@@ -21,4 +21,6 @@ public interface ElevatorIO {
     boolean isSecondSwitchPressed();
 
     void setDutyCycle(double dutyCycle);
+
+    void moveToLength(double length);
 }
