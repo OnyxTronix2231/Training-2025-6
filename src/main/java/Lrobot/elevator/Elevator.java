@@ -7,25 +7,36 @@ public class Elevator extends SubsystemBase {
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
 
+    private double wantedLength;
 
     public enum WantedState {
         IDLE,
         OPEN,
         CLOSE,
-        SENSOR
+        MOVE_TO_POSITION
     }
 
     public enum SystemState {
         IDLING,
         OPENING,
-        CLOSING
+        CLOSING,
+        MOVING_TO_POSITION
     }
 
     private WantedState wantedState;
     private SystemState systemState;
 
+    public WantedState getWantedState() {
+        return wantedState;
+    }
+
     public void setWantedState(WantedState wantedState) {
         this.wantedState = wantedState;
+    }
+
+    public void setWantedState(WantedState wantedState, double wantedLength) {
+        this.wantedState = wantedState;
+        this.wantedLength = wantedLength;
     }
 
     public double getElevatorLength() {
@@ -37,21 +48,9 @@ public class Elevator extends SubsystemBase {
         ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = isPressed;
     }
 
-    public boolean isSensor1() {
-        return elevatorIO.isSensor1();
-    }
-
-    public boolean isSensor2() {
-        return elevatorIO.isSensor2();
-    }
-
     public boolean isMicroswitchPressed()
     {
         return elevatorIO.isMicroswitchPressed();
-    }
-
-    public WantedState getWantedState() {
-        return wantedState;
     }
 
     public Elevator(ElevatorIO elevatorIO) {
@@ -72,8 +71,6 @@ public class Elevator extends SubsystemBase {
         elevatorInputs.elevatorMasterInputs.log();
         applyStates();
 
-//        Logger.recordOutput("Subsystems/Elevator/test",
-//                elevatorIO.test());
     }
 
     public SystemState handleStateTransition() {
@@ -84,16 +81,8 @@ public class Elevator extends SubsystemBase {
                 return SystemState.OPENING;
             case CLOSE:
                 return SystemState.CLOSING;
-            case SENSOR:
-                if (!isSensor1() && isSensor2()) {
-                    return SystemState.CLOSING;
-                }
-                else if (isSensor1() && !isSensor2()) {
-                    return SystemState.OPENING;
-                }
-                else if (isSensor1() && isSensor2()) {
-                    return SystemState.IDLING;
-                }
+            case MOVE_TO_POSITION:
+                return SystemState.MOVING_TO_POSITION;
         }
         return SystemState.IDLING;
     }
@@ -109,23 +98,10 @@ public class Elevator extends SubsystemBase {
             case CLOSING:
                 elevatorIO.setDutyCycle(-0.1);
                 break;
+            case MOVING_TO_POSITION:
+                elevatorIO.moveToLength(wantedLength);
+                 break;
         }
-    }
-
-    public void setLimitSwitchValue(boolean value) {
-        ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = value;
-    }
-
-    public boolean getLimitSwitchValue() {
-        return elevatorIO.getLimitSwitchValue();
-    }
-
-    public void setSensor1Value(boolean value) {
-        ElevatorIOSimulation.SimulatedSensors.isSensor1Pressed = value;
-    }
-
-    public void setSensor2Value(boolean value) {
-        ElevatorIOSimulation.SimulatedSensors.isSensor2Pressed = value;
     }
 
     private static Elevator instance;

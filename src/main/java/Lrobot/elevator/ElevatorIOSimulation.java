@@ -2,6 +2,7 @@ package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -25,15 +26,14 @@ public class ElevatorIOSimulation implements ElevatorIO {
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
 
-    private Debouncer microSwitchDebouncer;
+    private final PositionVoltage positionController;
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
-        public static boolean isSensor1Pressed;
-        public static boolean isSensor2Pressed;
     }
 
-    public boolean isMicroswitchPressed() {
+    public boolean isMicroswitchPressed()
+    {
         return SimulatedSensors.isLimitSwitchPressed;
     }
 
@@ -59,12 +59,13 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         SimulatedSensors.isLimitSwitchPressed = false;
 
-        microSwitchDebouncer = new Debouncer(2, Debouncer.DebounceType.kBoth);
+        positionController = new PositionVoltage(0);
 
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
+        configuration.Slot0 = SIMULATION_ELEVATOR_PID_VALUES.pidValuesToSlot0Configs();
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
@@ -79,7 +80,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
         return configuration;
     }
 
-
     @Override
     public void updateInputs(ElevatorInputs inputs) {
         updateMotor();
@@ -87,34 +87,25 @@ public class ElevatorIOSimulation implements ElevatorIO {
         inputs.elevatorMasterInputs = elevatorMasterMotorInputs;
         inputs.elevatorFollowerInputs = elevatorFollowerMotorInputs;
 
-
         inputs.isMicroSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
-        inputs.isSensor1Pressed = SimulatedSensors.isSensor1Pressed;
-        inputs.isSensor2Pressed = SimulatedSensors.isSensor2Pressed;
     }
 
-
-    public void setLimitSwitchValue(boolean value) {
+    public static void setLimitSwitchValue(boolean value) {
         SimulatedSensors.isLimitSwitchPressed = value;
     }
 
-    public boolean getLimitSwitchValue() {
-        return microSwitchDebouncer.calculate(SimulatedSensors.isLimitSwitchPressed);
-    }
-
-    @Override
-    public boolean isSensor1() {
-        return SimulatedSensors.isSensor1Pressed;
-    }
-
-    @Override
-    public boolean isSensor2() {
-        return SimulatedSensors.isSensor2Pressed;
+    public static boolean getLimitSwitchValue() {
+        return SimulatedSensors.isLimitSwitchPressed;
     }
 
     @Override
     public void setDutyCycle(double dutyCycle) {
         motor.set(dutyCycle);
+    }
+
+    @Override
+    public void moveToLength(double length) {
+        motor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,true)));
     }
 
     public void updateMotor() {

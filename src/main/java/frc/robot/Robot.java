@@ -4,11 +4,7 @@
 
 package frc.robot;
 
-import Lrobot.Hinge.Hinge;
-import Lrobot.Hinge.HingeIOSimulation;
-import Lrobot.Hinge.HingeShuffleborad;
 import Lrobot.Visualization.ElevatorVisualization;
-import Lrobot.Visualization.HingeVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
@@ -17,9 +13,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.ballIntake.BallIntake;
-import frc.robot.subsystems.ballIntake.BallIntakeIORobot;
-import frc.robot.subsystems.ballIntake.BallIntakeShuffleBoard;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -44,16 +37,9 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        //BallIntake.init(new BallIntakeIORobot());
-        //new BallIntakeShuffleBoard();
-
-      Elevator.init(new ElevatorIOSimulation());
-      new ElevatorShuffleboard();
-      new ElevatorVisualization();
-
-//        Hinge.init(new HingeIOSimulation());
-//        new HingeVisualization();
-//        new HingeShuffleborad();
+        Elevator.init(new ElevatorIOSimulation());
+        new ElevatorShuffleboard();
+        new ElevatorVisualization();
     }
 
     /**
@@ -75,7 +61,8 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void teleopInit() {
-        Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);}
+        Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);
+    }
 
     @Override
     public void disabledInit() {
