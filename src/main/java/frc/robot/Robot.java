@@ -37,8 +37,9 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIORobot());
+        Elevator.init(new ElevatorIOSimulation());
         new ElevatorShuffleboard();
+        new ElevatorVisualization();
     }
 
     /**
@@ -46,7 +47,6 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
-        Elevator.getInstance().setWantedState(Elevator.WantedState.CLOSE);
     }
 
     /**
@@ -62,7 +62,6 @@ public class Robot extends LoggedRobot {
     @Override
     public void teleopInit() {
         Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.DEFAULT_STATE);
-        Elevator.getInstance().setWantedState(Elevator.WantedState.OPEN);
     }
 
     @Override

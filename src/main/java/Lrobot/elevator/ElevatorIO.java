@@ -18,4 +18,6 @@ public interface ElevatorIO {
     boolean isMicroswitchPressed();
 
     void setDutyCycle(double dutyCycle);
+
+    void moveToLength(double length);
 }

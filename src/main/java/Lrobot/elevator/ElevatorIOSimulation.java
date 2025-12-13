@@ -2,6 +2,7 @@ package Lrobot.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -24,6 +25,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     private final OnyxMotorInputs elevatorMasterMotorInputs;
     private final OnyxMotorInputs elevatorFollowerMotorInputs;
+
+    private final PositionVoltage positionController;
 
     class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
@@ -56,10 +59,13 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         SimulatedSensors.isLimitSwitchPressed = false;
 
+        positionController = new PositionVoltage(0);
+
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
+        configuration.Slot0 = SIMULATION_ELEVATOR_PID_VALUES.pidValuesToSlot0Configs();
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
@@ -95,6 +101,11 @@ public class ElevatorIOSimulation implements ElevatorIO {
     @Override
     public void setDutyCycle(double dutyCycle) {
         motor.set(dutyCycle);
+    }
+
+    @Override
+    public void moveToLength(double length) {
+        motor.setControl(positionController.withPosition(LENGTH_TO_ROTATIONS(length,true)));
     }
 
     public void updateMotor() {
