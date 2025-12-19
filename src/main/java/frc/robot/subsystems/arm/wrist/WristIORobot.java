@@ -47,7 +47,8 @@ public class WristIORobot implements WristIO {
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        // TODO motion magic values
+        configuration.MotionMagic.MotionMagicCruiseVelocity = WRIST_CRUISE_VELOCITY;
+        configuration.MotionMagic.MotionMagicAcceleration = WRIST_ACCELERATION;
 
         return configuration;
     }
@@ -65,7 +66,7 @@ public class WristIORobot implements WristIO {
     @Override
     public void updateInputs(WristInputs inputs) {
         wristMotorInputs.updateInputs();
-        inputs.wristInputs = wristMotorInputs;
+        inputs.wristMotorInputs = wristMotorInputs;
 
         inputs.encoderPosition = encoder.getPosition().getValueAsDouble();
     }

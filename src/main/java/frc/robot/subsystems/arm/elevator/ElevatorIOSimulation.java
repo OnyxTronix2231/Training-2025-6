@@ -63,6 +63,9 @@ public class ElevatorIOSimulation implements ElevatorIO {
         configuration.HardwareLimitSwitch.ForwardLimitEnable = false;
         configuration.HardwareLimitSwitch.ReverseLimitEnable = false;
 
+        configuration.MotionMagic.MotionMagicCruiseVelocity = SIMULATION_ELEVATOR_CRUISE_VELOCITY;
+        configuration.MotionMagic.MotionMagicAcceleration = SIMULATION_ELEVATOR_ACCELERATION;
+
         return configuration;
     }
 

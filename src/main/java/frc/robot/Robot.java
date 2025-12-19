@@ -7,18 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Visualization.ElevatorVisualization;
+import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.wrist.Wrist;
-import frc.robot.subsystems.wrist.WristIOSimulation;
-import frc.robot.subsystems.wrist.WristShuffleboard;
-import frc.robot.visualization.WristVisualization;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
+import frc.robot.subsystems.arm.wrist.WristIOSimulation;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
-import static frc.robot.visualization.VisualizedSubsystem.updateVisualizations;
+import static frc.robot.Visualization.VisualizedSubsystem.updateVisualizations;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -36,9 +37,10 @@ public class Robot extends LoggedRobot {
 //        new ElevatorShuffleboard();
 //        new ElevatorVisualization();
 
-        Wrist.init(new WristIOSimulation());
-        new WristShuffleboard();
+        Arm.init(new WristIOSimulation(), new ElevatorIOSimulation());
+        // new ArmShuffleboard();
         new WristVisualization();
+        new ElevatorVisualization();
     }
 
     /**

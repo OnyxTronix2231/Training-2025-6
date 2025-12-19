@@ -1,4 +1,4 @@
-package frc.robot.visualization;
+package frc.robot.Visualization;
 
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;

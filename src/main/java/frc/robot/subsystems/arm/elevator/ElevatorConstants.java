@@ -14,6 +14,10 @@ public class ElevatorConstants {
 
     public static final double ELEVATOR_FORWARD_LIMIT_THRESHOLD = 1.3;
     public static final double ELEVATOR_REVERSE_LIMIT_THRESHOLD = 0.002;
+    public static final double ELEVATOR_ALLOWED_LENGTH_ERROR_METERS = 0.02;
+
+    public static final double ELEVATOR_CRUISE_VELOCITY = 1;
+    public static final double ELEVATOR_ACCELERATION = 1;
 
     public static final double ELEVATOR_KP = 0;
     public static final double ELEVATOR_KI = 0;
@@ -33,9 +37,9 @@ public class ElevatorConstants {
         GravityTypeValue.Elevator_Static,
         StaticFeedforwardSignValue.UseClosedLoopSign);
 
-    public static final double SIMULATION_ELEVATOR_LENGTH_METERS = 0.001;
-    public static final double SIMULATION_ELEVATOR_MASS_KG = 0.001;
-    public static final int SIMULATION_ELEVATOR_NUM_OF_MOTORS = 2;
+
+    public static final double SIMULATION_ELEVATOR_CRUISE_VELOCITY = 1;
+    public static final double SIMULATION_ELEVATOR_ACCELERATION = 1;
 
     public static final double SIMULATION_ELEVATOR_KP = 0;
     public static final double SIMULATION_ELEVATOR_KI = 0;
@@ -85,5 +89,12 @@ public class ElevatorConstants {
         return length / diameter * ratio;
     }
 
+    public static final double ZEROED_HEIGHT = 0.002;
+
     public static final double SIMULATION_DT_SECONDS = 0.02;
+
+    public static final double SIMULATION_ELEVATOR_LENGTH_METERS = 0.001;
+    public static final double SIMULATION_ELEVATOR_MASS_KG = 0.001;
+    public static final double ELEVATOR_VISUALIZATION_OFFSET = 0.2;
+    public static final int SIMULATION_ELEVATOR_NUM_OF_MOTORS = 2;
 }

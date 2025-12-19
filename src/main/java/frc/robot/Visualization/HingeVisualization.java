@@ -1,4 +1,4 @@
-package frc.robot.visualization;
+package frc.robot.Visualization;
 
 import Lrobot.hinge.Hinge;
 import edu.wpi.first.wpilibj.util.Color;

@@ -9,7 +9,7 @@ public interface WristIO {
     class WristInputs {
         public double encoderPosition;
 
-        public OnyxMotorInputs wristInputs;
+        public OnyxMotorInputs wristMotorInputs;
     }
 
     void setDutyCycle(double dutyCycle);
@@ -17,4 +17,5 @@ public interface WristIO {
     void updatePID(PIDValues pidValues);
 
     void moveToAngle(double angle);
+
 }

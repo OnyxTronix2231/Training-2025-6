@@ -11,18 +11,10 @@ public class WristConstants {
 
     public static final int WRIST_CANCODER_ID = 5;
 
-    public static final double WRIST_CANCODER_OFFSET = 0.3017578125;
-    public static final double CONVERSION_RATE_WRIST = 61.6; // (70/10.0)*(60/18.0)*(66/25.0)
+    public static final double WRIST_ALLOWED_ANGLE_ERROR = 2;
 
-    public static final DoubleUnaryOperator ROTATIONS_TO_ANGLE = rotations -> rotations * 360;
-
-    public static double ANGLE_TO_ROTATIONS(double angle) {
-        return angle / 360;
-    }
-
-    public static double ROTATIONS_TO_ANGLE(double rotations) {
-        return rotations * 360;
-    }
+    public static final double WRIST_CRUISE_VELOCITY = 1;
+    public static final double WRIST_ACCELERATION = 1;
 
     public static final double WRIST_KP = 0;
     public static final double WRIST_KI = 0;
@@ -42,6 +34,9 @@ public class WristConstants {
         GravityTypeValue.Arm_Cosine,
         StaticFeedforwardSignValue.UseVelocitySign);
 
+    public static final double SIMULATION_WRIST_CRUISE_VELOCITY = 1;
+    public static final double SIMULATION_WRIST_ACCELERATION = 1;
+
     public static final double SIMULATION_WRIST_KP = 0;
     public static final double SIMULATION_WRIST_KI = 0;
     public static final double SIMULATION_WRIST_KD = 0;
@@ -60,11 +55,27 @@ public class WristConstants {
         GravityTypeValue.Arm_Cosine,
         StaticFeedforwardSignValue.UseVelocitySign);
 
+    public static final double WRIST_CANCODER_OFFSET = 0.3017578125;
+    public static final double CONVERSION_RATE_WRIST = 61.6; // (70/10.0)*(60/18.0)*(66/25.0)
+
+    public static final DoubleUnaryOperator ROTATIONS_TO_ANGLE = rotations -> rotations * 360;
+
+    public static double ANGLE_TO_ROTATIONS(double angle) {
+        return angle / 360;
+    }
+
+    public static double ROTATIONS_TO_ANGLE(double rotations) {
+        return rotations * 360;
+    }
+
+    public static final double ZEROED_ANGLE = 90;
+
     public static final double SIMULATION_DT_SECONDS = 0.02;
 
     public static final double SIMULATION_WRIST_LENGTH_METERS = 0.001;
     public static final double SIMULATION_WRIST_MASS_KG = 0.001;
     public static final int SIMULATION_WRIST_NUM_OF_MOTORS = 1;
+
 
     public static final double WRIST_ZERO_OFFSET_DEG = 90;
 }

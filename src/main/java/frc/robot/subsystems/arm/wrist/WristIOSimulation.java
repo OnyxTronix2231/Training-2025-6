@@ -35,8 +35,6 @@ public class WristIOSimulation implements WristIO {
         motor.getConfigurator().apply(getTalonFXConfiguration());
 
         motor.setPosition(ANGLE_TO_ROTATIONS(WRIST_ZERO_OFFSET_DEG));
-
-
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
@@ -46,7 +44,8 @@ public class WristIOSimulation implements WristIO {
 
         configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        // TODO MOTION MAGIC
+        configuration.MotionMagic.MotionMagicCruiseVelocity = SIMULATION_WRIST_CRUISE_VELOCITY;
+        configuration.MotionMagic.MotionMagicAcceleration = SIMULATION_WRIST_ACCELERATION;
 
         return configuration;
     }
@@ -57,7 +56,7 @@ public class WristIOSimulation implements WristIO {
 
         wristMotorInputs.updateInputs();
 
-        inputs.wristInputs = wristMotorInputs;
+        inputs.wristMotorInputs = wristMotorInputs;
     }
 
     @Override
