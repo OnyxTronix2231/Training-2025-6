@@ -54,8 +54,7 @@ public class ElevatorIORobot implements ElevatorIO {
         configuration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         configuration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = LENGTH_TO_ROTATIONS(ELEVATOR_REVERSE_LIMIT_THRESHOLD, false);
 
-        configuration.HardwareLimitSwitch.ForwardLimitEnable = false;
-        configuration.HardwareLimitSwitch.ReverseLimitEnable = false;
+        // TODO motion magic values
 
         return configuration;
     }

@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import Lrobot.Visualization.WristVisualization;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,13 +11,14 @@ import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.wrist.Wrist;
 import frc.robot.subsystems.wrist.WristIOSimulation;
 import frc.robot.subsystems.wrist.WristShuffleboard;
+import frc.robot.visualization.WristVisualization;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import static Lrobot.Visualization.VisualizedSubsystem.updateVisualizations;
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
+import static frc.robot.visualization.VisualizedSubsystem.updateVisualizations;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
