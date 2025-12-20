@@ -87,12 +87,10 @@ public class ElevatorIORobot implements ElevatorIO {
         return limitSwitch.get();
     }
 
-    @Override
     public boolean isFirstSensorPressed() {
         return false;
     }
 
-    @Override
     public boolean isSecondSensorPressed() {
         return false;
     }

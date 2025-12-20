@@ -50,7 +50,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
                 DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS));
 
         elevatorMasterMotorInputs = new OnyxMotorInputs(motor, "Arm", "elevatorMotor", ROTATIONS_TO_LENGTH_SIMULATION);
-
         elevatorFollowerMotorInputs = new OnyxMotorInputs();
 
         motor.getConfigurator().apply(getTalonFXConfiguration());
