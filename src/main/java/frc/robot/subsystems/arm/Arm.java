@@ -111,6 +111,10 @@ public class Arm extends SubsystemBase {
         }
     }
 
+    public boolean isElevatorSwitchPressed() {
+        return elevatorInputs.isMicroSwitchPressed;
+    }
+
     public boolean isWristOnTarget() {
         return Math.abs(wantedArmPosition.getArmAngle() - this.getWristAngle()) <= WRIST_ALLOWED_ANGLE_ERROR;
     }

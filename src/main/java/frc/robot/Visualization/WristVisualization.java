@@ -6,6 +6,8 @@ import frc.robot.subsystems.arm.Arm;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
+import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_VISUALIZATION_OFFSET;
+
 public class WristVisualization extends VisualizedSubsystem {
     private final Arm arm;
 
@@ -15,7 +17,7 @@ public class WristVisualization extends VisualizedSubsystem {
 
     @Override
     void updateVisualization() {
-        WristVisualizationMechanism.WRIST.setAngle(arm.getWristAngle());
+        WristVisualizationMechanism.WRIST.setAngle(arm.getWristAngle() + WRIST_VISUALIZATION_OFFSET);
     }
 
     public class WristVisualizationMechanism {

@@ -44,7 +44,7 @@ public class ArmShuffleboard {
             new ArmPosition(targetLength.getDouble(0), targetAngle.getDouble(0)))));
 
         tab.add("Toggle limit switch", new InstantCommand(() -> ElevatorIOSimulation.setSwitchValue(!ElevatorIOSimulation.getSwitchValue())));
-        tab.addBoolean("Is limit switch pressed", () -> ElevatorIOSimulation.getSwitchValue());
+        tab.addBoolean("Is limit switch pressed", () -> Arm.getInstance().isElevatorSwitchPressed());
 
         tab.addBoolean("System on target", () -> Arm.getInstance().isOnTarget());
         tab.addBoolean("Elevator on target", () -> Arm.getInstance().isElevatorOnTarget());

@@ -52,6 +52,10 @@ public class ElevatorConstants {
         GravityTypeValue.Elevator_Static,
         StaticFeedforwardSignValue.UseClosedLoopSign);
 
+    public static final double ELEVATOR_CRUISE_VELOCITY = 1;
+    public static final double ELEVATOR_ACCELERATION = 1;
+    public static final double ELEVATOR_JERK = 1;
+
     public static final double RATIO = 56 / 9.0;
     public static final double RADIUS = 0.0573 / 2.0;
     public static final double DIAMETER = RADIUS * 2 * Math.PI;
@@ -85,6 +89,10 @@ public class ElevatorConstants {
     public static final double ZEROED_HEIGHT = 0.002;
 
     public static final double SIMULATION_DT_SECONDS = 0.02;
+
+    public static final double SIMULATION_ELEVATOR_CRUISE_VELOCITY = 0.975; // 0.975
+    public static final double SIMULATION_ELEVATOR_ACCELERATION = 10; // 5
+    public static final double SIMULATION_ELEVATOR_JERK = 0;
 
     public static final double SIMULATION_ELEVATOR_LENGTH_METERS = 1;
     public static final double SIMULATION_ELEVATOR_MASS_KG = 0.5;

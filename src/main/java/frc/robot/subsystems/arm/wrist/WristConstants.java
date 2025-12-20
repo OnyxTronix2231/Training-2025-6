@@ -34,7 +34,7 @@ public class WristConstants {
         GravityTypeValue.Arm_Cosine,
         StaticFeedforwardSignValue.UseVelocitySign);
 
-    public static final double SIMULATION_WRIST_CRUISE_VELOCITY = 1;
+    public static final double SIMULATION_WRIST_CRUISE_VELOCITY = 3.575;
     public static final double SIMULATION_WRIST_ACCELERATION = 1;
 
     public static final double SIMULATION_WRIST_KP = 1;
@@ -76,6 +76,6 @@ public class WristConstants {
     public static final double SIMULATION_WRIST_MASS_KG = 0.1;
     public static final int SIMULATION_WRIST_NUM_OF_MOTORS = 1;
 
-
     public static final double WRIST_ZERO_OFFSET_DEG = 90;
+    public static final double WRIST_VISUALIZATION_OFFSET = -90;
 }

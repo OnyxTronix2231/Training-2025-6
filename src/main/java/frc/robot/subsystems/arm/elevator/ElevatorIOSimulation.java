@@ -1,7 +1,7 @@
 package frc.robot.subsystems.arm.elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -28,7 +28,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
         public static boolean isLimitSwitchPressed;
     }
 
-    private final PositionVoltage positionVoltage = new PositionVoltage(0).withSlot(0);
+    private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0).withSlot(0);
 
     public ElevatorIOSimulation() {
         motor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
@@ -59,6 +59,10 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         configuration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         configuration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = LENGTH_TO_ROTATIONS(ELEVATOR_REVERSE_LIMIT_THRESHOLD, true);
+
+        configuration.MotionMagic.MotionMagicCruiseVelocity = SIMULATION_ELEVATOR_CRUISE_VELOCITY;
+        configuration.MotionMagic.MotionMagicAcceleration = SIMULATION_ELEVATOR_ACCELERATION;
+        configuration.MotionMagic.MotionMagicJerk = SIMULATION_ELEVATOR_JERK;
 
         return configuration;
     }
@@ -95,7 +99,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     @Override
     public void moveToLength(double length) {
-        motor.setControl(positionVoltage.withPosition(LENGTH_TO_ROTATIONS(length, true)));
+        motor.setControl(motionMagicVoltage.withPosition(LENGTH_TO_ROTATIONS(length, true)));
     }
 
     public void updateMotor() {
