@@ -37,9 +37,9 @@ public class WristConstants {
     public static final double SIMULATION_WRIST_CRUISE_VELOCITY = 1;
     public static final double SIMULATION_WRIST_ACCELERATION = 1;
 
-    public static final double SIMULATION_WRIST_KP = 0;
+    public static final double SIMULATION_WRIST_KP = 1;
     public static final double SIMULATION_WRIST_KI = 0;
-    public static final double SIMULATION_WRIST_KD = 0;
+    public static final double SIMULATION_WRIST_KD = 0.25;
     public static final double SIMULATION_WRIST_KG = 0;
     public static final double SIMULATION_WRIST_KS = 0;
     public static final double SIMULATION_WRIST_KV = 0;
@@ -72,8 +72,8 @@ public class WristConstants {
 
     public static final double SIMULATION_DT_SECONDS = 0.02;
 
-    public static final double SIMULATION_WRIST_LENGTH_METERS = 0.001;
-    public static final double SIMULATION_WRIST_MASS_KG = 0.001;
+    public static final double SIMULATION_WRIST_LENGTH_METERS = 0.25;
+    public static final double SIMULATION_WRIST_MASS_KG = 0.1;
     public static final int SIMULATION_WRIST_NUM_OF_MOTORS = 1;
 
 

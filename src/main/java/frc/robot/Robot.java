@@ -11,6 +11,7 @@ import frc.robot.Visualization.ElevatorVisualization;
 import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.ArmShuffleboard;
 import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
 import frc.robot.subsystems.arm.wrist.WristIOSimulation;
 import org.littletonrobotics.junction.LoggedRobot;
@@ -38,7 +39,7 @@ public class Robot extends LoggedRobot {
 //        new ElevatorVisualization();
 
         Arm.init(new WristIOSimulation(), new ElevatorIOSimulation());
-        // new ArmShuffleboard();
+        new ArmShuffleboard();
         new WristVisualization();
         new ElevatorVisualization();
     }
