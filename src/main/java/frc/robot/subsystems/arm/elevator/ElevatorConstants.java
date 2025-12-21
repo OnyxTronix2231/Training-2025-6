@@ -12,9 +12,10 @@ public class ElevatorConstants {
 
     public static final int ELEVATOR_LIMIT_SWITCH_ID = 10;
 
-    public static final double ELEVATOR_FORWARD_LIMIT_THRESHOLD = 1.3;
+    public static final double ELEVATOR_FORWARD_LIMIT_THRESHOLD = 0.998;
     public static final double ELEVATOR_REVERSE_LIMIT_THRESHOLD = 0.002;
     public static final double ELEVATOR_ALLOWED_LENGTH_ERROR_METERS = 0.02;
+    public static final double ELEVATOR_SWITCH_DEBOUNCE_TIME = 0.1;
 
     public static final double ELEVATOR_KP = 0;
     public static final double ELEVATOR_KI = 0;
@@ -90,7 +91,7 @@ public class ElevatorConstants {
 
     public static final double SIMULATION_DT_SECONDS = 0.02;
 
-    public static final double SIMULATION_ELEVATOR_CRUISE_VELOCITY = 0.975; // 0.975
+    public static final double SIMULATION_ELEVATOR_CRUISE_VELOCITY = 0.975;
     public static final double SIMULATION_ELEVATOR_ACCELERATION = 10; // 5
     public static final double SIMULATION_ELEVATOR_JERK = 0;
 

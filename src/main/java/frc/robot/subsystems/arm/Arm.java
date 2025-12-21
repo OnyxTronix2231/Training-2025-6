@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.PID.PIDValues;
@@ -7,8 +8,7 @@ import frc.robot.subsystems.arm.elevator.ElevatorIO;
 import frc.robot.subsystems.arm.wrist.WristIO;
 import org.littletonrobotics.junction.Logger;
 
-import static frc.robot.subsystems.arm.elevator.ElevatorConstants.ELEVATOR_ALLOWED_LENGTH_ERROR_METERS;
-import static frc.robot.subsystems.arm.elevator.ElevatorConstants.ZEROED_HEIGHT;
+import static frc.robot.subsystems.arm.elevator.ElevatorConstants.*;
 import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_ALLOWED_ANGLE_ERROR;
 import static frc.robot.subsystems.arm.wrist.WristConstants.ZEROED_ANGLE;
 
@@ -18,6 +18,8 @@ public class Arm extends SubsystemBase {
 
     private final WristIO.WristInputs wristInputs;
     private final WristIO wristIO;
+
+    private final Debouncer elevatorSwitchDebouncer;
 
     private ArmPosition wantedArmPosition;
 
@@ -67,6 +69,8 @@ public class Arm extends SubsystemBase {
         previousSystemState = SystemState.IDLING;
 
         this.wantedArmPosition = new ArmPosition(ZEROED_HEIGHT, ZEROED_ANGLE);
+
+        elevatorSwitchDebouncer = new Debouncer(ELEVATOR_SWITCH_DEBOUNCE_TIME, Debouncer.DebounceType.kBoth);
     }
 
     @Override
@@ -112,7 +116,7 @@ public class Arm extends SubsystemBase {
     }
 
     public boolean isElevatorSwitchPressed() {
-        return elevatorInputs.isMicroSwitchPressed;
+        return elevatorSwitchDebouncer.calculate(elevatorInputs.isMicroSwitchPressed);
     }
 
     public boolean isWristOnTarget() {

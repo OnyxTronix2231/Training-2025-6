@@ -34,10 +34,6 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-//        Elevator.init(new ElevatorIOSimulation());
-//        new ElevatorShuffleboard();
-//        new ElevatorVisualization();
-
         Arm.init(new WristIOSimulation(), new ElevatorIOSimulation());
         new ArmShuffleboard();
         new WristVisualization();
@@ -82,13 +78,9 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
+
         updateVisualizations();
 
-
-        // if (button1.isPressed()) {
-        //     led.fullColor(Color.RED);
-        // }
-        // led.periodic();
         CommandScheduler.getInstance().run();
     }
 
