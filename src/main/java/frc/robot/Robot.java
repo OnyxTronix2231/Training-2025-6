@@ -7,8 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Visualization.ElevatorVisualization;
-import frc.robot.Visualization.WristVisualization;
+import frc.robot.Visualization.ArmVisualization;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmShuffleboard;
@@ -36,8 +35,9 @@ public class Robot extends LoggedRobot {
 
         Arm.init(new WristIOSimulation(), new ElevatorIOSimulation());
         new ArmShuffleboard();
-        new WristVisualization();
-        new ElevatorVisualization();
+        new ArmVisualization();
+//        new WristVisualization();
+//        new ElevatorVisualization();
     }
 
     /**

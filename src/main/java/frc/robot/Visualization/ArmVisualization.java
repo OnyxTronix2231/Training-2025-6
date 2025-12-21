@@ -7,20 +7,22 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 import static frc.robot.subsystems.arm.elevator.ElevatorConstants.ELEVATOR_VISUALIZATION_OFFSET;
+import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_VISUALIZATION_OFFSET;
 
-public class ElevatorVisualization extends VisualizedSubsystem {
+public class ArmVisualization extends VisualizedSubsystem {
     private final Arm arm;
 
-    public ElevatorVisualization() {
+    public ArmVisualization() {
         arm = Arm.getInstance();
     }
 
     @Override
     void updateVisualization() {
-        ElevatorVisualizationMechanism.ELEVATOR.setLength(arm.getElevatorLength() + ELEVATOR_VISUALIZATION_OFFSET);
+        ArmVisualizationMechanism.ELEVATOR.setLength(arm.getElevatorLength() + ELEVATOR_VISUALIZATION_OFFSET);
+        ArmVisualizationMechanism.WRIST.setAngle(arm.getWristAngle() + WRIST_VISUALIZATION_OFFSET);
     }
 
-    public class ElevatorVisualizationMechanism {
+    public class ArmVisualizationMechanism {
         private static final double ELEVATOR_X_POSITION = 2;
         private static final double ELEVATOR_Y_POSITION = 1;
         private static final double ELEVATOR_LIGAMENT_LENGTH = 0.375;
@@ -37,6 +39,16 @@ public class ElevatorVisualization extends VisualizedSubsystem {
             )
         );
 
+        private static final double WRIST_LIGAMENT_LENGTH = 0.375;
+        private static final double WRIST_LIGAMENT_ANGLE = 0;
+        private static final double WRIST_LIGAMENT_LINE_WIDTH = 5;
+        public static final Color8Bit WRIST_LIGAMENT_COLOR = new Color8Bit(Color.kBlue);
 
+        public static final LoggedMechanismLigament2d WRIST = ELEVATOR.append(
+            new LoggedMechanismLigament2d("wrist",
+                WRIST_LIGAMENT_LENGTH, WRIST_LIGAMENT_ANGLE,
+                WRIST_LIGAMENT_LINE_WIDTH, WRIST_LIGAMENT_COLOR
+            )
+        );
     }
 }
