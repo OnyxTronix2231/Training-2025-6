@@ -20,7 +20,7 @@ public class WristVisualization extends VisualizedSubsystem {
 
     public class WristVisualizationMechanism {
         private static final double X_POSITION = 3;
-        private static final double Y_POSITION = 0.1;
+        private static final double Y_POSITION = 2;
         private static final double LIGAMENT_LENGTH = 0.375;
         private static final double LIGAMENT_ANGLE = 0;
         private static final double LIGAMENT_LINE_WIDTH = 5;

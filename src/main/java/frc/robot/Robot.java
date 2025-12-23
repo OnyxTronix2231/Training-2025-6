@@ -4,14 +4,14 @@
 
 package frc.robot;
 
-import Lrobot.Visualization.WristVisualization;
+import Lrobot.Visualization.CoralHolderVisualization;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.wrist.Wrist;
-import frc.robot.subsystems.wrist.WristIOSimulation;
-import frc.robot.subsystems.wrist.WristShuffleboard;
+import frc.robot.subsystems.coralHolder.CoralHolder;
+import frc.robot.subsystems.coralHolder.CoralHolderIOSimulation;
+import frc.robot.subsystems.coralHolder.CoralHolderShuffleboard;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -35,10 +35,14 @@ public class Robot extends LoggedRobot {
 //        Elevator.init(new ElevatorIOSimulation());
 //        new ElevatorShuffleboard();
 //        new ElevatorVisualization();
+//
+//        Wrist.init(new WristIOSimulation());
+//        new WristShuffleboard();
+//        new WristVisualization();
 
-        Wrist.init(new WristIOSimulation());
-        new WristShuffleboard();
-        new WristVisualization();
+        CoralHolder.init(new CoralHolderIOSimulation());
+        new CoralHolderShuffleboard();
+        new CoralHolderVisualization(CoralHolder.getInstance());
     }
 
     /**

@@ -1,7 +1,6 @@
-package frc.robot.subsystems.wrist;
+package frc.robot.subsystems.coralHolder;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -15,50 +14,63 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.lib.OnyxMotorInputs;
 import org.littletonrobotics.junction.Logger;
 
-import static frc.robot.subsystems.wrist.WristConstants.*;
+import static frc.robot.subsystems.coralHolder.CoralHolderConstants.*;
 
-public class WristIOSimulation implements WristIO {
+public class CoralHolderIOSimulation implements CoralHolderIO {
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
 
-    private final OnyxMotorInputs wristMotorInputs;
+    private final OnyxMotorInputs coralHolderMotorInputs;
 
-    private final MotionMagicVoltage angleController;
+    class SimulatedSensors {
+        public static boolean outerSensorDetecting;
+        public static boolean innerSensorDetecting;
+    }
 
-    public WristIOSimulation() {
-        motor = new TalonFX(WRIST_MOTOR_ID);
-        simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(SIMULATION_WRIST_NUM_OF_MOTORS),
-                SingleJointedArmSim.estimateMOI(SIMULATION_WRIST_LENGTH_METERS, SIMULATION_WRIST_MASS_KG), 1.0),
-                DCMotor.getKrakenX60(SIMULATION_WRIST_NUM_OF_MOTORS));
-        wristMotorInputs = new OnyxMotorInputs(motor, "Wrist", "wristMotor", ROTATIONS_TO_ANGLE);
+    public CoralHolderIOSimulation() {
+        motor = new TalonFX(CORAL_HOLDER_MOTOR_ID);
+
+        simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(CORAL_HOLDER_NUM_OF_MOTORS),
+                SingleJointedArmSim.estimateMOI(CORAL_HOLDER_SIMULATION_LENGTH_METERS, CORAL_HOLDER_SIMULATION_WEIGHT_KG), 1),
+                DCMotor.getKrakenX60(CORAL_HOLDER_NUM_OF_MOTORS));
+
+        coralHolderMotorInputs = new OnyxMotorInputs(motor, "CoralHolder", "coralHolderMotor");
 
         motor.getConfigurator().apply(getTalonFXConfiguration());
-
-        angleController = new MotionMagicVoltage(0);
     }
 
     public TalonFXConfiguration getTalonFXConfiguration() {
         TalonFXConfiguration configuration = new TalonFXConfiguration();
 
-        configuration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-
-        configuration.Slot0 = SIMULATION_WRIST_PID_VALUES.pidValuesToSlot0Configs();
+        configuration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         configuration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         return configuration;
     }
 
-    @Override
-    public void updateInputs(WristInputs inputs) {
-        updateMotor();
-        wristMotorInputs.updateInputs();
-        inputs.wristMotorInputs = wristMotorInputs;
-
-        inputs.encoderPosition = 0;
+    public boolean isOuterSensorDetecting() {
+        return SimulatedSensors.outerSensorDetecting;
     }
 
-    public void updateMotor() {
+    public boolean isInnerSensorDetecting() {
+        return SimulatedSensors.outerSensorDetecting;
+    }
+
+
+    @Override
+    public void updateInputs(CoralHolderInputs inputs) {
+        updateMotor();
+
+        coralHolderMotorInputs.updateInputs();
+
+        inputs.coralHolderInputs = coralHolderMotorInputs;
+
+        inputs.isOuterSensorDetecting = SimulatedSensors.outerSensorDetecting;
+        inputs.isInnerSensorDetecting = SimulatedSensors.innerSensorDetecting;
+    }
+
+    private void updateMotor() {
         TalonFXSimState motorSimState = motor.getSimState();
         motor.getSimState().setSupplyVoltage(RobotController.getBatteryVoltage());
 
@@ -72,17 +84,7 @@ public class WristIOSimulation implements WristIO {
     }
 
     @Override
-    public double getEncoderPosition() {
-        return 0;
-    }
-
-    @Override
     public void setDutyCycle(double dutyCycle) {
         motor.set(dutyCycle);
-    }
-
-    @Override
-    public void moveToAngle(double angle) {
-        motor.setControl(angleController.withPosition(ANGLE_TO_ROTATIONS(angle)));
     }
 }

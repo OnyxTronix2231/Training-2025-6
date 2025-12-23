@@ -18,7 +18,7 @@ public class BallIntake extends SubsystemBase {
         IDLE,
         INTAKING,
         HAS_BALL,
-        EJECTING
+        EJECTING,
     }
 
     private WantedState wantedState;
