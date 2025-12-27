@@ -5,6 +5,7 @@
 package frc.robot;
 
 import Lrobot.Visualization.ElevatorVisualization;
+import Lrobot.Visualization.WristVisualization;
 import Lrobot.elevator.Elevator;
 import Lrobot.elevator.ElevatorIORobot;
 import Lrobot.elevator.ElevatorIOSimulation;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.wrist.*;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -37,9 +39,16 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        Elevator.init(new ElevatorIOSimulation());
-        new ElevatorShuffleboard();
-        new ElevatorVisualization();
+        //Wrist.init(new WristIORobot());
+        //new WristShuffleBoard();
+
+        Wrist.init(new WristIOSimulation());
+        new WristShuffleBoard();
+        new WristVisualization();
+
+        //Elevator.init(new ElevatorIOSimulation());
+        //new ElevatorShuffleboard();
+        //new ElevatorVisualization();
     }
 
     /**

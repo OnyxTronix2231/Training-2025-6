@@ -1,5 +1,4 @@
 package Lrobot.Visualization;
-
 import Lrobot.Hinge.Hinge;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;

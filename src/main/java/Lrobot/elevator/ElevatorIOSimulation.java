@@ -94,8 +94,18 @@ public class ElevatorIOSimulation implements ElevatorIO {
         SimulatedSensors.isLimitSwitchPressed = value;
     }
 
-    public static boolean getLimitSwitchValue() {
+    public boolean getLimitSwitchValue() {
         return SimulatedSensors.isLimitSwitchPressed;
+    }
+
+    @Override
+    public boolean isSensor1() {
+        return false;
+    }
+
+    @Override
+    public boolean isSensor2() {
+        return false;
     }
 
     @Override
