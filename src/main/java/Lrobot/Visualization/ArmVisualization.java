@@ -1,4 +1,4 @@
-package frc.robot.Visualization;
+package Lrobot.Visualization;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 import static frc.robot.subsystems.arm.elevator.ElevatorConstants.SIMULATION_ELEVATOR_VISUALIZATION_OFFSET;
 import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_ZERO_OFFSET_DEG;
 
-public class ArmVisualization extends VisualizedSubsystem{
+public class ArmVisualization extends VisualizedSubsystem {
 
     private final ArmSubsystem armSubsystem;
 
