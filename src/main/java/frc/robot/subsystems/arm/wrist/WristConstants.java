@@ -8,7 +8,7 @@ import java.util.function.DoubleUnaryOperator;
 
 public class WristConstants {
     public static final String WRIST_SUBSYSTEM_NAME = "arm";
-    public static final String WRIST_MOTOR_MASTER_NAME = "wrist";
+    public static final String WRIST_MOTOR_NAME = "wrist";
 
     public static final int WRIST_MOTOR_ID = 11;
 
@@ -56,6 +56,8 @@ public class WristConstants {
 
     public static final DoubleUnaryOperator ROTATIONS_TO_ANGLE = rotations -> rotations * 360;
 
+    public static final double ZEROED_ANGLE = 90;
+    public static final double DEFAULT_ANGLE = 90;
 
     //SIMULATION
     public static final String SIMULATION_WRIST_MOTOR_NAME = "WRIST_MOTOR";

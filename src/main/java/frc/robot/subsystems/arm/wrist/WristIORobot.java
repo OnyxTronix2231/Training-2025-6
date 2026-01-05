@@ -28,7 +28,7 @@ public class WristIORobot implements WristIO {
     public WristIORobot() {
         motor = new TalonFX(WRIST_MOTOR_ID);
 
-        wristMotorInputs = new OnyxMotorInputs(motor, WRIST_SUBSYSTEM_NAME, WRIST_MOTOR_MASTER_NAME, ROTATIONS_TO_ANGLE);
+        wristMotorInputs = new OnyxMotorInputs(motor, WRIST_SUBSYSTEM_NAME, WRIST_MOTOR_NAME, ROTATIONS_TO_ANGLE);
 
         wristMotorInputs.updateInputs();
 

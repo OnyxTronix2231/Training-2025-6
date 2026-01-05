@@ -33,7 +33,7 @@ public class WristIOSimulation implements WristIO {
                 SingleJointedArmSim.estimateMOI(SIMULATION_WRIST_LENGTH_METERS, SIMULATION_WRIST_MASS_KG), RATIO),
                 DCMotor.getKrakenX60(SIMULATION_WRIST_NUM_OF_MOTORS));
 
-        wristMotorInputs = new OnyxMotorInputs(motor, WRIST_SUBSYSTEM_NAME, WRIST_MOTOR_MASTER_NAME, ROTATIONS_TO_ANGLE);
+        wristMotorInputs = new OnyxMotorInputs(motor, WRIST_SUBSYSTEM_NAME, WRIST_MOTOR_NAME, ROTATIONS_TO_ANGLE);
 
         motor.getConfigurator().apply(getTalonFXConfiguration());
 

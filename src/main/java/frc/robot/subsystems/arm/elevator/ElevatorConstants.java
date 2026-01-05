@@ -78,6 +78,9 @@ public class ElevatorConstants {
         return length / diameter * ratio;
     }
 
+    public static final double ZEROED_HEIGHT = 0;
+    public static final double DEFAULT_HEIGHT = 0;
+
     //SIMULATION
     public static final String SIMULATION_ELEVATOR_MOTOR_NAME = "ELEVATOR_MOTOR";
 
