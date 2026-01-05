@@ -2,7 +2,6 @@ package frc.robot.subsystems.arm.elevator;
 
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
-import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.lib.PID.PIDValues;
 
 import java.util.function.DoubleUnaryOperator;

@@ -17,7 +17,7 @@ import frc.robot.lib.PID.PIDValues;
 import static Lrobot.elevator.ElevatorConstants.SIMULATION_DT_SECONDS;
 import static frc.robot.subsystems.arm.elevator.ElevatorConstants.*;
 
-public class ElevatorSimulation implements ElevatorIO {
+public class ElevatorIOSimulation implements ElevatorIO {
 
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
@@ -31,10 +31,10 @@ public class ElevatorSimulation implements ElevatorIO {
         public static boolean isLimitSwitchPressed;
     }
 
-    public ElevatorSimulation() {
+    public ElevatorIOSimulation() {
         motor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
 
-        simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS),
+            simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS),
                 SingleJointedArmSim.estimateMOI(SIMULATION_ELEVATOR_LENGTH_METERS, SIMULATION_ELEVATOR_MASS_KG), RATIO),
                 DCMotor.getKrakenX60(SIMULATION_ELEVATOR_NUM_OF_MOTORS));
 

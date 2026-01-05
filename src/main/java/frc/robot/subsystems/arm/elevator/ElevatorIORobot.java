@@ -12,7 +12,7 @@ import frc.robot.lib.PID.PIDValues;
 
 import static frc.robot.subsystems.arm.elevator.ElevatorConstants.*;
 
-public class ElevatorRobot implements ElevatorIO {
+public class ElevatorIORobot implements ElevatorIO {
 
     private final TalonFX masterMotor;
     private final TalonFX followerMotor;
@@ -24,7 +24,7 @@ public class ElevatorRobot implements ElevatorIO {
 
     private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0.0).withSlot(ELEVATOR_MOTION_MAGIC_DEFAULT_SLOT);
 
-    public ElevatorRobot() {
+    public ElevatorIORobot() {
         masterMotor = new TalonFX(ELEVATOR_MASTER_MOTOR_ID);
         followerMotor = new TalonFX(ELEVATOR_FOLLOWER_MOTOR_ID);
 
