@@ -1,32 +1,27 @@
 package frc.robot.subsystems.arm.elevator;
 
+import frc.robot.lib.OnyxMotorInputs;
+
 public interface ElevatorIO {
     void updateInputs(ElevatorIOInputs inputs);
 
     class ElevatorIOInputs {
-        public double elevatorPrimaryMotorDutyCycle;
-        public double elevatorPrimaryMotorAppliedVolts;
-        public double elevatorPrimaryMotorSupplyCurrentAmps;
-        public double elevatorPrimaryMotorStatorCurrentAmps;
-        public double elevatorPrimaryMotorAngularVelocityRadPerSec;
-        public double elevatorPrimaryMotorAngularAccelerationRadPerSecSquare;
-        public double elevatorPrimaryMotorMotorTemp;
-        public double elevatorSlaveMotorDutyCycle;
-        public double elevatorSlaveMotorAppliedVolts;
-        public double elevatorSlaveMotorSupplyCurrentAmps;
-        public double elevatorSlaveMotorStatorCurrentAmps;
-        public double elevatorSlaveMotorAngularVelocityRadPerSec;
-        public double elevatorSlaveMotorAngularAccelerationRadPerSecSquare;
-        public double elevatorSlaveMotorMotorTemp;
+        public OnyxMotorInputs masterMotorInputs;
+        public OnyxMotorInputs followerMotorInputs;
+        public boolean isLimitSwitchPressed;
+        public double elevatorHeight;
     }
 
     void setDutyCycle(double dutyCycle);
 
+    void stop();
+
     double getHeight();
 
+    void moveElevatorToHeight(double height);
 
+    boolean isOnTarget(double target);
 
-
-
+    void updatePID(double kP, double kI, double kD);
 
 }

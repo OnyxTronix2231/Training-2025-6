@@ -14,7 +14,14 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Visualization.ElevatorVisualization;
+import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.elevator.ElevatorIORobot;
+import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
+import frc.robot.subsystems.arm.wrist.WristIORobot;
+import frc.robot.subsystems.arm.wrist.WristIOSimulation;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -31,6 +38,8 @@ import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
  */
 public class Robot extends LoggedRobot {
 
+    public static Constants.RunningState currentRunningState = isSimulation() ? Constants.RunningState.SIMULATION : Constants.RunningState.ROBOT;
+
     // private LED led;
     // private KeyButton button1;
 
@@ -39,12 +48,23 @@ public class Robot extends LoggedRobot {
         initializeLogger();
         Superstructure.init();
 
-        AddressableLEDSim strip = new AddressableLEDSim();
-        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
-        strip.setLength(buffer.getLength());
+//        AddressableLEDSim strip = new AddressableLEDSim();
+//        AddressableLEDBuffer buffer = new AddressableLEDBuffer(7);
+//        strip.setLength(buffer.getLength());
+//
+//        buffer.setRGB(3, 0, 255, 0);
+//        strip.setData(buffer);
 
-        buffer.setRGB(3, 0, 255, 0);
-        strip.setData(buffer);
+        switch (currentRunningState) {
+            case SIMULATION -> {
+                ArmSubsystem.init(new ElevatorIOSimulation(), new WristIOSimulation());
+                new ElevatorVisualization();
+                new WristVisualization();
+            }
+            case ROBOT -> {
+                ArmSubsystem.init(new ElevatorIORobot(), new WristIORobot());
+            }
+        }
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
