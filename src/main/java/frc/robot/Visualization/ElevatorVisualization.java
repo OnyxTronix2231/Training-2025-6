@@ -15,7 +15,7 @@ public class ElevatorVisualization extends VisualizedSubsystem {
 
     @Override
     void updateVisualization() {
-        ElevatorVisualizationMechanism.ELEVATOR.setLength(arcSubsystem.getElevatorLength() + 0.02);
+        ElevatorVisualizationMechanism.ELEVATOR.setLength(arcSubsystem.getElevatorLength() + 0.2);
     }
 
     public class ElevatorVisualizationMechanism {
@@ -23,7 +23,7 @@ public class ElevatorVisualization extends VisualizedSubsystem {
         public static final double ELEVATOR_Y_POSITION = 0;
         public static final LoggedMechanismRoot2d elevatorRoot = ROBOT_MECHANISM.getRoot("elevator", ELEVATOR_X_POSITION, ELEVATOR_Y_POSITION);
 
-        private static final double ELEVATOR_LIGAMENT_LENGTH = 0.02;
+        private static final double ELEVATOR_LIGAMENT_LENGTH = 0.2;
         private static final double ELEVATOR_LIGAMENT_ANGLE = 90;
         private static final double ELEVATOR_LIGAMENT_LINE_WIDTH = 8;
         public static final Color8Bit ELEVATOR_LIGAMENT_COLOR = new Color8Bit(Color.kSkyBlue);
