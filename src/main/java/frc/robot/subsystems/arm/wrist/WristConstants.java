@@ -38,8 +38,8 @@ public class WristConstants {
     public static final double SIMULATED_KV = 0;
     public static final double SIMULATED_KA = 0;
 
-    public static final double SIMULATED_MOTION_MAGIC_ACCELERATION = 0;
-    public static final double SIMULATED_MOTION_MAGIC_SPEED = 0;
+    public static final double SIMULATED_MOTION_MAGIC_ACCELERATION = 1;
+    public static final double SIMULATED_MOTION_MAGIC_SPEED = 1;
     public static final double SIMULATED_MOTION_MAGIC_JERK = 0;
 
     public static PIDValues SIMULATED_WRIST_PID_VALUES = new PIDValues(SIMULATED_KP, SIMULATED_KI, SIMULATED_KD, SIMULATED_KG, SIMULATED_KS, SIMULATED_KV, SIMULATED_KA, GravityTypeValue.Arm_Cosine, StaticFeedforwardSignValue.UseClosedLoopSign);
