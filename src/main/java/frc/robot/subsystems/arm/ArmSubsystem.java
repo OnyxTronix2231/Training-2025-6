@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.arm.elevator.ElevatorIO;
@@ -72,6 +73,22 @@ public class ArmSubsystem extends SubsystemBase {
 
     public double getWristAngle() {
         return wristIOInputs.wristAngle;
+    }
+
+    public double getWristVelocity() {
+        return wristIOInputs.motorInputs.getMotorAngularVelocityRadPerSec();
+    }
+
+    public double getWristAcceleration() {
+        return wristIOInputs.motorInputs.getMotorAngularAccelerationRadPerSecSquared();
+    }
+
+    public double getElevatorVelocity() {
+        return elevatorIOInputs.masterMotorInputs.getMotorAngularVelocityRadPerSec();
+    }
+
+    public double getElevatorAcceleration() {
+        return elevatorIOInputs.masterMotorInputs.getMotorAngularAccelerationRadPerSecSquared();
     }
 
     @Override

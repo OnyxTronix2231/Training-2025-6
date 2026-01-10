@@ -30,6 +30,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import java.awt.*;
 
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
+import static frc.robot.Visualization.VisualizedSubsystem.updateVisualizations;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -111,6 +112,8 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         Logger.recordOutput("robot mechanism", ROBOT_MECHANISM);
+
+        updateVisualizations();
 
         // if (button1.isPressed()) {
         //     led.fullColor(Color.RED);
