@@ -1,11 +1,17 @@
 package frc.robot.subsystems.arm;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.lib.PID.PIDValues;
 import frc.robot.subsystems.arm.elevator.ElevatorIO;
+import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
 import frc.robot.subsystems.arm.wrist.WristIO;
 import org.littletonrobotics.junction.Logger;
+
+import static frc.robot.subsystems.arm.elevator.ElevatorConstants.ELEVATOR_PID_VALUES;
+import static frc.robot.subsystems.arm.elevator.ElevatorConstants.SIMULATED_ELEVATOR_PID_VALUES;
+import static frc.robot.subsystems.arm.wrist.WristConstants.SIMULATED_WRIST_PID_VALUES;
+import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_PID_VALUES;
 
 public class ArmSubsystem extends SubsystemBase {
     private final ElevatorIO elevatorIO;
@@ -75,6 +81,10 @@ public class ArmSubsystem extends SubsystemBase {
         return wristIOInputs.wristAngle;
     }
 
+    public boolean isLimitSwitchPressed() {
+        return elevatorIOInputs.isLimitSwitchPressed;
+    }
+
     public double getWristVelocity() {
         return wristIOInputs.motorInputs.getMotorAngularVelocityRadPerSec();
     }
@@ -89,6 +99,14 @@ public class ArmSubsystem extends SubsystemBase {
 
     public double getElevatorAcceleration() {
         return elevatorIOInputs.masterMotorInputs.getMotorAngularAccelerationRadPerSecSquared();
+    }
+
+    public PIDValues getElevatorPIDValues(boolean isSimulated) {
+        return isSimulated ? SIMULATED_ELEVATOR_PID_VALUES : ELEVATOR_PID_VALUES;
+    }
+
+    public PIDValues getWristPIDValues(boolean isSimulated) {
+        return isSimulated ? SIMULATED_WRIST_PID_VALUES : WRIST_PID_VALUES;
     }
 
     @Override
@@ -114,7 +132,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         previousWantedArmPosition = wantedArmPosition.createAClone();
 
-        Logger.recordOutput("Subsystem/Arm/PeriodicTime", timeStamp - Timer.getFPGATimestamp());
+        Logger.recordOutput("Subsystems/Arm/PeriodicTime", timeStamp - Timer.getFPGATimestamp());
     }
 
     private SystemState handleStateTransition() {
@@ -148,6 +166,18 @@ public class ArmSubsystem extends SubsystemBase {
         wristIO.moveWristToAngle(position.getWristAngle());
     }
 
+    public void toggleLimitSwitchSimulated() {
+        ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed = !ElevatorIOSimulation.SimulatedSensors.isLimitSwitchPressed;
+    }
+
+    public void updateElevatorPID(double kP, double kI, double kD, double kG) {
+        elevatorIO.updatePID(kP, kI, kD, kG);
+    }
+
+    public void updateWristPID(double kP, double kI, double kD, double kG) {
+        wristIO.updatePID(kP, kI, kD, kG);
+    }
+
     private static ArmSubsystem instance;
 
     public static void init(ElevatorIO elevatorIO, WristIO wristIO) {
@@ -158,5 +188,9 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static ArmSubsystem getInstance() {
         return instance;
+    }
+
+    public void setWristDutyCycle(double dC) {
+        wristIO.setDutyCycle(dC);
     }
 }

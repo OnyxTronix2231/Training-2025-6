@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.lib.OnyxMotorInputs;
 
 import static frc.robot.subsystems.arm.elevator.ElevatorConstants.*;
-import static frc.robot.subsystems.arm.elevator.ElevatorConstants.SIMULATED_CONSTANTS.*;
 
 public class ElevatorIOSimulation implements ElevatorIO {
     private final TalonFX motor;
@@ -24,7 +23,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
     private final OnyxMotorInputs masterMotorInputs;
     private final OnyxMotorInputs followerMotorInputs;
 
-    class simulatedSensors {
+    public static class SimulatedSensors {
         public static boolean isLimitSwitchPressed;
 
         public static void setLimitSwitchPressed(boolean pressed) {
@@ -37,7 +36,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
     public ElevatorIOSimulation() {
         motor = new TalonFX(MASTER_MOTOR_ID);
         simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(2),
-                                        SingleJointedArmSim.estimateMOI(0.001, 0.001), RATIO),
+                SingleJointedArmSim.estimateMOI(0.001, 0.001), RATIO),
                 DCMotor.getKrakenX60(2));
 
         masterMotorInputs = new OnyxMotorInputs(motor, "Arm/Elevator", "Master Motor");
@@ -45,7 +44,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
         motor.getConfigurator().apply(getMotorConfiguration());
 
-        simulatedSensors.setLimitSwitchPressed(true);
+        SimulatedSensors.setLimitSwitchPressed(true);
 
     }
 
@@ -56,6 +55,10 @@ public class ElevatorIOSimulation implements ElevatorIO {
         config.Slot0.withKI(SIMULATED_KI);
         config.Slot0.withKD(SIMULATED_KD);
         config.Slot0.withKG(SIMULATED_KG);
+
+        config.MotionMagic.MotionMagicAcceleration = SIMULATED_MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = SIMULATED_MOTION_MAGIC_SPEED;
+        config.MotionMagic.MotionMagicJerk = SIMULATED_MOTION_MAGIC_JERK;
 
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -70,7 +73,7 @@ public class ElevatorIOSimulation implements ElevatorIO {
         followerMotorInputs.updateInputs();
         inputs.followerMotorInputs = followerMotorInputs;
 
-        inputs.isLimitSwitchPressed = simulatedSensors.isLimitSwitchPressed;
+        inputs.isLimitSwitchPressed = SimulatedSensors.isLimitSwitchPressed;
 
         inputs.elevatorHeight = getHeight();
 
@@ -89,12 +92,12 @@ public class ElevatorIOSimulation implements ElevatorIO {
 
     @Override
     public double getHeight() {
-        return ROTATIONS_TO_METERS(motor.getPosition().getValueAsDouble());
+        return motor.getPosition().getValueAsDouble() * 2 * Math.PI / RATIO;
     }
 
     @Override
     public void moveElevatorToHeight(double height) {
-        motor.setControl(motionMagicVoltage.withPosition(METERS_TO_ROTATIONS(height)));
+        motor.setControl(motionMagicVoltage.withPosition(height / (2 * Math.PI * 1) * RATIO));
     }
 
     @Override
@@ -103,8 +106,8 @@ public class ElevatorIOSimulation implements ElevatorIO {
     }
 
     @Override
-    public void updatePID(double kP, double kI, double kD) {
-        motor.getConfigurator().apply(new Slot0Configs().withKP(kP).withKI(kI).withKD(kD));
+    public void updatePID(double kP, double kI, double kD, double kG) {
+        motor.getConfigurator().apply(new Slot0Configs().withKP(kP).withKI(kI).withKD(kD).withKG(kG));
     }
 
     private void updateSimulatedMotor() {

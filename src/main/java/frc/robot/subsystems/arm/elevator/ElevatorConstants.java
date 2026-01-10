@@ -12,13 +12,17 @@ public class ElevatorConstants {
 
     public static final double HEIGHT_ERROR_TOLERANCE = 0.02;
 
-    public static final double KP = 0;
+    public static final double KP = 1;
     public static final double KI = 0;
     public static final double KD = 0;
     public static final double KG = 0;
     public static final double KS = 0;
     public static final double KV = 0;
     public static final double KA = 0;
+
+    public static final double MOTION_MAGIC_ACCELERATION = 1;
+    public static final double MOTION_MAGIC_SPEED = 1;
+    public static final double MOTION_MAGIC_JERK = 0;
     
     public static PIDValues ELEVATOR_PID_VALUES = new PIDValues(KP, KI, KD, KG, KS, KV, KA, GravityTypeValue.Elevator_Static, StaticFeedforwardSignValue.UseClosedLoopSign);
 
@@ -36,11 +40,18 @@ public class ElevatorConstants {
         return height / (2 * Math.PI * RADIUS) * RATIO;
     }
 
-    public class SIMULATED_CONSTANTS {
-        public static final double SIMULATED_KP = 0;
-        public static final double SIMULATED_KI = 0;
-        public static final double SIMULATED_KD = 0;
-        public static final double SIMULATED_KG = 0;
-    }
+    public static final double SIMULATED_KP = 1;
+    public static final double SIMULATED_KI = 0;
+    public static final double SIMULATED_KD = 0;
+    public static final double SIMULATED_KG = 0;
+    public static final double SIMULATED_KS = 0;
+    public static final double SIMULATED_KV = 0;
+    public static final double SIMULATED_KA = 0;
+
+    public static final double SIMULATED_MOTION_MAGIC_ACCELERATION = 1;
+    public static final double SIMULATED_MOTION_MAGIC_SPEED = 1;
+    public static final double SIMULATED_MOTION_MAGIC_JERK = 0;
+
+    public static PIDValues SIMULATED_ELEVATOR_PID_VALUES = new PIDValues(SIMULATED_KP, SIMULATED_KI, SIMULATED_KD, SIMULATED_KG, SIMULATED_KS, SIMULATED_KV, SIMULATED_KA, GravityTypeValue.Elevator_Static, StaticFeedforwardSignValue.UseClosedLoopSign);
 
 }

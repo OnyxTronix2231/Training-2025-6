@@ -47,6 +47,10 @@ public class WristIORobot implements WristIO {
         config.Slot0.kG = KG;
         config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
 
+        config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
+        config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
+
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         return config;

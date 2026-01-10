@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Visualization.ElevatorVisualization;
 import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.arm.ArmShuffleBoard;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.arm.elevator.ElevatorIORobot;
 import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
@@ -66,6 +67,8 @@ public class Robot extends LoggedRobot {
                 ArmSubsystem.init(new ElevatorIORobot(), new WristIORobot());
             }
         }
+
+        new ArmShuffleBoard();
 
         // led = new LED(7);
         //led.fullColor(Color.RED);

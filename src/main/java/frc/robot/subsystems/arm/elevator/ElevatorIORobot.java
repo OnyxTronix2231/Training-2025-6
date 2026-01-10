@@ -45,6 +45,10 @@ public class ElevatorIORobot implements ElevatorIO {
         config.Slot0.kD = KD;
         config.Slot0.kG = KG;
 
+        config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
+        config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
+
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         return config;
@@ -89,8 +93,8 @@ public class ElevatorIORobot implements ElevatorIO {
     }
 
     @Override
-    public void updatePID(double kP, double kI, double kD) {
-        masterMotor.getConfigurator().apply(new Slot0Configs().withKP(kP).withKI(kI).withKD(kD));
+    public void updatePID(double kP, double kI, double kD, double kG) {
+        masterMotor.getConfigurator().apply(new Slot0Configs().withKP(kP).withKI(kI).withKD(kD).withKG(kG));
     }
 
 }

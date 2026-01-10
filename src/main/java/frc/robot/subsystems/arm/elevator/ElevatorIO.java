@@ -22,6 +22,6 @@ public interface ElevatorIO {
 
     boolean isOnTarget(double target);
 
-    void updatePID(double kP, double kI, double kD);
+    void updatePID(double kP, double kI, double kD, double kG);
 
 }

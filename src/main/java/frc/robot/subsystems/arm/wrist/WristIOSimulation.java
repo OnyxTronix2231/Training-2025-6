@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -18,27 +19,23 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.lib.OnyxMotorInputs;
+import org.littletonrobotics.junction.Logger;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static frc.robot.subsystems.arm.wrist.WristConstants.*;
-import static frc.robot.subsystems.arm.wrist.WristConstants.SIMULATED_CONSTANTS.*;
 
 public class WristIOSimulation implements WristIO {
     private final TalonFX motor;
     private final DCMotorSim simulatedMotor;
 
-    private final CANcoder canCoder = new CANcoder(CANCODER_ID);
-
     private final OnyxMotorInputs motorInputs;
 
-    private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0).withSlot(WRIST_MOTION_MAGIC_DEFAULT_SLOT);
+    private final MotionMagicVoltage motionMagicVoltage = new  MotionMagicVoltage(0).withSlot(WRIST_MOTION_MAGIC_DEFAULT_SLOT);
 
     public WristIOSimulation() {
         motor = new TalonFX(MOTOR_ID);
 
-
         motor.getConfigurator().apply(getMotorConfiguration());
-        canCoder.getConfigurator().apply(getCANCoderConfiguration());
 
         simulatedMotor = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), SingleJointedArmSim.estimateMOI(0.001, 0.001), RATIO), DCMotor.getKrakenX60(1));
 
@@ -54,24 +51,14 @@ public class WristIOSimulation implements WristIO {
         config.Slot0.withKG(SIMULATED_KG);
         config.Slot0.withGravityType(GravityTypeValue.Arm_Cosine);
 
+        config.MotionMagic.MotionMagicAcceleration = SIMULATED_MOTION_MAGIC_ACCELERATION;
+        config.MotionMagic.MotionMagicCruiseVelocity = SIMULATED_MOTION_MAGIC_SPEED;
+        config.MotionMagic.MotionMagicJerk = SIMULATED_MOTION_MAGIC_JERK;
+
         config.MotorOutput.withNeutralMode(NeutralModeValue.Brake);
 
-        config.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
-        config.Feedback.FeedbackRemoteSensorID = CANCODER_ID;
-        config.Feedback.RotorToSensorRatio = RATIO;
-
         return config;
     }
-
-    private CANcoderConfiguration getCANCoderConfiguration() {
-        CANcoderConfiguration config = new CANcoderConfiguration();
-
-        config.MagnetSensor.MagnetOffset = CANCODER_MAGNET_OFFSET;
-        config.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
-
-        return config;
-    }
-
 
     @Override
     public void updateInputs(WristIOInputs inputs) {
