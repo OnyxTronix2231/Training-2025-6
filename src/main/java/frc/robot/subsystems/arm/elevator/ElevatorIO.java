@@ -18,7 +18,5 @@ public interface ElevatorIO {
 
     void moveToLength(double length);
 
-    void resetElevatorPosition(double length);
-
     void updatePID(PIDValues pidValues);
 }

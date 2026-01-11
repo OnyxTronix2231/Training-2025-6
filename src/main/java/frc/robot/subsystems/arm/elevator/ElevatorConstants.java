@@ -26,7 +26,7 @@ public class ElevatorConstants {
 
     public static final int ELEVATOR_MOTION_MAGIC_DEFAULT_SLOT = 0;
 
-    public static final double ELEVATOR_KP = 0;
+    public static final double ELEVATOR_KP = 1;
     public static final double ELEVATOR_KI = 0;
     public static final double ELEVATOR_KD = 0;
     public static final double ELEVATOR_KG = 0;
@@ -84,7 +84,7 @@ public class ElevatorConstants {
     //SIMULATION
     public static final String SIMULATION_ELEVATOR_MOTOR_NAME = "ELEVATOR_MOTOR";
 
-    public static final double SIMULATION_ELEVATOR_KP = 0;
+    public static final double SIMULATION_ELEVATOR_KP = 7.5;
     public static final double SIMULATION_ELEVATOR_KI = 0;
     public static final double SIMULATION_ELEVATOR_KD = 0;
     public static final double SIMULATION_ELEVATOR_KG = 0;

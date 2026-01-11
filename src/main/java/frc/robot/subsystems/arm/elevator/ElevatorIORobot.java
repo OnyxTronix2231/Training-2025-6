@@ -98,11 +98,6 @@ public class ElevatorIORobot implements ElevatorIO {
     }
 
     @Override
-    public void resetElevatorPosition(double length) {
-        masterMotor.setPosition(LENGTH_TO_ROTATIONS(length, false));
-    }
-
-    @Override
     public void updatePID(PIDValues pidValues) {
         pidValues.updatePIDValues(masterMotor);
     }

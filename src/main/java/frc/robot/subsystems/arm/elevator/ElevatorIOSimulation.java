@@ -109,11 +109,6 @@ public class ElevatorIOSimulation implements ElevatorIO {
     }
 
     @Override
-    public void resetElevatorPosition(double length) {
-        motor.setPosition(LENGTH_TO_ROTATIONS(length, true));
-    }
-
-    @Override
     public void updatePID(PIDValues pidValues) {
         pidValues.updatePIDValues(motor);
     }

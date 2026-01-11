@@ -21,14 +21,14 @@ public class ArmShuffleBoard {
         ShuffleboardTab tab = Shuffleboard.getTab(ELEVATOR_SUBSYSTEM_NAME);
 
         PhysicalTelemetryEntries elevator = new PhysicalTelemetryEntries(ELEVATOR_SUBSYSTEM_NAME, ELEVATOR_MOTOR_MASTER_NAME,
-                () -> ArmSubsystem.getInstance().getElevatorLength(),
+                () -> ArmSubsystem.getInstance().getElevatorPosition(),
                 () -> ArmSubsystem.getInstance().getElevatorVelocity(),
                 () -> ArmSubsystem.getInstance().getElevatorAcceleration()
         );
         DoubleSupplier targetLength = ()-> elevator.getTargetPosition();
 
         PhysicalTelemetryEntries wrist = new PhysicalTelemetryEntries(WRIST_SUBSYSTEM_NAME, WRIST_MOTOR_NAME,
-                () -> ArmSubsystem.getInstance().getWristAngle(),
+                () -> ArmSubsystem.getInstance().getWristPosition(),
                 () -> ArmSubsystem.getInstance().getWristVelocity(),
                 () -> ArmSubsystem.getInstance().getWristAcceleration()
         );
@@ -49,10 +49,10 @@ public class ArmShuffleBoard {
         tab.add("home", new InstantCommand(()-> ArmSubsystem.getInstance().setWantedState(ArmSubsystem.WantedState.HOME)));
 
         tab.add("Move elevator to position", new InstantCommand(()-> ArmSubsystem.getInstance().setWantedState(
-                ArmSubsystem.WantedState.MOVE_TO_POSITION, new ArmPosition(targetLength.getAsDouble(), ArmSubsystem.getInstance().getWristAngle()))));
+                ArmSubsystem.WantedState.MOVE_TO_POSITION, new ArmPosition(targetLength.getAsDouble(), ArmSubsystem.getInstance().getWristPosition()))));
 
         tab.add("Move Wrist to position" , new InstantCommand(()-> ArmSubsystem.getInstance().setWantedState(
-                ArmSubsystem.WantedState.MOVE_TO_POSITION, new ArmPosition(ArmSubsystem.getInstance().getElevatorLength(), targetAngle.getAsDouble()))));
+                ArmSubsystem.WantedState.MOVE_TO_POSITION, new ArmPosition(ArmSubsystem.getInstance().getElevatorPosition(), targetAngle.getAsDouble()))));
 
         tab.add("Move Elevator and Wrist to position", new InstantCommand(()-> ArmSubsystem.getInstance().setWantedState(
                 ArmSubsystem.WantedState.MOVE_TO_POSITION, new ArmPosition(targetLength.getAsDouble(), targetAngle.getAsDouble()))));

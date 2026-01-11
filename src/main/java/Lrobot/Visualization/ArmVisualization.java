@@ -19,9 +19,9 @@ public class ArmVisualization extends VisualizedSubsystem {
 
     @Override
     void updateVisualization() {
-        ArmVisualizationMechanism.ELEVATOR.setLength(armSubsystem.getElevatorLength() +
+        ArmVisualizationMechanism.ELEVATOR.setLength(armSubsystem.getElevatorPosition() +
                 SIMULATION_ELEVATOR_VISUALIZATION_OFFSET);
-        ArmVisualizationMechanism.WRIST.setAngle(armSubsystem.getWristAngle() - WRIST_ZERO_OFFSET_DEG);
+        ArmVisualizationMechanism.WRIST.setAngle(armSubsystem.getWristPosition() - WRIST_ZERO_OFFSET_DEG);
     }
 
     public class ArmVisualizationMechanism {

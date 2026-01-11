@@ -62,7 +62,7 @@ public class WristConstants {
     //SIMULATION
     public static final String SIMULATION_WRIST_MOTOR_NAME = "WRIST_MOTOR";
 
-    public static final double SIMULATION_WRIST_KP = 0;
+    public static final double SIMULATION_WRIST_KP = 7.5;
     public static final double SIMULATION_WRIST_KI = 0;
     public static final double SIMULATION_WRIST_KD = 0;
     public static final double SIMULATION_WRIST_KG = 0;

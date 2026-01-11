@@ -6,6 +6,7 @@ import frc.robot.subsystems.arm.elevator.ElevatorIO;
 import frc.robot.subsystems.arm.wrist.WristIO;
 
 public class ArmSubsystem extends SubsystemBase {
+
     private final ElevatorIO.ElevatorInputs elevatorInputs;
     private final ElevatorIO elevatorIO;
 
@@ -46,14 +47,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     public SystemState getSystemState() {
         return systemState;
-    }
-
-    public double getElevatorLength() {
-        return wantedArmPosition.getElevatorLength();
-    }
-
-    public double getWristAngle() {
-        return wantedArmPosition.getWristAngle();
     }
 
     public ArmSubsystem(ElevatorIO elevatorIO, WristIO wristIO) {
@@ -153,6 +146,14 @@ public class ArmSubsystem extends SubsystemBase {
 
     public double getWristAcceleration(){
         return wristInputs.wristMotorInputs.getMotorAngularAccelerationRadPerSecSquared();
+    }
+
+    public double getElevatorPosition(){
+        return elevatorInputs.elevatorMasterInputs.getMotorValue().getAsDouble();
+    }
+
+    public double getWristPosition(){
+        return wristInputs.wristMotorInputs.getMotorValue().getAsDouble();
     }
 
     private static ArmSubsystem instance;
