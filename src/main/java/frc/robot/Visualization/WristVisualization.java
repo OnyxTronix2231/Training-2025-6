@@ -2,21 +2,19 @@ package frc.robot.Visualization;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import frc.robot.subsystems.arm.ArmSubsystem;
-import org.littletonrobotics.junction.Logger;
+import frc.robot.subsystems.arm.Arm;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 public class WristVisualization extends VisualizedSubsystem {
-    private final ArmSubsystem armSubsystem;
+    private final Arm arm;
 
     public WristVisualization() {
-        armSubsystem = ArmSubsystem.getInstance();
+        arm = Arm.getInstance();
     }
 
     @Override
     void updateVisualization() {
-        WristVisualizationMechanism.WRIST.setAngle(armSubsystem.getWristAngle());
+        WristVisualizationMechanism.WRIST.setAngle(arm.getWristAngle());
     }
 
     public class WristVisualizationMechanism {

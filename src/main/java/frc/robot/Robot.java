@@ -4,21 +4,14 @@
 
 package frc.robot;
 
-import L5.lecture.LED;
-import TrainingUtils.AddressableLEDSim;
-import TrainingUtils.KeyButton;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Visualization.ElevatorVisualization;
 import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.arm.ArmShuffleBoard;
-import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.elevator.ElevatorIORobot;
 import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
 import frc.robot.subsystems.arm.wrist.WristIORobot;
@@ -27,8 +20,6 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
-
-import java.awt.*;
 
 import static TrainingUtils.LedConstants.LedSimulationConstants.ROBOT_MECHANISM;
 import static frc.robot.Visualization.VisualizedSubsystem.updateVisualizations;
@@ -59,12 +50,12 @@ public class Robot extends LoggedRobot {
 
         switch (currentRunningState) {
             case SIMULATION -> {
-                ArmSubsystem.init(new ElevatorIOSimulation(), new WristIOSimulation());
+                Arm.init(new ElevatorIOSimulation(), new WristIOSimulation());
                 new ElevatorVisualization();
                 new WristVisualization();
             }
             case ROBOT -> {
-                ArmSubsystem.init(new ElevatorIORobot(), new WristIORobot());
+                Arm.init(new ElevatorIORobot(), new WristIORobot());
             }
         }
 

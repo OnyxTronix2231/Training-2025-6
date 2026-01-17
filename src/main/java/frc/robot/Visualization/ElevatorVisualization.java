@@ -2,15 +2,15 @@ package frc.robot.Visualization;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import frc.robot.subsystems.arm.ArmSubsystem;
+import frc.robot.subsystems.arm.Arm;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 public class ElevatorVisualization extends VisualizedSubsystem {
-    private final ArmSubsystem arcSubsystem;
+    private final Arm arcSubsystem;
 
     public ElevatorVisualization() {
-        arcSubsystem = ArmSubsystem.getInstance();
+        arcSubsystem = Arm.getInstance();
     }
 
     @Override

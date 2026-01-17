@@ -13,7 +13,7 @@ import static frc.robot.subsystems.arm.elevator.ElevatorConstants.SIMULATED_ELEV
 import static frc.robot.subsystems.arm.wrist.WristConstants.SIMULATED_WRIST_PID_VALUES;
 import static frc.robot.subsystems.arm.wrist.WristConstants.WRIST_PID_VALUES;
 
-public class ArmSubsystem extends SubsystemBase {
+public class Arm extends SubsystemBase {
     private final ElevatorIO elevatorIO;
     private final ElevatorIO.ElevatorIOInputs elevatorIOInputs;
 
@@ -37,7 +37,7 @@ public class ArmSubsystem extends SubsystemBase {
     private ArmPosition wantedArmPosition;
     private ArmPosition previousWantedArmPosition;
 
-    public ArmSubsystem(ElevatorIO elevatorIO, WristIO wristIO) {
+    public Arm(ElevatorIO elevatorIO, WristIO wristIO) {
         this.wantedState = WantedState.IDLE;
         this.systemState = SystemState.IDLING;
         this.previousSystemState = systemState;
@@ -178,15 +178,15 @@ public class ArmSubsystem extends SubsystemBase {
         wristIO.updatePID(kP, kI, kD, kG);
     }
 
-    private static ArmSubsystem instance;
+    private static Arm instance;
 
     public static void init(ElevatorIO elevatorIO, WristIO wristIO) {
         if (instance == null) {
-            instance = new ArmSubsystem(elevatorIO, wristIO);
+            instance = new Arm(elevatorIO, wristIO);
         }
     }
 
-    public static ArmSubsystem getInstance() {
+    public static Arm getInstance() {
         return instance;
     }
 
