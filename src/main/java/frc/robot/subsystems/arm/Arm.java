@@ -132,6 +132,8 @@ public class Arm extends SubsystemBase {
 
         previousWantedArmPosition = wantedArmPosition.createAClone();
 
+        previousSystemState = systemState;
+
         Logger.recordOutput("Subsystems/Arm/PeriodicTime", timeStamp - Timer.getFPGATimestamp());
     }
 
