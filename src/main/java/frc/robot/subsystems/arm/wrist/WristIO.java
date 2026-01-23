@@ -1,6 +1,7 @@
 package frc.robot.subsystems.arm.wrist;
 
 import frc.robot.lib.OnyxMotorInputs;
+import frc.robot.lib.PID.PIDValues;
 
 public interface WristIO {
     void updateInputs(WristIOInputs inputs);
@@ -13,13 +14,17 @@ public interface WristIO {
 
     void setDutyCycle(double dutyCycle);
 
-    void stop();
-
     double getWristAngle();
 
-    void moveWristToAngle(double angle);
+    void moveWristToAngle(double angle, int slot);
+
+    void stayInPlace(double angle);
 
     boolean isOnTarget(double target);
 
-    void updatePID(double kP, double kI, double kD, double kG);
+    void updatePIDSlot0(PIDValues PIDValues);
+
+    void updatePIDSlot1(PIDValues PIDValues);
+
+    boolean isDetectedPush();
 }

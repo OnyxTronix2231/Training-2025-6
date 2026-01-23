@@ -7,16 +7,17 @@ public class Superstructure extends SubsystemBase {
 
     public enum WantedSuperState {
         DEFAULT_STATE,
-        STOPPED
+        OPEN,
+        CLOSE
     }
 
     public enum CurrentSuperState {
         DEFAULT_STATE,
-        STOPPED
+        OPEN
     }
 
-    private WantedSuperState wantedSuperState = WantedSuperState.STOPPED;
-    private CurrentSuperState currentSuperState = CurrentSuperState.STOPPED;
+    private WantedSuperState wantedSuperState = WantedSuperState.DEFAULT_STATE;
+    private CurrentSuperState currentSuperState = CurrentSuperState.DEFAULT_STATE;
     private CurrentSuperState previousSuperState;
 
     private Superstructure() {

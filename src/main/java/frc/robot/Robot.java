@@ -7,15 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Visualization.ElevatorVisualization;
-import frc.robot.Visualization.WristVisualization;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.arm.ArmShuffleBoard;
-import frc.robot.subsystems.arm.Arm;
-import frc.robot.subsystems.arm.elevator.ElevatorIORobot;
-import frc.robot.subsystems.arm.elevator.ElevatorIOSimulation;
+import frc.robot.subsystems.arm.wrist.Wrist;
 import frc.robot.subsystems.arm.wrist.WristIORobot;
-import frc.robot.subsystems.arm.wrist.WristIOSimulation;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -50,16 +44,12 @@ public class Robot extends LoggedRobot {
 
         switch (currentRunningState) {
             case SIMULATION -> {
-                Arm.init(new ElevatorIOSimulation(), new WristIOSimulation());
-                new ElevatorVisualization();
-                new WristVisualization();
             }
             case ROBOT -> {
-                Arm.init(new ElevatorIORobot(), new WristIORobot());
+                Wrist.init(new WristIORobot());
             }
         }
 
-        new ArmShuffleBoard();
 
         // led = new LED(7);
         //led.fullColor(Color.RED);
@@ -92,7 +82,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void disabledInit() {
-        Superstructure.getInstance().setWantedSuperState(Superstructure.WantedSuperState.STOPPED);
+
     }
 
     /**

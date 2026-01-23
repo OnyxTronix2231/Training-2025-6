@@ -1,9 +1,8 @@
 package frc.robot.subsystems.arm.wrist;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -11,6 +10,7 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import frc.robot.lib.OnyxMotorInputs;
+import frc.robot.lib.PID.PIDValues;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static frc.robot.subsystems.arm.wrist.WristConstants.*;
@@ -20,7 +20,7 @@ public class WristIORobot implements WristIO {
 
     private final CANcoder canCoder;
 
-    private final MotionMagicVoltage motionMagicVoltage = new MotionMagicVoltage(0).withSlot(WRIST_MOTION_MAGIC_DEFAULT_SLOT);
+    private final PositionTorqueCurrentFOC positionTorque = new PositionTorqueCurrentFOC(0).withSlot(WRIST_FAST_SLOT);
 
     private final OnyxMotorInputs motorInputs;
 
@@ -51,7 +51,7 @@ public class WristIORobot implements WristIO {
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
         config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
 
-        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         return config;
     }
@@ -80,18 +80,18 @@ public class WristIORobot implements WristIO {
     }
 
     @Override
-    public void stop() {
-        motor.stopMotor();
-    }
-
-    @Override
     public double getWristAngle() {
         return motor.getPosition().getValue().in(Degrees);
     }
 
     @Override
-    public void moveWristToAngle(double angle) {
-        motor.setControl(motionMagicVoltage.withPosition(angle / 360));
+    public void moveWristToAngle(double angle, int slot) {
+        motor.setControl(positionTorque.withPosition(angle / 360).withSlot(slot));
+    }
+
+    @Override
+    public void stayInPlace(double angle) {
+        motor.setControl(positionTorque.withPosition(angle / 360).withSlot(WRIST_SLOW_SLOT));
     }
 
     @Override
@@ -100,7 +100,17 @@ public class WristIORobot implements WristIO {
     }
 
     @Override
-    public void updatePID(double kP, double kI, double kD, double kG) {
-        motor.getConfigurator().apply(new Slot0Configs().withKP(kP).withKI(kI).withKD(kD).withKG(kG));
+    public void updatePIDSlot0(PIDValues PIDValues) {
+        motor.getConfigurator().apply(PIDValues.pidValuesToSlot0Configs());
+    }
+
+    @Override
+    public void updatePIDSlot1(PIDValues PIDValues) {
+        motor.getConfigurator().apply(PIDValues.pidValuesToSlot1Configs());
+    }
+
+    @Override
+    public boolean isDetectedPush() {
+        return (motor.getStatorCurrent().getValueAsDouble() - motor.getSupplyCurrent().getValueAsDouble()) < TOLERANCE;
     }
 }
