@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.arm.wrist.Wrist;
@@ -56,6 +59,10 @@ public class Robot extends LoggedRobot {
         //led.oneLed(3, Color.GREEN);
 
         //button1 = new KeyButton(1);
+
+        HttpCamera DriversCamera = new HttpCamera("DriversCamera", "http://10.22.31.200:5000/?action=stream");
+        CameraServer.addCamera(DriversCamera);
+        Shuffleboard.getTab("Drivers Camera").add(DriversCamera);
     }
 
     /**
