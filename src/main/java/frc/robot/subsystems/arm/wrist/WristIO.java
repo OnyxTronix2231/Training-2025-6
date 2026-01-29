@@ -18,8 +18,6 @@ public interface WristIO {
 
     void moveWristToAngle(double angle, int slot);
 
-    void stayInPlace(double angle);
-
     boolean isOnTarget(double target);
 
     void updatePIDSlot0(PIDValues PIDValues);

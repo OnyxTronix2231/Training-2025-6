@@ -39,20 +39,19 @@ public class Superstructure extends SubsystemBase {
     private CurrentSuperState handleStateTransition() {
         switch (wantedSuperState) {
             case DEFAULT_STATE:
-
                 return CurrentSuperState.DEFAULT_STATE;
-            case STOPPED:
-                return CurrentSuperState.STOPPED;
+            case OPEN:
+                return CurrentSuperState.OPEN;
         }
 
-        return CurrentSuperState.STOPPED;
+        return CurrentSuperState.DEFAULT_STATE;
     }
 
     public void applyStates() {
         switch (currentSuperState) {
             case DEFAULT_STATE:
                 defaultState();
-            case STOPPED:
+            case OPEN:
                 stopped();
                 break;
         }

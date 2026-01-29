@@ -1,6 +1,7 @@
 package frc.robot.subsystems.arm.wrist;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.lib.PID.PIDValues;
 import frc.robot.subsystems.arm.wrist.WristIO.WristIOInputs;
 import org.littletonrobotics.junction.Logger;
 
@@ -12,21 +13,19 @@ public class Wrist extends SubsystemBase {
 
     public enum WantedState {
         IDLE,
-        MOVE_TO_ANGLE,
-        KEEP_OPEN
+        OPEN,
+        CLOSE
     }
 
     public enum SystemState {
         IDLING,
-        MOVING_TO_ANGLE,
-        KEEPING_OPEN,
+        OPENING,
+        CLOSING
     }
 
     private WantedState wantedState;
     private SystemState systemState;
     private SystemState previousSystemState;
-
-    private double targetAngle;
 
     public void setWantedState(WantedState wantedState) {
         this.wantedState = wantedState;
@@ -70,16 +69,16 @@ public class Wrist extends SubsystemBase {
     public SystemState handleStateTransition() {
         return switch (wantedState) {
             case IDLE -> SystemState.IDLING;
-            case MOVE_TO_ANGLE -> SystemState.MOVING_TO_ANGLE;
-            case KEEP_OPEN -> SystemState.KEEPING_OPEN;
+            case OPEN -> SystemState.OPENING;
+            case CLOSE -> SystemState.CLOSING;
         };
     }
 
     public void applyStates() {
         switch (systemState) {
             case IDLING -> idling();
-            case MOVING_TO_ANGLE -> movingToAngle();
-            case KEEPING_OPEN -> keepingOpen();
+            case OPENING -> movingToAngle();
+            case CLOSING -> closing();
         }
     }
 
@@ -88,19 +87,36 @@ public class Wrist extends SubsystemBase {
     }
 
     public void movingToAngle() {
-        if (wristIO.isOnTarget(targetAngle)) {
-            wristIO.moveWristToAngle(targetAngle, WRIST_SLOW_SLOT);
+        if (wristIO.isOnTarget(OPEN_ANGLE)) {
+            wristIO.moveWristToAngle(OPEN_ANGLE, WRIST_SLOW_SLOT);
         }
         else {
-            wristIO.moveWristToAngle(targetAngle, WRIST_FAST_SLOT);
+            wristIO.moveWristToAngle(OPEN_ANGLE, WRIST_FAST_SLOT);
         }
     }
 
-    public void keepingOpen() {
-        if (wristIO.isDetectedPush()) {
-            systemState = SystemState.MOVING_TO_ANGLE;
-        }
-        wristIO.moveWristToAngle(0, WRIST_SLOW_SLOT);
+    public void closing() {
+        wristIO.moveWristToAngle(CLOSE_ANGLE, WRIST_FAST_SLOT);
+    }
+
+    public double getAngle() {
+        return inputs.wristAngle;
+    }
+
+    public double getVelocity() {
+        return inputs.motorInputs.getMotorAngularVelocityRadPerSec();
+    }
+
+    public double getAcceleration() {
+        return inputs.motorInputs.getMotorAngularAccelerationRadPerSecSquared();
+    }
+
+    public void updatePIDSlot0(PIDValues PIDValues) {
+        wristIO.updatePIDSlot0(PIDValues);
+    }
+
+    public void updatePIDSlot1(PIDValues PIDValues) {
+        wristIO.updatePIDSlot1(PIDValues);
     }
 
     public static Wrist instance;

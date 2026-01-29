@@ -12,6 +12,8 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import frc.robot.lib.OnyxMotorInputs;
 import frc.robot.lib.PID.PIDValues;
 
+import java.util.function.UnaryOperator;
+
 import static edu.wpi.first.units.Units.Degrees;
 import static frc.robot.subsystems.arm.wrist.WristConstants.*;
 
@@ -31,7 +33,7 @@ public class WristIORobot implements WristIO {
         canCoder = new CANcoder(CANCODER_ID);
         canCoder.getConfigurator().apply(getCANCoderConfiguration());
 
-        motorInputs = new OnyxMotorInputs(motor, "Arm/Wrist", "Motor");
+        motorInputs = new OnyxMotorInputs(motor, "Arm/Wrist", "Motor", WRIST_ROTOR_TO_SENSOR);
     }
 
     private TalonFXConfiguration getMotorConfiguration() {
@@ -51,7 +53,7 @@ public class WristIORobot implements WristIO {
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
         config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
 
-        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         return config;
     }
@@ -87,11 +89,6 @@ public class WristIORobot implements WristIO {
     @Override
     public void moveWristToAngle(double angle, int slot) {
         motor.setControl(positionTorque.withPosition(angle / 360).withSlot(slot));
-    }
-
-    @Override
-    public void stayInPlace(double angle) {
-        motor.setControl(positionTorque.withPosition(angle / 360).withSlot(WRIST_SLOW_SLOT));
     }
 
     @Override

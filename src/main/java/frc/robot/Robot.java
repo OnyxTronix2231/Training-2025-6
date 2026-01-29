@@ -4,12 +4,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.arm.wrist.Wrist;
 import frc.robot.subsystems.arm.wrist.WristIORobot;
+import frc.robot.subsystems.arm.wrist.WristShuffleboard;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -47,8 +53,20 @@ public class Robot extends LoggedRobot {
             }
             case ROBOT -> {
                 Wrist.init(new WristIORobot());
+                new WristShuffleboard();
             }
         }
+
+//        HttpCamera httpCamera = new HttpCamera(
+//                "Drivers' Camera",
+//                "http://10.22.31.200:5000",
+//                HttpCamera.HttpCameraKind.kMJPGStreamer
+//        );
+
+//        CameraServer.addCamera(httpCamera);
+
+//        Shuffleboard.getTab("cameras").add(httpCamera);
+
 
 
         // led = new LED(7);
