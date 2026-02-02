@@ -24,5 +24,9 @@ public interface WristIO {
 
     void updatePIDSlot1(PIDValues PIDValues);
 
-    boolean isDetectedPush();
+    boolean isDetectedPush(double tolerance);
+
+    void setBrakeMode();
+
+    void setCoastMode();
 }

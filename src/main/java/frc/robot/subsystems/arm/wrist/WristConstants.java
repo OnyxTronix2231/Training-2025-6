@@ -15,19 +15,19 @@ public class WristConstants {
     public static final double CANCODER_MAGNET_OFFSET = 0.3017578125;
 
     public static final double OPEN_ANGLE = 0;
-    public static final double CLOSE_ANGLE = 90;
+    public static final double CLOSE_ANGLE = 180;
 
     public static final int WRIST_FAST_SLOT = 0;
     public static final int WRIST_SLOW_SLOT = 1;
 
-    public static final double KP = 85;
-    public static final double SLOW_KP = 0;
-    public static final double KI = 2;
+    public static final double KP = 100;
+    public static final double SLOW_KP = 20;
+    public static final double KI = 1;
     public static final double SLOW_KI = 0;
-    public static final double KD = 24;
-    public static final double SLOW_KD = 0;
-    public static final double KG = 5.2;
-    public static final double SLOW_KG = 5.2;
+    public static final double KD = 35;
+    public static final double SLOW_KD = 2;
+    public static final double KG = 5.8;
+    public static final double SLOW_KG = 6.2;
     public static final double KS = 0;
     public static final double SLOW_KS = 0;
     public static final double KV = 0;
@@ -63,7 +63,7 @@ public class WristConstants {
     public static final double MOTION_MAGIC_SPEED = 0;
     public static final double MOTION_MAGIC_JERK = 0;
 
-    public static final double WRIST_ANGLE_ERROR_TOLERANCE = 2;
+    public static final double WRIST_ANGLE_TOLERANCE = 2;
 
     public static final double RATIO = (70 / 10.0) * (60 / 18.0) * (66 / 25.0);
     public static final DoubleUnaryOperator WRIST_ROTOR_TO_SENSOR = rotations -> rotations / RATIO ;
@@ -82,5 +82,9 @@ public class WristConstants {
 
     public static PIDValues SIMULATED_WRIST_PID_VALUES = new PIDValues(SIMULATED_KP, SIMULATED_KI, SIMULATED_KD, SIMULATED_KG, SIMULATED_KS, SIMULATED_KV, SIMULATED_KA, GravityTypeValue.Arm_Cosine, StaticFeedforwardSignValue.UseClosedLoopSign);
 
-    public static double TOLERANCE = 0.5;
+    public static double TOLERANCE_LOWER_ANGLE = 10;
+    public static double TOLERANCE_GRAVITY = 7;
+    public static double TOLERANCE_SLOW_LOWER_ANGLE = 9;
+
+    public static double TOLERANCE = 0.3;
 }

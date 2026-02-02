@@ -1,5 +1,6 @@
 package frc.robot.subsystems.arm.wrist;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.PID.PIDValues;
 import frc.robot.subsystems.arm.wrist.WristIO.WristIOInputs;
@@ -10,6 +11,8 @@ import static frc.robot.subsystems.arm.wrist.WristConstants.*;
 public class Wrist extends SubsystemBase {
     private final WristIO wristIO;
     private final WristIOInputs inputs;
+
+    private double currentSlot;
 
     public enum WantedState {
         IDLE,
@@ -26,6 +29,9 @@ public class Wrist extends SubsystemBase {
     private WantedState wantedState;
     private SystemState systemState;
     private SystemState previousSystemState;
+
+    private double lastVel;
+    private double lastAngleTimeStamp;
 
     public void setWantedState(WantedState wantedState) {
         this.wantedState = wantedState;
@@ -44,6 +50,11 @@ public class Wrist extends SubsystemBase {
         previousSystemState = SystemState.IDLING;
 
         wristIO.updateInputs(inputs);
+
+        currentSlot = WRIST_FAST_SLOT;
+
+        lastVel = getAngle();
+        lastAngleTimeStamp = RobotController.getFPGATime();
     }
 
     @Override
@@ -56,6 +67,8 @@ public class Wrist extends SubsystemBase {
         systemState = handleStateTransition();
         applyStates();
         previousSystemState = systemState;
+
+        updateLastAngle();
     }
 
     public void log() {
@@ -64,6 +77,10 @@ public class Wrist extends SubsystemBase {
         Logger.recordOutput(LOG_PATH + "previousSystemState", previousSystemState);
 
         Logger.recordOutput(LOG_PATH + "wristAngle", inputs.wristAngle);
+
+        Logger.recordOutput(LOG_PATH + "currentSlot", currentSlot);
+        Logger.recordOutput(LOG_PATH + "isDetectedPush", isDetectedPush());
+        Logger.recordOutput(LOG_PATH + "lastAngle", lastVel);
     }
 
     public SystemState handleStateTransition() {
@@ -87,16 +104,26 @@ public class Wrist extends SubsystemBase {
     }
 
     public void movingToAngle() {
-        if (wristIO.isOnTarget(OPEN_ANGLE)) {
+        if (wristIO.isOnTarget(OPEN_ANGLE) || isDetectedPush()) {
+            currentSlot = WRIST_SLOW_SLOT;
             wristIO.moveWristToAngle(OPEN_ANGLE, WRIST_SLOW_SLOT);
+            Logger.recordOutput(LOG_PATH + "pidSlot", WRIST_SLOW_SLOT);
         }
         else {
+            currentSlot = WRIST_FAST_SLOT;
             wristIO.moveWristToAngle(OPEN_ANGLE, WRIST_FAST_SLOT);
+            Logger.recordOutput(LOG_PATH + "pidSlot", WRIST_FAST_SLOT);
         }
     }
 
     public void closing() {
+        currentSlot = WRIST_FAST_SLOT;
         wristIO.moveWristToAngle(CLOSE_ANGLE, WRIST_FAST_SLOT);
+        Logger.recordOutput(LOG_PATH + "pidSlot", WRIST_FAST_SLOT);
+    }
+
+    public boolean isDetectedPush() {
+        return Math.abs(lastVel - getVelocity()) < TOLERANCE;
     }
 
     public double getAngle() {
@@ -117,6 +144,21 @@ public class Wrist extends SubsystemBase {
 
     public void updatePIDSlot1(PIDValues PIDValues) {
         wristIO.updatePIDSlot1(PIDValues);
+    }
+
+    public void updateLastAngle() {
+        if (RobotController.getFPGATime() - lastAngleTimeStamp > 50000) {
+            lastAngleTimeStamp = RobotController.getFPGATime();
+            lastVel = getVelocity();
+        }
+    }
+
+    public void setBrakeMode() {
+        wristIO.setBrakeMode();
+    }
+
+    public void setCoastMode() {
+        wristIO.setCoastMode();
     }
 
     public static Wrist instance;

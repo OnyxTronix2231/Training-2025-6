@@ -39,5 +39,8 @@ public class WristShuffleboard {
         tab.add("Open", new InstantCommand(() -> Wrist.getInstance().setWantedState(Wrist.WantedState.OPEN)));
         tab.add("Close", new InstantCommand(() -> Wrist.getInstance().setWantedState(Wrist.WantedState.CLOSE)));
         tab.add("Idle", new InstantCommand(() -> Wrist.getInstance().setWantedState(Wrist.WantedState.IDLE)));
+
+        tab.add("Brake", new InstantCommand(() -> Wrist.getInstance().setBrakeMode()));
+        tab.add("Coast", new InstantCommand(() -> Wrist.getInstance().setCoastMode()));
     }
 }

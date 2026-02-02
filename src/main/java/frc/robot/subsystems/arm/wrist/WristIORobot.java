@@ -12,8 +12,6 @@ import com.ctre.phoenix6.signals.SensorDirectionValue;
 import frc.robot.lib.OnyxMotorInputs;
 import frc.robot.lib.PID.PIDValues;
 
-import java.util.function.UnaryOperator;
-
 import static edu.wpi.first.units.Units.Degrees;
 import static frc.robot.subsystems.arm.wrist.WristConstants.*;
 
@@ -25,6 +23,8 @@ public class WristIORobot implements WristIO {
     private final PositionTorqueCurrentFOC positionTorque = new PositionTorqueCurrentFOC(0).withSlot(WRIST_FAST_SLOT);
 
     private final OnyxMotorInputs motorInputs;
+
+    private double currentSlot;
 
     public WristIORobot() {
         motor = new TalonFX(WristConstants.MOTOR_ID);
@@ -53,7 +53,7 @@ public class WristIORobot implements WristIO {
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
         config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
 
-        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         return config;
     }
@@ -93,7 +93,7 @@ public class WristIORobot implements WristIO {
 
     @Override
     public boolean isOnTarget(double target) {
-        return Math.abs(getWristAngle() - target) < WRIST_ANGLE_ERROR_TOLERANCE;
+        return Math.abs(getWristAngle() - target) < WRIST_ANGLE_TOLERANCE;
     }
 
     @Override
@@ -107,7 +107,17 @@ public class WristIORobot implements WristIO {
     }
 
     @Override
-    public boolean isDetectedPush() {
-        return (motor.getStatorCurrent().getValueAsDouble() - motor.getSupplyCurrent().getValueAsDouble()) < TOLERANCE;
+    public boolean isDetectedPush(double tolerance) {
+        return Math.abs(motor.getStatorCurrent().getValueAsDouble() - motor.getSupplyCurrent().getValueAsDouble()) > tolerance;
+    }
+
+    @Override
+    public void setBrakeMode() {
+        motor.setNeutralMode(NeutralModeValue.Brake);
+    }
+
+    @Override
+    public void setCoastMode() {
+        motor.setNeutralMode(NeutralModeValue.Coast);
     }
 }
