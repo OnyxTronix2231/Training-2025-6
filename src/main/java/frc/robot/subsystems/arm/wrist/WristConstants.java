@@ -25,9 +25,9 @@ public class WristConstants {
     public static final double KI = 1;
     public static final double SLOW_KI = 0;
     public static final double KD = 35;
-    public static final double SLOW_KD = 2;
+    public static final double SLOW_KD = 8;
     public static final double KG = 5.8;
-    public static final double SLOW_KG = 6.2;
+    public static final double SLOW_KG = 6;
     public static final double KS = 0;
     public static final double SLOW_KS = 0;
     public static final double KV = 0;
@@ -86,5 +86,6 @@ public class WristConstants {
     public static double TOLERANCE_GRAVITY = 7;
     public static double TOLERANCE_SLOW_LOWER_ANGLE = 9;
 
-    public static double TOLERANCE = 0.3;
+    public static double TOLERANCE = 0.16;
+    public static double VEL_TOL = 0.2;
 }

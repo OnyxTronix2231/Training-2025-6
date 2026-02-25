@@ -43,17 +43,14 @@ public class WristIORobot implements WristIO {
         config.Feedback.FeedbackRemoteSensorID = CANCODER_ID;
         config.Feedback.RotorToSensorRatio = RATIO;
 
-        config.Slot0.kP = KP;
-        config.Slot0.kI = KI;
-        config.Slot0.kD = KD;
-        config.Slot0.kG = KG;
-        config.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+        config.Slot0 = WRIST_PID_VALUES_FAST.pidValuesToSlot0Configs();
+        config.Slot1 = WRIST_PID_VALUES_SLOW.pidValuesToSlot1Configs();
 
         config.MotionMagic.MotionMagicAcceleration = MOTION_MAGIC_ACCELERATION;
         config.MotionMagic.MotionMagicCruiseVelocity = MOTION_MAGIC_SPEED;
         config.MotionMagic.MotionMagicJerk = MOTION_MAGIC_JERK;
 
-        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         return config;
     }
@@ -104,11 +101,6 @@ public class WristIORobot implements WristIO {
     @Override
     public void updatePIDSlot1(PIDValues PIDValues) {
         motor.getConfigurator().apply(PIDValues.pidValuesToSlot1Configs());
-    }
-
-    @Override
-    public boolean isDetectedPush(double tolerance) {
-        return Math.abs(motor.getStatorCurrent().getValueAsDouble() - motor.getSupplyCurrent().getValueAsDouble()) > tolerance;
     }
 
     @Override

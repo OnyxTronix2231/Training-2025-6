@@ -65,11 +65,13 @@ public class Wrist extends SubsystemBase {
         log();
 
         systemState = handleStateTransition();
+
         applyStates();
+
         previousSystemState = systemState;
 
-        updateLastAngle();
     }
+
 
     public void log() {
         Logger.recordOutput(LOG_PATH + "WantedState", wantedState);
@@ -81,6 +83,8 @@ public class Wrist extends SubsystemBase {
         Logger.recordOutput(LOG_PATH + "currentSlot", currentSlot);
         Logger.recordOutput(LOG_PATH + "isDetectedPush", isDetectedPush());
         Logger.recordOutput(LOG_PATH + "lastAngle", lastVel);
+
+        Logger.recordOutput(LOG_PATH + "getVel", getVelocity());
     }
 
     public SystemState handleStateTransition() {
@@ -123,7 +127,11 @@ public class Wrist extends SubsystemBase {
     }
 
     public boolean isDetectedPush() {
-        return Math.abs(lastVel - getVelocity()) < TOLERANCE;
+        return wristIO.isOnTarget(OPEN_ANGLE) ? !(getVelocity() < -0.25) && inputs.motorInputs.getMotorStatorCurrentAmps() > 3.5 : getVelocity() > -0.3;
+    }
+
+    public boolean isOpened() {
+        return wristIO.isOnTarget(OPEN_ANGLE);
     }
 
     public double getAngle() {
@@ -144,13 +152,6 @@ public class Wrist extends SubsystemBase {
 
     public void updatePIDSlot1(PIDValues PIDValues) {
         wristIO.updatePIDSlot1(PIDValues);
-    }
-
-    public void updateLastAngle() {
-        if (RobotController.getFPGATime() - lastAngleTimeStamp > 50000) {
-            lastAngleTimeStamp = RobotController.getFPGATime();
-            lastVel = getVelocity();
-        }
     }
 
     public void setBrakeMode() {
